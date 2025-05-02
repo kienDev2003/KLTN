@@ -1,0 +1,278 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+
+namespace KLTN.DAL
+{
+    public class QuestionDAL
+    {
+        private DB.DbConn _db;
+
+        public QuestionDAL()
+        {
+            _db = new DB.DbConn();
+        }
+
+        public DataTable GetQuestionByAccountCode(int accountCode, int pageIndex)
+        {
+            int start = -1;
+            if (pageIndex == 1) start = pageIndex - 1;
+            else start = ((pageIndex - 1) * 10) + 1;
+
+            DataTable data = new DataTable();
+            string query = @"SELECT QuestionCode, QuestionText, QuestionLevel, QuestionType, IsApproved, CreateDate
+                             FROM Question
+                             JOIN Subject ON Question.SubjectCode = Subject.SubjectCode
+                             JOIN Subject_Teaching ON Subject.SubjectCode = Subject_Teaching.SubjectCode
+                             JOIN Lecturer ON Subject_Teaching.LecturerCode = Lecturer.LecturerCode
+                             JOIN Account ON Lecturer.AccountCode = Account.AccountCode
+                             WHERE Account.AccountCode = @accountCode
+                             ORDER BY IsApproved ASC, CreateDate DESC
+                             OFFSET @start ROWS FETCH NEXT 10 ROWS ONLY";
+
+            using (SqlConnection conn = _db.GetConn())
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@accountCode", accountCode);
+                    cmd.Parameters.AddWithValue("@start", start);
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(data);
+                    }
+                }
+                conn.Close();
+            }
+            return data;
+        }
+
+        public bool DeleteQuestionByQuestionCode(int questionCode)
+        {
+            string query1 = @"DELETE Answer WHERE Answer.QuestionCode = @questionCode";
+            string query2 = @"DELETE Question WHERE Question.QuestionCode = @questionCode";
+
+            using (SqlConnection conn = _db.GetConn())
+            {
+                using (SqlTransaction tran = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SqlCommand cmd1 = new SqlCommand(query1, conn, tran))
+                        {
+                            cmd1.Parameters.AddWithValue("@questionCode", questionCode);
+
+                            cmd1.ExecuteNonQuery();
+                        }
+
+                        using (SqlCommand cmd2 = new SqlCommand(query2, conn, tran))
+                        {
+                            cmd2.Parameters.AddWithValue("@questionCode", questionCode);
+
+                            cmd2.ExecuteNonQuery();
+                        }
+
+                        tran.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public int GetNumberQuestionByAccountCode(int accountCode)
+        {
+            DataTable data = new DataTable();
+            string query = @"SELECT COUNT(Question.QuestionCode)
+                             FROM Question
+                             JOIN Subject ON Question.SubjectCode = Subject.SubjectCode
+                             JOIN Subject_Teaching ON Subject.SubjectCode = Subject_Teaching.SubjectCode
+                             JOIN Lecturer ON Subject_Teaching.LecturerCode = Lecturer.LecturerCode
+                             JOIN Account ON Lecturer.AccountCode = Account.AccountCode
+                             WHERE Account.AccountCode = @accountCode";
+
+            using (SqlConnection conn = _db.GetConn())
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@accountCode", accountCode);
+
+                    return Convert.ToInt32(cmd.ExecuteScalar());
+                }
+            }
+        }
+
+        public bool InsertQuestion(Models.Req.Question questionRequest)
+        {
+            string query1 = @"INSERT INTO Question (QuestionText,QuestionType,QuestionLevel,SubjectCode,LecturerCode,IsApproved,CreateDate)
+                              VALUES (@questionText,@questionType,@questionLevel,@subjectCode,@lecturerCode,@isApproved,@createDate);
+                              SELECT SCOPE_IDENTITY();";
+
+            string query2 = @"INSERT INTO Answer (AnswerText,AnswerTrue,QuestionCode)
+                              VALUES (@answerText,@answerTrue,@questionCode)";
+
+            using (SqlConnection conn = _db.GetConn())
+            {
+                using (SqlTransaction tran = conn.BeginTransaction())
+                {
+                    int questionCode = -1;
+                    try
+                    {
+                        using (SqlCommand cmd1 = new SqlCommand(query1, conn, tran))
+                        {
+                            cmd1.Parameters.AddWithValue("@questionText", questionRequest.questionText);
+                            cmd1.Parameters.AddWithValue("@questionType", questionRequest.questionType);
+                            cmd1.Parameters.AddWithValue("@questionLevel", questionRequest.questionLevel);
+                            cmd1.Parameters.AddWithValue("@subjectCode", questionRequest.subjectCode);
+                            cmd1.Parameters.AddWithValue("@lecturerCode", questionRequest.lecturerCode);
+                            cmd1.Parameters.AddWithValue("@isApproved", false);
+                            cmd1.Parameters.AddWithValue("@createDate", questionRequest.createDate);
+
+                            questionCode = Convert.ToInt32(cmd1.ExecuteScalar());
+                        }
+
+                        foreach (var answer in questionRequest.answers)
+                        {
+                            using (SqlCommand cmd2 = new SqlCommand(query2, conn, tran))
+                            {
+                                cmd2.Parameters.AddWithValue("@answerText", answer.AnswerText);
+                                cmd2.Parameters.AddWithValue("@answerTrue", answer.AnswerTrue);
+                                cmd2.Parameters.AddWithValue("@questionCode", questionCode);
+
+                                cmd2.ExecuteNonQuery();
+                            }
+                        }
+
+                        tran.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public bool UpdateQuestion(Models.Req.Question questionRequest)
+        {
+            string query1 = @"DELETE Answer WHERE Answer.QuestionCode = @questionCode";
+
+            string query2 = @"UPDATE Question
+                              SET
+                                QuestionText = @questionText,
+                                QuestionType = @questionType,
+                                QuestionLevel = @questionLevel,
+                                CreateDate = @createDate
+                              WHERE
+                                QuestionCode = @questionCode;";
+
+            string query3 = @"INSERT INTO Answer (AnswerText,AnswerTrue,QuestionCode)
+                              VALUES (@answerText,@answerTrue,@questionCode)";
+
+            using (SqlConnection conn = _db.GetConn())
+            {
+                using (SqlTransaction tran = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SqlCommand cmd1 = new SqlCommand(query1, conn, tran))
+                        {
+                            cmd1.Parameters.AddWithValue("@questionCode", questionRequest.questionCode);
+
+                            cmd1.ExecuteNonQuery();
+                        }
+
+                        using (SqlCommand cmd2 = new SqlCommand(query2, conn, tran))
+                        {
+                            cmd2.Parameters.AddWithValue("@questionText", questionRequest.questionText);
+                            cmd2.Parameters.AddWithValue("@questionType", questionRequest.questionType);
+                            cmd2.Parameters.AddWithValue("@questionLevel", questionRequest.questionLevel);
+                            cmd2.Parameters.AddWithValue("@createDate", questionRequest.createDate);
+                            cmd2.Parameters.AddWithValue("@questionCode", questionRequest.questionCode);
+
+                            cmd2.ExecuteNonQuery();
+                        }
+
+                        foreach (var answer in questionRequest.answers)
+                        {
+                            using (SqlCommand cmd3 = new SqlCommand(query3, conn, tran))
+                            {
+                                cmd3.Parameters.AddWithValue("@answerText", answer.AnswerText);
+                                cmd3.Parameters.AddWithValue("@answerTrue", answer.AnswerTrue);
+                                cmd3.Parameters.AddWithValue("@questionCode", questionRequest.questionCode);
+
+                                cmd3.ExecuteNonQuery();
+                            }
+                        }
+
+                        tran.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public DataTable GetQuestionByQuestionCode(int questionCode)
+        {
+            DataTable data = new DataTable();
+            string query = @"SELECT QuestionCode, QuestionText, QuestionLevel, QuestionType, IsApproved, CreateDate
+                             FROM Question
+                             WHERE QuestionCode = @questionCode";
+
+            using (SqlConnection conn = _db.GetConn())
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@questionCode", questionCode);
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(data);
+                    }
+                }
+            }
+
+            return data;
+        }
+
+        public DataTable GetAnswerByQuestionCode(int questionCode)
+        {
+            DataTable data = new DataTable();
+            string query = @"SELECT AnswerCode, AnswerText, AnswerTrue, QuestionCode
+                             FROM Answer
+                             WHERE QuestionCode = @questionCode";
+
+            using (SqlConnection conn = _db.GetConn())
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@questionCode", questionCode);
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(data);
+                    }
+                }
+            }
+
+            return data;
+        }
+    }
+}
