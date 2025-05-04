@@ -45,84 +45,85 @@
             cursor: pointer;
         }
     </style>
+    <div class="flex-1 p-4 relative">
+        <h2 class="text-xl font-bold mb-4" id="subject_name" runat="server"></h2>
 
-    <h2 class="text-xl font-bold mb-4" id="subject_name" runat="server"></h2>
-
-    <div class="flex-1 p-5">
-        <div class="flex justify-end">
-            <input type="button" onclick="CreateQuestion()" class="cursor-pointer bg-green-500 text-white py-2 px-4 rounded" value="Tạo câu hỏi">
-        </div>
-        <div class="mt-5 bg-white p-4 shadow-md rounded-lg">
-            <h2 class="text-xl font-bold mb-4">Danh sách câu hỏi đã tạo</h2>
-            <table class="w-full border-collapse border border-gray-300">
-                <thead>
-                    <tr class="bg-gray-200">
-                        <th class="border border-gray-300 px-4 py-2">Câu hỏi</th>
-                        <th class="border border-gray-300 px-4 py-2">Dạng</th>
-                        <th class="border border-gray-300 px-4 py-2">Mức độ</th>
-                        <th class="border border-gray-300 px-4 py-2">Thời gian tạo</th>
-                        <th class="border border-gray-300 px-4 py-2">Trạng thái</th>
-                        <th class="border border-gray-300 px-4 py-2">Chức năng</th>
-                    </tr>
-                </thead>
-                <tbody id="question_table" runat="server">
-                </tbody>
-            </table>
-            <div class="flex justify-center mt-6">
-                <div class="inline-flex space-x-1" id="pagination" runat="server">
-                    <input type="button" class="pagination-btn pagination-active px-4 py-2 border border-gray-300 bg-blue-500 text-white text-sm font-medium rounded hover:bg-blue-600" value="1">
-                    <input type="button" class="pagination-btn px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 rounded hover:bg-gray-50" value="2">
-                    <input type="button" class="pagination-btn px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 rounded hover:bg-gray-50" value="3">
-                    <input type="button" class="pagination-btn px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 rounded hover:bg-gray-50" value="4">
-                    <input type="button" class="pagination-btn px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 rounded hover:bg-gray-50" value="5">
+        <div class="flex-1 p-5">
+            <div class="flex justify-end">
+                <input type="button" onclick="CreateQuestion()" class="cursor-pointer bg-green-500 text-white py-2 px-4 rounded" value="Tạo câu hỏi">
+            </div>
+            <div class="mt-5 bg-white p-4 shadow-md rounded-lg">
+                <h2 class="text-xl font-bold mb-4">Danh sách câu hỏi đã tạo</h2>
+                <table class="w-full border-collapse border border-gray-300">
+                    <thead>
+                        <tr class="bg-gray-200">
+                            <th class="border border-gray-300 px-4 py-2">Câu hỏi</th>
+                            <th class="border border-gray-300 px-4 py-2">Dạng</th>
+                            <th class="border border-gray-300 px-4 py-2">Mức độ</th>
+                            <th class="border border-gray-300 px-4 py-2">Thời gian tạo</th>
+                            <th class="border border-gray-300 px-4 py-2">Trạng thái</th>
+                            <th class="border border-gray-300 px-4 py-2">Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody id="question_table" runat="server">
+                    </tbody>
+                </table>
+                <div class="flex justify-center mt-6">
+                    <div class="inline-flex space-x-1" id="pagination" runat="server">
+                        <input type="button" class="pagination-btn pagination-active px-4 py-2 border border-gray-300 bg-blue-500 text-white text-sm font-medium rounded hover:bg-blue-600" value="1">
+                        <input type="button" class="pagination-btn px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 rounded hover:bg-gray-50" value="2">
+                        <input type="button" class="pagination-btn px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 rounded hover:bg-gray-50" value="3">
+                        <input type="button" class="pagination-btn px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 rounded hover:bg-gray-50" value="4">
+                        <input type="button" class="pagination-btn px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 rounded hover:bg-gray-50" value="5">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="question-modal" class="modal">
-        <div class="modal-content">
-            <div id="modal-question-form">
-                <div class="mb-4">
-                    <label class="block text-lg font-medium text-gray-700">Nội dung câu hỏi</label>
-                    <div class="flex items-center gap-2">
-                        <input type="text" id="question-content"
-                            class="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
-                            placeholder="Nhập nội dung câu hỏi">
+        <div id="question-modal" class="modal">
+            <div class="modal-content">
+                <div id="modal-question-form">
+                    <div class="mb-4">
+                        <label class="block text-lg font-medium text-gray-700">Nội dung câu hỏi</label>
+                        <div class="flex items-center gap-2">
+                            <input type="text" id="question-content"
+                                class="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
+                                placeholder="Nhập nội dung câu hỏi">
+                        </div>
                     </div>
-                </div>
-                <div class="mb-4">
-                    <label class="block text-lg font-medium text-gray-700">Kiểu câu hỏi</label>
-                    <select id="question-type" onchange="ChangeQuestionType()"
-                        class="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300">
-                        <option value="single">Một câu trả lời</option>
-                        <option value="multiple">Nhiều câu trả lời</option>
-                    </select>
-                </div>
-                <div class="mb-4">
-                    <label class="block text-lg font-medium text-gray-700">Mức độ</label>
-                    <select id="question-level"
-                        class="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300">
-                        <option value="basic">Dễ</option>
-                        <option value="medium">Trung bình</option>
-                        <option value="hard">Khó</option>
-                    </select>
-                </div>
-                <div class="answer-section">
-                    <div id="answer-list" class="space-y-2"></div>
-                    <input type="button" onclick="CreateElementAnswer()"
-                        class="cursor-pointer mt-2 flex items-center gap-1 text-blue-600 hover:text-blue-800"
-                        value="➕ Thêm đáp án">
-                </div>
-                <div class="mt-6 flex justify-end space-x-2">
-                    <input type="button" onclick="CancelQuestion()"
-                        class="cursor-pointer px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
-                        value="Hủy">
-                    <input type="button" id="save-question" onclick="SaveQuestion()"
-                        class="cursor-pointer px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-                        value="Thêm câu hỏi">
-                    <input type="button" id="update-question"
-                        class=" hidden cursor-pointer px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700"
-                        value="Lưu">
+                    <div class="mb-4">
+                        <label class="block text-lg font-medium text-gray-700">Kiểu câu hỏi</label>
+                        <select id="question-type" onchange="ChangeQuestionType()"
+                            class="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300">
+                            <option value="single">Một câu trả lời</option>
+                            <option value="multiple">Nhiều câu trả lời</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-lg font-medium text-gray-700">Mức độ</label>
+                        <select id="question-level"
+                            class="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300">
+                            <option value="basic">Dễ</option>
+                            <option value="medium">Trung bình</option>
+                            <option value="hard">Khó</option>
+                        </select>
+                    </div>
+                    <div class="answer-section">
+                        <div id="answer-list" class="space-y-2"></div>
+                        <input type="button" id="answer-create" onclick="CreateElementAnswer()"
+                            class="cursor-pointer mt-2 flex items-center gap-1 text-blue-600 hover:text-blue-800"
+                            value="➕ Thêm đáp án">
+                    </div>
+                    <div class="mt-6 flex justify-end space-x-2">
+                        <input type="button" onclick="CancelQuestion()"
+                            class="cursor-pointer px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+                            value="Hủy">
+                        <input type="button" id="save-question" onclick="SaveQuestion()"
+                            class="cursor-pointer px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                            value="Thêm câu hỏi">
+                        <input type="button" id="update-question"
+                            class=" hidden cursor-pointer px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700"
+                            value="Lưu">
+                    </div>
                 </div>
             </div>
         </div>
@@ -156,11 +157,14 @@
             btnEdit.addEventListener('click', async () => await UpdateQuestion(questionCode));
 
             HandleViewQuestion(questionCode);
+
+            document.getElementById('answer-create').style.display = 'block';
         }
 
         async function HandleViewQuestion(questionCode) {
             document.getElementById('save-question').style.display = 'none';
             document.getElementById('question-modal').style.display = 'block';
+            document.getElementById('answer-create').style.display = 'none';
 
             const response = await fetch('./question-created.aspx/HandleViewQuestion', {
                 method: 'POST',
@@ -310,12 +314,15 @@
         function CancelQuestion() {
             const modal = document.getElementById("question-modal");
             modal.style.display = "none";
+            document.getElementById('update-question').style.display = 'none';
+            document.getElementById('answer-create').style.display = 'block';
         }
 
         function CreateQuestion() {
             const modal = document.getElementById("question-modal");
             modal.style.display = 'block';
             document.getElementById('save-question').style.display = 'block';
+            document.getElementById('answer-create').style.display = 'block';
 
             document.getElementById('question-content').value = '';
             document.getElementById('question-type').value = '';

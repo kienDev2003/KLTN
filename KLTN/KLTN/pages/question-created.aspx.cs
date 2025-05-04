@@ -14,17 +14,30 @@ namespace KLTN.pages
     {
         private static QuestionBLL _questionBLL = new QuestionBLL();
         private static LecturerBLL _lecturerBLL = new LecturerBLL();
+        private static SubjectBLL _subjectBLL = new SubjectBLL();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["login"] == null) return;
-            HandleGetQuestionCreatedByAccountCode(1);
+
+            string subjectCode = Request.QueryString["subjectCode"].ToString();
+
+            HandleGetQuestionCreatedByAccountCode(1,subjectCode);
+            HandlGetSubjectName(subjectCode);
         }
 
-        private void HandleGetQuestionCreatedByAccountCode(int pageIndex)
+        private void HandlGetSubjectName(string subjectCode)
+        {
+            Models.Res.Subject subject = _subjectBLL.GetInfoBySubjectCode(subjectCode);
+
+            if(subject != null) subject_name.InnerText = $"Môn : {subject.SubjectName}";
+            else subject_name.InnerText = $"Môn : Chưa xác định !";
+        }
+
+        private void HandleGetQuestionCreatedByAccountCode(int pageIndex, string subjectCode)
         {
             Models.Res.Login loginSession = Session["login"] as Models.Res.Login;
-
-            List<Models.Res.Question> questions = _questionBLL.GetQuestionByAccountCode(loginSession.accountCode, pageIndex);
+            
+            List<Models.Res.Question> questions = _questionBLL.GetQuestionBySubjectTeaching(loginSession.accountCode,subjectCode, pageIndex);
 
             if(questions == null)
             {
@@ -53,12 +66,12 @@ namespace KLTN.pages
             question_table.Controls.Clear();
             question_table.Controls.Add(literalControl);
 
-            HandleCreatePageNumber(loginSession.accountCode);
+            HandleCreatePageNumber(loginSession.accountCode, subjectCode);
         }
 
-        private void HandleCreatePageNumber(int accountCode)
+        private void HandleCreatePageNumber(int accountCode, string subjectCode)
         {
-            int questionNumber = _questionBLL.GetQuestionNumberByAccountCode(accountCode);
+            int questionNumber = _questionBLL.GetNumberQuestionBySubjectTeaching(accountCode, subjectCode);
             int page = questionNumber / 10;
 
             if (page < 1)

@@ -32,5 +32,22 @@ namespace KLTN.BLL
             }
             return lecturer;
         }
+
+        public Models.Res.Lecturer GetInfoByLecturerCode(string lecturerCode)
+        {
+            DataTable data = _lecturerDAL.GetInfoByLecturerCode(lecturerCode);
+
+            if (data.Rows.Count <= 0) return null;
+
+            Models.Res.Lecturer lecturer = new Models.Res.Lecturer();
+            foreach (DataRow row in data.Rows)
+            {
+                lecturer.FullName = row["FullName"].ToString();
+                lecturer.DateOfBirth = Convert.ToDateTime(row["DateOfBirth"]);
+                lecturer.IsLeader = Convert.ToBoolean(row["IsLeader"]);
+                lecturer.DepartmentName = row["DepartmentName"].ToString();
+            }
+            return lecturer;
+        }
     }
 }

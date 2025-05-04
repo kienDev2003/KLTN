@@ -70,11 +70,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="pages\assessment.aspx" />
+    <Content Include="pages\bank-question.aspx" />
     <Content Include="pages\home.aspx" />
     <Content Include="pages\index.aspx" />
     <Content Include="pages\question-created.aspx" />
     <Content Include="pages\question.aspx" />
+    <Content Include="pages\subject-lecturer.aspx" />
     <Content Include="pages\subject-teaching.aspx" />
+    <Content Include="pages\subject.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -82,20 +86,39 @@
     <Compile Include="BLL\LecturerBLL.cs" />
     <Compile Include="BLL\QuestionBLL.cs" />
     <Compile Include="BLL\StudentBLL.cs" />
+    <Compile Include="BLL\SubjectBLL.cs" />
+    <Compile Include="BLL\SubjectLecturerBLL.cs" />
     <Compile Include="BLL\SubjectTeachingBLL.cs" />
     <Compile Include="DAL\AccountDAL.cs" />
     <Compile Include="DAL\LecturerDAL.cs" />
     <Compile Include="DAL\QuestionDAL.cs" />
     <Compile Include="DAL\StudentDAL.cs" />
+    <Compile Include="DAL\SubjectDAL.cs" />
+    <Compile Include="DAL\SubjectLecturerDAL.cs" />
     <Compile Include="DAL\SubjectTeachingDAL.cs" />
     <Compile Include="DB\DbConn.cs" />
     <Compile Include="Models\Req\Login.cs" />
     <Compile Include="Models\Req\Question.cs" />
+    <Compile Include="Models\Req\Subject.cs" />
     <Compile Include="Models\Res\Lecturer.cs" />
     <Compile Include="Models\Res\Login.cs" />
     <Compile Include="Models\Res\Question.cs" />
     <Compile Include="Models\Res\Student.cs" />
     <Compile Include="Models\Res\Subject.cs" />
+    <Compile Include="pages\assessment.aspx.cs">
+      <DependentUpon>assessment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\assessment.aspx.designer.cs">
+      <DependentUpon>assessment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pages\bank-question.aspx.cs">
+      <DependentUpon>bank-question.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\bank-question.aspx.designer.cs">
+      <DependentUpon>bank-question.aspx</DependentUpon>
+    </Compile>
     <Compile Include="pages\home.aspx.cs">
       <DependentUpon>home.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -131,12 +154,26 @@
     <Compile Include="pages\question.aspx.designer.cs">
       <DependentUpon>question.aspx</DependentUpon>
     </Compile>
+    <Compile Include="pages\subject-lecturer.aspx.cs">
+      <DependentUpon>subject-lecturer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\subject-lecturer.aspx.designer.cs">
+      <DependentUpon>subject-lecturer.aspx</DependentUpon>
+    </Compile>
     <Compile Include="pages\subject-teaching.aspx.cs">
       <DependentUpon>subject-teaching.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="pages\subject-teaching.aspx.designer.cs">
       <DependentUpon>subject-teaching.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pages\subject.aspx.cs">
+      <DependentUpon>subject.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\subject.aspx.designer.cs">
+      <DependentUpon>subject.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

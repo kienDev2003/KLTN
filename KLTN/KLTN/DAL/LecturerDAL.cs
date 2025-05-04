@@ -39,5 +39,29 @@ namespace KLTN.DAL
             }
             return data;
         }
+
+        public DataTable GetInfoByLecturerCode(string lecturerCode)
+        {
+            DataTable data = new DataTable();
+            string query = @"SELECT FullName, DateOfBirth, IsLeader, DepartmentName
+                             FROM Lecturer
+                             JOIN Department ON Lecturer.DepartmentCode = Department.DepartmentCode
+                             WHERE LecturerCode = @lecturerCode";
+
+            using (SqlConnection conn = _db.GetConn())
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@lecturerCode", lecturerCode);
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(data);
+                    }
+                }
+                conn.Close();
+            }
+            return data;
+        }
     }
 }

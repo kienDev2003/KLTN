@@ -16,7 +16,7 @@ namespace KLTN.DAL
             _db = new DB.DbConn();
         }
 
-        public DataTable GetQuestionByAccountCode(int accountCode, int pageIndex)
+        public DataTable GetQuestionBySubjectTeaching(int accountCode, string subjectCode, int pageIndex)
         {
             int start = -1;
             if (pageIndex == 1) start = pageIndex - 1;
@@ -29,7 +29,7 @@ namespace KLTN.DAL
                              JOIN Subject_Teaching ON Subject.SubjectCode = Subject_Teaching.SubjectCode
                              JOIN Lecturer ON Subject_Teaching.LecturerCode = Lecturer.LecturerCode
                              JOIN Account ON Lecturer.AccountCode = Account.AccountCode
-                             WHERE Account.AccountCode = @accountCode
+                             WHERE Account.AccountCode = @accountCode AND Subject.SubjectCode = @subjectCode
                              ORDER BY IsApproved ASC, CreateDate DESC
                              OFFSET @start ROWS FETCH NEXT 10 ROWS ONLY";
 
@@ -39,6 +39,42 @@ namespace KLTN.DAL
                 {
                     cmd.Parameters.AddWithValue("@accountCode", accountCode);
                     cmd.Parameters.AddWithValue("@start", start);
+                    cmd.Parameters.AddWithValue("@subjectCode", subjectCode);
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(data);
+                    }
+                }
+                conn.Close();
+            }
+            return data;
+        }
+
+        public DataTable GetQuestionBySubjectLecturer(int accountCode, string subjectCode, int pageIndex)
+        {
+            int start = -1;
+            if (pageIndex == 1) start = pageIndex - 1;
+            else start = ((pageIndex - 1) * 10) + 1;
+
+            DataTable data = new DataTable();
+            string query = @"SELECT QuestionCode, QuestionText, QuestionLevel, QuestionType, IsApproved, CreateDate, Question.LecturerCode
+                             FROM Question
+                             JOIN Subject ON Question.SubjectCode = Subject.SubjectCode
+                             JOIN Subject_Lecturer ON Subject.SubjectCode = Subject_Lecturer.SubjectCode
+                             JOIN Lecturer ON Subject_Lecturer.LecturerCode = Lecturer.LecturerCode
+                             JOIN Account ON Lecturer.AccountCode = Account.AccountCode
+                             WHERE Account.AccountCode = @accountCode AND Subject.SubjectCode = @subjectCode
+                             ORDER BY IsApproved ASC, CreateDate DESC
+                             OFFSET @start ROWS FETCH NEXT 10 ROWS ONLY";
+
+            using (SqlConnection conn = _db.GetConn())
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@accountCode", accountCode);
+                    cmd.Parameters.AddWithValue("@start", start);
+                    cmd.Parameters.AddWithValue("@subjectCode", subjectCode);
 
                     using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
                     {
@@ -88,7 +124,7 @@ namespace KLTN.DAL
             return false;
         }
 
-        public int GetNumberQuestionByAccountCode(int accountCode)
+        public int GetNumberQuestionBySubjectTeaching(int accountCode, string subjectCode)
         {
             DataTable data = new DataTable();
             string query = @"SELECT COUNT(Question.QuestionCode)
@@ -97,13 +133,37 @@ namespace KLTN.DAL
                              JOIN Subject_Teaching ON Subject.SubjectCode = Subject_Teaching.SubjectCode
                              JOIN Lecturer ON Subject_Teaching.LecturerCode = Lecturer.LecturerCode
                              JOIN Account ON Lecturer.AccountCode = Account.AccountCode
-                             WHERE Account.AccountCode = @accountCode";
+                             WHERE Account.AccountCode = @accountCode AND Subject.SubjectCode = @subjectCode";
 
             using (SqlConnection conn = _db.GetConn())
             {
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@accountCode", accountCode);
+                    cmd.Parameters.AddWithValue("@subjectCode", subjectCode);
+
+                    return Convert.ToInt32(cmd.ExecuteScalar());
+                }
+            }
+        }
+
+        public int GetNumberQuestionBySubjectLecturer(int accountCode, string subjectCode)
+        {
+            DataTable data = new DataTable();
+            string query = @"SELECT COUNT(Question.QuestionCode)
+                             FROM Question
+                             JOIN Subject ON Question.SubjectCode = Subject.SubjectCode
+                             JOIN Subject_Lecturer ON Subject.SubjectCode = Subject_Lecturer.SubjectCode
+                             JOIN Lecturer ON Subject_Lecturer.LecturerCode = Lecturer.LecturerCode
+                             JOIN Account ON Lecturer.AccountCode = Account.AccountCode
+                             WHERE Account.AccountCode = @accountCode AND Subject.SubjectCode = @subjectCode";
+
+            using (SqlConnection conn = _db.GetConn())
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@accountCode", accountCode);
+                    cmd.Parameters.AddWithValue("@subjectCode", subjectCode);
 
                     return Convert.ToInt32(cmd.ExecuteScalar());
                 }
@@ -273,6 +333,36 @@ namespace KLTN.DAL
             }
 
             return data;
+        }
+
+        public bool ApprovalQuestion(int questionCode)
+        {
+            string query = @"UPDATE Question SET IsApproved = 1 WHERE QuestionCode = @questionCode";
+
+            using(SqlConnection conn = _db.GetConn())
+            {
+                using(SqlTransaction tran = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SqlCommand cmd = new SqlCommand(query, conn, tran))
+                        {
+                            cmd.Parameters.AddWithValue("@questionCode", questionCode);
+
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        tran.Commit();
+                        return true;
+                    }
+                    catch(Exception ex)
+                    {
+                        tran.Rollback();
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }
