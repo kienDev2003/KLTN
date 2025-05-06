@@ -40,8 +40,7 @@ namespace KLTN.pages
                             $"<td class=\"border border-gray-300 px-4 py-2\">{subject.CreateDate}</td>" +
                             $"<td class=\"border border-gray-300 px-4 py-2\">" +
                                 $"<input type=\"button\" class=\"cursor-pointer bg-blue-500 text-white px-2 py-1 rounded\" onclick=\"HandleViewSubject('{subject.SubjectCode}')\" value=\"Xem\">" +
-                                $"<input type=\"button\" class=\"cursor-pointer bg-yellow-500 text-white px-2 py-1 rounded\" onclick=\"HandleEditSubject('{subject.SubjectCode}')\" value=\"Sửa\">" +
-                                $"<input type=\"button\" class=\"cursor-pointer bg-red-500 text-white px-2 py-1 rounded\" onclick=\"HandleDeteleSubject('{subject.SubjectCode}')\" value=\"Xóa\">" +
+                                $"<input type=\"button\" class=\"cursor-pointer bg-red-500 text-white px-2 py-1 rounded\" onclick=\"HandleDeleteSubject('{subject.SubjectCode}')\" value=\"Xóa\">" +
                             $"</td>" +
                         $"</tr>";
             }
@@ -67,6 +66,15 @@ namespace KLTN.pages
 
             if (subject == null) return new { status = "404", message = "Không tìm thấy môn học !" };
             else return new { status = "200", subject = subject };
+        }
+
+        [WebMethod]
+        public static object HandleDeleteSubject(string subjectCode)
+        {
+            bool exec = _subjectBLL.DeleteSubject(subjectCode);
+
+            if (!exec) return new { status = "404", message = "Không tìm thấy môn học !" };
+            else return new { status = "200", message = "Xóa môn học thành công !" };
         }
     }
 }

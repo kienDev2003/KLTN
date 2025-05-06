@@ -91,5 +91,10 @@ namespace KLTN.BLL
 
             return _subjectDAL.InsertSubject(subject);
         }
+
+        public bool DeleteSubject(string subjectCode)
+        {
+            return _subjectDAL.DeleteSubject(subjectCode);
+        }
     }
 }

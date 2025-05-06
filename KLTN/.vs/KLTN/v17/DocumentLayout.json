@@ -3,28 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|c:\\users\\kiendev2003\\desktop\\kltn\\kltn\\kltn\\pages\\subject.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|solutionrelative:kltn\\pages\\subject.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+      "AbsoluteMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|c:\\users\\kiendev2003\\desktop\\kltn\\kltn\\kltn\\pages\\account-lecturer.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|solutionrelative:kltn\\pages\\account-lecturer.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|c:\\users\\kiendev2003\\desktop\\kltn\\kltn\\kltn\\pages\\question-created.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
       "RelativeMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|solutionrelative:kltn\\pages\\question-created.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|c:\\users\\kiendev2003\\desktop\\kltn\\kltn\\kltn\\pages\\subject.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|solutionrelative:kltn\\pages\\subject.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|c:\\users\\kiendev2003\\desktop\\kltn\\kltn\\kltn\\bll\\subjectbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|solutionrelative:kltn\\bll\\subjectbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|c:\\users\\kiendev2003\\desktop\\kltn\\kltn\\kltn\\dal\\subjectdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|solutionrelative:kltn\\dal\\subjectdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|c:\\users\\kiendev2003\\desktop\\kltn\\kltn\\kltn\\pages\\question-created.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|solutionrelative:kltn\\pages\\question-created.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|c:\\users\\kiendev2003\\desktop\\kltn\\kltn\\kltn\\pages\\master\\home.master.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|solutionrelative:kltn\\pages\\master\\home.master.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,21 +22,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 1,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "question-created.aspx.cs",
-              "DocumentMoniker": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\question-created.aspx.cs",
-              "RelativeDocumentMoniker": "KLTN\\pages\\question-created.aspx.cs",
-              "ToolTip": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\question-created.aspx.cs",
-              "RelativeToolTip": "KLTN\\pages\\question-created.aspx.cs",
-              "ViewState": "AgIAADIAAAAAAAAAAAAgwD0AAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T07:40:08.306Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -59,59 +34,33 @@
               "RelativeToolTip": "KLTN\\pages\\question-created.aspx",
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-05-04T05:19:20.408Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "SubjectBLL.cs",
-              "DocumentMoniker": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\BLL\\SubjectBLL.cs",
-              "RelativeDocumentMoniker": "KLTN\\BLL\\SubjectBLL.cs",
-              "ToolTip": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\BLL\\SubjectBLL.cs",
-              "RelativeToolTip": "KLTN\\BLL\\SubjectBLL.cs",
-              "ViewState": "AgIAAB0AAAAAAAAAAAAQwFUAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T05:17:56.442Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "SubjectDAL.cs",
-              "DocumentMoniker": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\DAL\\SubjectDAL.cs",
-              "RelativeDocumentMoniker": "KLTN\\DAL\\SubjectDAL.cs",
-              "ToolTip": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\DAL\\SubjectDAL.cs",
-              "RelativeToolTip": "KLTN\\DAL\\SubjectDAL.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAAwCsAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T03:31:45.982Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "subject.aspx.cs",
-              "DocumentMoniker": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\subject.aspx.cs",
-              "RelativeDocumentMoniker": "KLTN\\pages\\subject.aspx.cs",
-              "ToolTip": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\subject.aspx.cs",
-              "RelativeToolTip": "KLTN\\pages\\subject.aspx.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAQwCkAAACWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T03:30:02.052Z",
+              "WhenOpened": "2025-05-06T11:10:54.003Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "subject.aspx",
-              "DocumentMoniker": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\subject.aspx",
-              "RelativeDocumentMoniker": "KLTN\\pages\\subject.aspx",
-              "ToolTip": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\subject.aspx",
-              "RelativeToolTip": "KLTN\\pages\\subject.aspx",
+              "Title": "account-lecturer.aspx",
+              "DocumentMoniker": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\account-lecturer.aspx",
+              "RelativeDocumentMoniker": "KLTN\\pages\\account-lecturer.aspx",
+              "ToolTip": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\account-lecturer.aspx",
+              "RelativeToolTip": "KLTN\\pages\\account-lecturer.aspx",
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-05-04T02:00:12.552Z",
+              "WhenOpened": "2025-05-06T10:50:56.69Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "home.Master.cs",
+              "DocumentMoniker": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\master\\home.Master.cs",
+              "RelativeDocumentMoniker": "KLTN\\pages\\master\\home.Master.cs",
+              "ToolTip": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\master\\home.Master.cs",
+              "RelativeToolTip": "KLTN\\pages\\master\\home.Master.cs",
+              "ViewState": "AgIAAFwAAAAAAAAAAAAkwHIAAAB5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-06T01:48:33.322Z",
               "EditorCaption": ""
             }
           ]

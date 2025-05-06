@@ -33,5 +33,51 @@ namespace KLTN.BLL
             }
             return subjects;
         }
+
+        public List<Models.Res.Subject> GetSubjectNotLecturer()
+        {
+            DataTable data = _subjectLecturerDAL.GetSubjectNotLecturer();
+
+            if (data.Rows.Count <= 0) return null;
+
+            List<Models.Res.Subject> subjects = new List<Models.Res.Subject>();
+            foreach (DataRow row in data.Rows)
+            {
+                subjects.Add(new Models.Res.Subject()
+                {
+                    SubjectCode = row["SubjectCode"].ToString(),
+                    SubjectName = row["SubjectName"].ToString()
+                });
+            }
+            return subjects;
+        }
+
+        public List<Models.Res.Subject> GetSubjectLecturerByLecturerCode(string lecturerCode)
+        {
+            DataTable data = _subjectLecturerDAL.GetSubjectLecturerByLecturerCode(lecturerCode);
+
+            if (data.Rows.Count <= 0) return null;
+
+            List<Models.Res.Subject> subjects = new List<Models.Res.Subject>();
+            foreach (DataRow row in data.Rows)
+            {
+                subjects.Add(new Models.Res.Subject()
+                {
+                    SubjectCode = row["SubjectCode"].ToString(),
+                    SubjectName = row["SubjectName"].ToString()
+                });
+            }
+            return subjects;
+        }
+
+        public bool InsertSubjectLecturer(Models.Req.SubjectTeaching subjectLecturer)
+        {
+            return _subjectLecturerDAL.InsertSubjectLecturer(subjectLecturer);
+        }
+
+        public bool DeleteSubjectLecturer(Models.Req.SubjectTeaching subjectLecturer)
+        {
+            return _subjectLecturerDAL.DeleteSubjectLecturer(subjectLecturer);
+        }
     }
 }

@@ -33,5 +33,32 @@ namespace KLTN.BLL
             }
             return subjects;
         }
+
+        public List<Models.Res.Subject> GetSubjectTeachingByLecturerCode(string lecturerCode)
+        {
+            DataTable data = _subjectTeachingDAL.GetSubjectTeachingByLecturerCode(lecturerCode);
+
+            if (data.Rows.Count <= 0) return null;
+
+            List<Models.Res.Subject> subjects = new List<Models.Res.Subject>();
+            foreach (DataRow row in data.Rows)
+            {
+                subjects.Add(new Models.Res.Subject()
+                {
+                    SubjectCode = row["SubjectCode"].ToString()
+                });
+            }
+            return subjects;
+        }
+
+        public bool InsertSubjectTeaching(Models.Req.SubjectTeaching subjectTeaching)
+        {
+            return _subjectTeachingDAL.InsertSubjectTeaching(subjectTeaching);
+        }
+
+        public bool DeteleSubjectTeaching(Models.Req.SubjectTeaching subjectTeaching)
+        {
+            return _subjectTeachingDAL.DeleteSubjectTeaching(subjectTeaching);
+        }
     }
 }

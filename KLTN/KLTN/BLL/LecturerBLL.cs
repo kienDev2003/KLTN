@@ -49,5 +49,24 @@ namespace KLTN.BLL
             }
             return lecturer;
         }
+
+        public List<Models.Res.Lecturer> GetAllLecturer()
+        {
+            DataTable data = _lecturerDAL.GetAllLecturer();
+
+            if (data.Rows.Count <= 0) return null;
+
+            List<Models.Res.Lecturer> lecturers = new List<Models.Res.Lecturer>();
+            foreach(DataRow row in data.Rows)
+            {
+                lecturers.Add(new Models.Res.Lecturer()
+                {
+                    LecturerCode = row["LecturerCode"].ToString(),
+                    FullName = row["FullName"].ToString()
+                });
+            }
+
+            return lecturers;
+        }
     }
 }

@@ -63,5 +63,25 @@ namespace KLTN.DAL
             }
             return data;
         }
+
+        public DataTable GetAllLecturer()
+        {
+            DataTable data = new DataTable();
+            string query = @"SELECT LecturerCode, FullName
+                             FROM Lecturer";
+
+            using(SqlConnection conn = _db.GetConn())
+            {
+                using(SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    using(SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(data);
+                    }
+                }
+            }
+
+            return data;
+        }
     }
 }

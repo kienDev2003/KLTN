@@ -91,6 +91,12 @@
                         </div>
                     </div>
                     <div class="mb-4">
+                        <label class="block text-lg font-medium text-gray-700">Chương</label>
+                        <select id="question-chapter"
+                            class="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300">
+                        </select>
+                    </div>
+                    <div class="mb-4">
                         <label class="block text-lg font-medium text-gray-700">Kiểu câu hỏi</label>
                         <select id="question-type" onchange="ChangeQuestionType()"
                             class="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300">
@@ -129,6 +135,37 @@
         </div>
     </div>
     <script>
+        async function HandleGetChapters() {
+            const subjectCode = new URLSearchParams(location.search).get("subjectCode");
+
+            const response = await fetch('subject.aspx/HandleViewSubject', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ subjectCode: subjectCode })
+            });
+
+            const res = await response.json();
+
+            if (res.d.status !== "200") {
+                alert(res.d.message);
+                return;
+            }
+
+            const question_chapter = document.getElementById('question-chapter');
+
+            if (res.d.subject && Array.isArray(res.d.subject.Chapters)) {
+                for (let i = 0; i < res.d.subject.Chapters.length; i++) {
+                    const chapter = res.d.subject.Chapters[i];
+
+                    const html = `<option value="${chapter.ChapterCode}">${chapter.ChapterName}</option>`;
+
+                    question_chapter.innerHTML += html;
+                }
+            }
+        }
+
         async function HandleDeteleQuestion(questionCode) {
             if (!confirm('Bạn chắc chắn muốn xóa câu hỏi này ?')) return;
 
@@ -184,6 +221,7 @@
             document.getElementById('question-content').value = res.d.question.QuestionText;
             document.getElementById('question-type').value = res.d.question.QuestionType;
             document.getElementById('question-level').value = res.d.question.QuestionLevel;
+            document.getElementById('question-chapter').value = res.d.question.ChapterCode;
 
             const answer_list = document.getElementById('answer-list');
             answer_list.innerHTML = '';
@@ -206,6 +244,7 @@
             const questionContent = document.getElementById('question-content').value;
             const questionType = document.getElementById('question-type').value;
             const questionLevel = document.getElementById('question-level').value;
+            const chapterCode = document.getElementById('question-chapter').value;
             const subjectCode = new URLSearchParams(location.search).get("subjectCode");
             var answers = [];
 
@@ -226,6 +265,7 @@
                 questionLevel: questionLevel,
                 questionType: questionType,
                 subjectCode: subjectCode,
+                chapterCode: chapterCode,
                 answers: answers
             };
 
@@ -254,6 +294,7 @@
             const questionType = document.getElementById('question-type').value;
             const questionLevel = document.getElementById('question-level').value;
             const subjectCode = new URLSearchParams(location.search).get("subjectCode");
+            const chapterCode = document.getElementById('question-chapter').value;
             var answers = [];
 
             const answer_list = document.getElementById('answer-list');
@@ -272,6 +313,7 @@
                 questionLevel: questionLevel,
                 questionType: questionType,
                 subjectCode: subjectCode,
+                chapterCode: chapterCode,
                 answers: answers
             };
 
@@ -325,8 +367,6 @@
             document.getElementById('answer-create').style.display = 'block';
 
             document.getElementById('question-content').value = '';
-            document.getElementById('question-type').value = '';
-            document.getElementById('question-level').value = '';
             const answer_list = document.getElementById('answer-list');
             answer_list.innerHTML = '';
         }
@@ -373,6 +413,8 @@
 
                 });
             });
+
+            HandleGetChapters();
         });
     </script>
 </asp:Content>

@@ -102,6 +102,7 @@ namespace KLTN.BLL
                 question.QuestionType = row["QuestionType"].ToString();
                 question.IsApproved = Convert.ToBoolean(row["IsApproved"]);
                 question.CreateDate = Convert.ToDateTime(row["CreateDate"]);
+                question.ChapterCode = Convert.ToInt32(row["ChapterCode"]);
             }
 
             DataTable dataAnswer = _questionDAL.GetAnswerByQuestionCode(questionCode);

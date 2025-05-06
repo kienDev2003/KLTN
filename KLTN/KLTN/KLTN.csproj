@@ -70,7 +70,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="pages\account-lecturer.aspx" />
     <Content Include="pages\assessment.aspx" />
+    <Content Include="pages\assignment-lecterer.aspx" />
+    <Content Include="pages\assignment-teaching.aspx" />
     <Content Include="pages\bank-question.aspx" />
     <Content Include="pages\home.aspx" />
     <Content Include="pages\index.aspx" />
@@ -100,17 +103,39 @@
     <Compile Include="Models\Req\Login.cs" />
     <Compile Include="Models\Req\Question.cs" />
     <Compile Include="Models\Req\Subject.cs" />
+    <Compile Include="Models\Req\SubjectTeaching.cs" />
     <Compile Include="Models\Res\Lecturer.cs" />
     <Compile Include="Models\Res\Login.cs" />
     <Compile Include="Models\Res\Question.cs" />
     <Compile Include="Models\Res\Student.cs" />
     <Compile Include="Models\Res\Subject.cs" />
+    <Compile Include="pages\account-lecturer.aspx.cs">
+      <DependentUpon>account-lecturer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\account-lecturer.aspx.designer.cs">
+      <DependentUpon>account-lecturer.aspx</DependentUpon>
+    </Compile>
     <Compile Include="pages\assessment.aspx.cs">
       <DependentUpon>assessment.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="pages\assessment.aspx.designer.cs">
       <DependentUpon>assessment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pages\assignment-lecterer.aspx.cs">
+      <DependentUpon>assignment-lecterer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\assignment-lecterer.aspx.designer.cs">
+      <DependentUpon>assignment-lecterer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pages\assignment-teaching.aspx.cs">
+      <DependentUpon>assignment-teaching.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\assignment-teaching.aspx.designer.cs">
+      <DependentUpon>assignment-teaching.aspx</DependentUpon>
     </Compile>
     <Compile Include="pages\bank-question.aspx.cs">
       <DependentUpon>bank-question.aspx</DependentUpon>

@@ -119,6 +119,28 @@
     </div>
 
     <script>
+        async function HandleDeleteSubject(subjectCode) {
+            if (!confirm('Bạn chắc chắn muốn xóa môn học này ?')) return;
+
+            const response = await fetch('subject.aspx/HandleDeleteSubject', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ subjectCode: subjectCode })
+            });
+
+            const res = await response.json();
+
+            if (res.d.status !== "200") {
+                alert(res.d.message);
+            }
+            else {
+                alert(res.d.message);
+                window.location.reload();
+            }
+        }
+
         async function HandleViewSubject(subjectCode) {
             document.getElementById('save-subject').style.display = 'none';
             document.getElementById('subject-modal').style.display = 'block';
@@ -152,7 +174,6 @@
                     CreateElementChapter();
                     const lastChapterElem = chapter_list.lastElementChild;
                     if (lastChapterElem) {
-                        console.log(chapter);
                         lastChapterElem.querySelector('.chapter-name').value = chapter.ChapterName;
                     }
                 }
@@ -213,6 +234,7 @@
             const modal = document.getElementById("subject-modal");
             modal.style.display = 'block';
             document.getElementById('save-subject').style.display = 'block';
+            document.getElementById('chapter-create').style.display = 'block';
 
             document.getElementById('subject-code').value = '';
             document.getElementById('subject-name').value = '';

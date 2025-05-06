@@ -48,13 +48,13 @@ namespace KLTN.DAL
                              FROM Chapter
                              WHERE SubjectCode = @subjectCode";
 
-            using(SqlConnection conn = _db.GetConn())
+            using (SqlConnection conn = _db.GetConn())
             {
-                using(SqlCommand cmd = new SqlCommand(query, conn))
+                using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@subjectCode", subjectCode);
 
-                    using(SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
                     {
                         adapter.Fill(data);
                     }
@@ -62,7 +62,7 @@ namespace KLTN.DAL
             }
 
             return data;
-                
+
         }
 
         public DataTable GetSubjectAll()
@@ -75,6 +75,7 @@ namespace KLTN.DAL
                                 CreateDate,
                                 (SELECT COUNT(ChapterCode) FROM Chapter WHERE Chapter.SubjectCode = Subject.SubjectCode) AS NumberChapter
                             FROM Subject
+                            WHERE IsDelete = 0
                             ORDER BY CreateDate DESC";
 
             using (SqlConnection conn = _db.GetConn())
@@ -126,6 +127,36 @@ namespace KLTN.DAL
 
                                 cmd2.ExecuteNonQuery();
                             }
+                        }
+
+                        tran.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public bool DeleteSubject(string subjectCode)
+        {
+            string query = @"UPDATE Subject SET IsDelete = 1 WHERE SubjectCode = @subjectCode";
+
+            using (SqlConnection conn = _db.GetConn())
+            {
+                using (SqlTransaction tran = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SqlCommand cmd = new SqlCommand(query, conn, tran))
+                        {
+                            cmd.Parameters.AddWithValue("@subjectCode", subjectCode);
+
+                            cmd.ExecuteNonQuery();
                         }
 
                         tran.Commit();

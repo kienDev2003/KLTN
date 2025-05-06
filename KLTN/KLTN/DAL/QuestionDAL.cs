@@ -23,13 +23,11 @@ namespace KLTN.DAL
             else start = ((pageIndex - 1) * 10) + 1;
 
             DataTable data = new DataTable();
-            string query = @"SELECT QuestionCode, QuestionText, QuestionLevel, QuestionType, IsApproved, CreateDate
+            string query = @"SELECT QuestionCode, QuestionText, QuestionLevel, QuestionType, IsApproved, Question.CreateDate
                              FROM Question
-                             JOIN Subject ON Question.SubjectCode = Subject.SubjectCode
-                             JOIN Subject_Teaching ON Subject.SubjectCode = Subject_Teaching.SubjectCode
-                             JOIN Lecturer ON Subject_Teaching.LecturerCode = Lecturer.LecturerCode
+                             JOIN Lecturer ON Question.LecturerCode = Lecturer.LecturerCode
                              JOIN Account ON Lecturer.AccountCode = Account.AccountCode
-                             WHERE Account.AccountCode = @accountCode AND Subject.SubjectCode = @subjectCode
+                             WHERE Account.AccountCode = @accountCode AND Question.SubjectCode = @subjectCode
                              ORDER BY IsApproved ASC, CreateDate DESC
                              OFFSET @start ROWS FETCH NEXT 10 ROWS ONLY";
 
@@ -58,7 +56,7 @@ namespace KLTN.DAL
             else start = ((pageIndex - 1) * 10) + 1;
 
             DataTable data = new DataTable();
-            string query = @"SELECT QuestionCode, QuestionText, QuestionLevel, QuestionType, IsApproved, CreateDate, Question.LecturerCode
+            string query = @"SELECT QuestionCode, QuestionText, QuestionLevel, QuestionType, IsApproved, Question.CreateDate, Question.LecturerCode
                              FROM Question
                              JOIN Subject ON Question.SubjectCode = Subject.SubjectCode
                              JOIN Subject_Lecturer ON Subject.SubjectCode = Subject_Lecturer.SubjectCode
@@ -172,8 +170,8 @@ namespace KLTN.DAL
 
         public bool InsertQuestion(Models.Req.Question questionRequest)
         {
-            string query1 = @"INSERT INTO Question (QuestionText,QuestionType,QuestionLevel,SubjectCode,LecturerCode,IsApproved,CreateDate)
-                              VALUES (@questionText,@questionType,@questionLevel,@subjectCode,@lecturerCode,@isApproved,@createDate);
+            string query1 = @"INSERT INTO Question (QuestionText,QuestionType,QuestionLevel,ChapterCode,SubjectCode,LecturerCode,IsApproved,CreateDate)
+                              VALUES (@questionText,@questionType,@questionLevel,@chapterCode,@subjectCode,@lecturerCode,@isApproved,@createDate);
                               SELECT SCOPE_IDENTITY();";
 
             string query2 = @"INSERT INTO Answer (AnswerText,AnswerTrue,QuestionCode)
@@ -195,6 +193,7 @@ namespace KLTN.DAL
                             cmd1.Parameters.AddWithValue("@lecturerCode", questionRequest.lecturerCode);
                             cmd1.Parameters.AddWithValue("@isApproved", false);
                             cmd1.Parameters.AddWithValue("@createDate", questionRequest.createDate);
+                            cmd1.Parameters.AddWithValue("@chapterCode", questionRequest.ChapterCode);
 
                             questionCode = Convert.ToInt32(cmd1.ExecuteScalar());
                         }
@@ -233,7 +232,8 @@ namespace KLTN.DAL
                                 QuestionText = @questionText,
                                 QuestionType = @questionType,
                                 QuestionLevel = @questionLevel,
-                                CreateDate = @createDate
+                                CreateDate = @createDate,
+                                ChapterCode = @chapterCode
                               WHERE
                                 QuestionCode = @questionCode;";
 
@@ -260,6 +260,7 @@ namespace KLTN.DAL
                             cmd2.Parameters.AddWithValue("@questionLevel", questionRequest.questionLevel);
                             cmd2.Parameters.AddWithValue("@createDate", questionRequest.createDate);
                             cmd2.Parameters.AddWithValue("@questionCode", questionRequest.questionCode);
+                            cmd2.Parameters.AddWithValue("@chapterCode", questionRequest.ChapterCode);
 
                             cmd2.ExecuteNonQuery();
                         }
@@ -292,7 +293,7 @@ namespace KLTN.DAL
         public DataTable GetQuestionByQuestionCode(int questionCode)
         {
             DataTable data = new DataTable();
-            string query = @"SELECT QuestionCode, QuestionText, QuestionLevel, QuestionType, IsApproved, CreateDate
+            string query = @"SELECT QuestionCode, QuestionText, QuestionLevel, QuestionType, IsApproved, CreateDate, ChapterCode
                              FROM Question
                              WHERE QuestionCode = @questionCode";
 

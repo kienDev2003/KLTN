@@ -14,6 +14,7 @@ namespace KLTN.Models.Req
         public string questionLevel { get; set; }
         public string subjectCode { get; set; }
         public string lecturerCode { get; set; }
+        public int ChapterCode { get; set; }
         public DateTime createDate { get; set; }
         public List<Answer> answers { get; set; }
     }

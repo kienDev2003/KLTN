@@ -13,6 +13,7 @@ namespace KLTN.Models.Res
         public string QuestionType { get; set; }
         public string SubjectCode { get; set; }
         public string LecturerCode { get; set; }
+        public int ChapterCode { get; set; }
         public bool IsApproved { get; set; }
         public DateTime CreateDate { get; set; }
         public List<Answer> Answers { get; set; }

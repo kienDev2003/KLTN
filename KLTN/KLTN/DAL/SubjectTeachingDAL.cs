@@ -42,5 +42,92 @@ namespace KLTN.DAL
             }
             return data;
         }
+
+        public DataTable GetSubjectTeachingByLecturerCode(string lecturerCode)
+        {
+            DataTable data = new DataTable();
+            string query = @"SELECT SubjectCode 
+                             FROM Subject_Teaching
+                             WHERE LecturerCode = @lecturerCode";
+
+            using (SqlConnection conn = _dB.GetConn())
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@lecturerCode", lecturerCode);
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(data);
+                    }
+                }
+            }
+
+            return data;
+        }
+
+        public bool InsertSubjectTeaching(Models.Req.SubjectTeaching subjectTeaching)
+        {
+            string query = @"INSERT INTO Subject_Teaching (LecturerCode, SubjectCode)
+                             VALUES (@lecturerCode, @subjectCode)";
+
+            using (SqlConnection conn = _dB.GetConn())
+            {
+                using (SqlTransaction tran = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SqlCommand cmd = new SqlCommand(query, conn, tran))
+                        {
+                            cmd.Parameters.AddWithValue("@lecturerCode", subjectTeaching.LecturerCode);
+                            cmd.Parameters.AddWithValue("@subjectCode", subjectTeaching.SubjectCode);
+
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        tran.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public bool DeleteSubjectTeaching(Models.Req.SubjectTeaching subjectTeaching)
+        {
+            string query = @"DELETE Subject_Teaching
+                             WHERE LecturerCode = @lecturerCode AND SubjectCode = @subjectCode";
+
+            using (SqlConnection conn = _dB.GetConn())
+            {
+                using (SqlTransaction tran = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SqlCommand cmd = new SqlCommand(query, conn, tran))
+                        {
+                            cmd.Parameters.AddWithValue("@lecturerCode", subjectTeaching.LecturerCode);
+                            cmd.Parameters.AddWithValue("@subjectCode", subjectTeaching.SubjectCode);
+
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        tran.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                    }
+                }
+            }
+
+            return false;
+        }
     }
 }
