@@ -240,7 +240,7 @@
                 return;
             }
 
-            
+
 
             if (mode == 'uncheck') {
                 if (confirm(`Bạn chắc chắn muốn bỏ phân công môn học này cho ${lecturerCode} ?`)) {
@@ -260,8 +260,8 @@
             }
         }
 
-        async function ChangeSubjectTeaching(mode,lecturerCode, subjectCode) {
-            
+        async function ChangeSubjectTeaching(mode, lecturerCode, subjectCode) {
+
             var subjectTeaching = {
                 mode: mode,
                 lecturerCode: lecturerCode,
@@ -311,6 +311,16 @@
 
             if (res.d.status !== "200") {
                 alert(res.d.message);
+
+                const container = document.getElementById("main_subject_list");
+                const subjectItems = Array.from(container.children);
+
+                subjectItems.forEach(item => {
+                    const checkbox = item.querySelector('input[type="checkbox"]');
+
+                    checkbox.setAttribute("onchange", `HandleChangeSubjectTeaching(this, '${lecturerCode}')`);
+                    checkbox.checked = false;
+                });
             }
             else {
                 HandleArrangeSubject(res.d.subjects, lecturerCode);

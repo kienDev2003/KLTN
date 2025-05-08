@@ -94,8 +94,8 @@ namespace KLTN.DAL
 
         public bool InsertSubject(Models.Req.Subject subject)
         {
-            string query1 = @"INSERT INTO Subject (SubjectCode, SubjectName, NumberOfCredits, CreateDate)
-                              VALUES (@subjectCode, @subjectName, @numberOfCredits, @createDate)";
+            string query1 = @"INSERT INTO Subject (SubjectCode, SubjectName, NumberOfCredits, CreateDate, IsDelete)
+                              VALUES (@subjectCode, @subjectName, @numberOfCredits, @createDate, 0)";
 
             string query2 = @"INSERT INTO Chapter (ChapterName, SubjectCode)
                               VALUES (@chapterName, @subjectCode)";

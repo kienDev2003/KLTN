@@ -21,7 +21,6 @@ namespace KLTN.DAL
             DataTable data = new DataTable();
             string query = @"SELECT LecturerCode, FullName, DateOfBirth, IsLeader, DepartmentName
                              FROM Lecturer
-                             JOIN Department ON Lecturer.DepartmentCode = Department.DepartmentCode
                              WHERE AccountCode = @accountCode";
 
             using (SqlConnection conn = _db.GetConn())
@@ -67,8 +66,9 @@ namespace KLTN.DAL
         public DataTable GetAllLecturer()
         {
             DataTable data = new DataTable();
-            string query = @"SELECT LecturerCode, FullName
-                             FROM Lecturer";
+            string query = @"SELECT LecturerCode, FullName, DateOfBirth, Email, DepartmentName, IsLeader
+                             FROM Lecturer
+                             JOIN Account ON Lecturer.AccountCode = Account.AccountCode";
 
             using(SqlConnection conn = _db.GetConn())
             {
@@ -82,6 +82,58 @@ namespace KLTN.DAL
             }
 
             return data;
+        }
+
+        public bool InsertLecturer(Models.Req.Lecturer lecturer)
+        {
+            string query1 = @"INSERT INTO Account (UserName, Password, Email, AccountType)
+                              VALUES (@userName, @password, @email, @accountType);
+                              SELECT SCOPE_IDENTITY();";
+
+            string query2 = @"INSERT INTO Lecturer (LecturerCode, FullName, DateOfBirth, IsLeader, AccountCode, DepartmentName)
+                              VALUES (@lecturerCode, @fullName, @dateOfBirth, @isLeader, @accountCode, @departmentName)";
+
+            using(SqlConnection conn = _db.GetConn())
+            {
+                using(SqlTransaction tran = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        int accountCode = -1;
+
+                        using (SqlCommand cmd1 = new SqlCommand(query1, conn, tran))
+                        {
+                            cmd1.Parameters.AddWithValue("@userName", lecturer.LecturerCode);
+                            cmd1.Parameters.AddWithValue("@password", lecturer.DateOfBirth);
+                            cmd1.Parameters.AddWithValue("@email", lecturer.Email);
+                            cmd1.Parameters.AddWithValue("@accountType", "GV");
+
+                            accountCode = Convert.ToInt32(cmd1.ExecuteScalar());
+                        }
+
+                        using (SqlCommand cmd2 = new SqlCommand(query2, conn, tran))
+                        {
+                            cmd2.Parameters.AddWithValue("@lecturerCode", lecturer.LecturerCode);
+                            cmd2.Parameters.AddWithValue("@fullName", lecturer.FullName);
+                            cmd2.Parameters.AddWithValue("@dateOfBirth", Convert.ToDateTime(lecturer.DateOfBirth));
+                            cmd2.Parameters.AddWithValue("@accountCode", accountCode);
+                            cmd2.Parameters.AddWithValue("@isLeader", false);
+                            cmd2.Parameters.AddWithValue("@departmentName", lecturer.DepartmentName);
+
+                            cmd2.ExecuteNonQuery();
+                        }
+
+                        tran.Commit();
+                        return true;
+                    }
+                    catch(Exception ex)
+                    {
+                        tran.Rollback();
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }

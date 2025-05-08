@@ -48,7 +48,7 @@
 
     <div class="flex-1 p-5">
         <div class="flex justify-end">
-            <input type="button" onclick="CreateLecturerAccount()" class="cursor-pointer bg-green-500 text-white py-2 px-4 rounded" value="Thêm tài khoản">
+            <input type="button" onclick="CreateLecturerAccount()" class="mr-[20px] cursor-pointer bg-green-500 text-white py-2 px-4 rounded" value="Thêm tài khoản">
             <input type="button" onclick="CreateLecturerAccountAuto()" class="cursor-pointer bg-green-500 text-white py-2 px-4 rounded" value="Thêm tài khoản tự động">
         </div>
         <div class="mt-5 bg-white p-4 shadow-md rounded-lg">
@@ -59,8 +59,8 @@
                         <th class="border border-gray-300 px-4 py-2">Mã giảng viên</th>
                         <th class="border border-gray-300 px-4 py-2">Họ tên</th>
                         <th class="border border-gray-300 px-4 py-2">Ngày sinh</th>
+                        <th class="border border-gray-300 px-4 py-2">Email</th>
                         <th class="border border-gray-300 px-4 py-2">Bộ môn</th>
-                        <th class="border border-gray-300 px-4 py-2">Trưởng bộ môn</th>
                         <th class="border border-gray-300 px-4 py-2">Chức năng</th>
                     </tr>
                 </thead>
@@ -99,47 +99,194 @@
                     </div>
                 </div>
                 <div class="mb-4">
-                    <label class="block text-lg font-medium text-gray-700">Chương</label>
-                    <select id="question-chapter"
-                        class="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300">
-                    </select>
+                    <label class="block text-lg font-medium text-gray-700">Ngày sinh</label>
+                    <div class="flex items-center gap-2">
+                        <input type="text" id="dateOfBirth"
+                            class="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
+                            placeholder="dd/MM/yyyy">
+                    </div>
                 </div>
                 <div class="mb-4">
-                    <label class="block text-lg font-medium text-gray-700">Kiểu câu hỏi</label>
-                    <select id="question-type" onchange="ChangeQuestionType()"
-                        class="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300">
-                        <option value="single">Một câu trả lời</option>
-                        <option value="multiple">Nhiều câu trả lời</option>
-                    </select>
+                    <label class="block text-lg font-medium text-gray-700">Email</label>
+                    <div class="flex items-center gap-2">
+                        <input type="text" id="email"
+                            class="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
+                            placeholder="Nhập email">
+                    </div>
                 </div>
                 <div class="mb-4">
-                    <label class="block text-lg font-medium text-gray-700">Mức độ</label>
-                    <select id="question-level"
-                        class="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300">
-                        <option value="basic">Dễ</option>
-                        <option value="medium">Trung bình</option>
-                        <option value="hard">Khó</option>
-                    </select>
-                </div>
-                <div class="answer-section">
-                    <div id="answer-list" class="space-y-2"></div>
-                    <input type="button" id="answer-create" onclick="CreateElementAnswer()"
-                        class="cursor-pointer mt-2 flex items-center gap-1 text-blue-600 hover:text-blue-800"
-                        value="➕ Thêm đáp án">
+                    <label class="block text-lg font-medium text-gray-700">Bộ môn</label>
+                    <div class="flex items-center gap-2">
+                        <input type="text" id="departmentName"
+                            class="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
+                            placeholder="Bộ môn">
+                    </div>
                 </div>
                 <div class="mt-6 flex justify-end space-x-2">
-                    <input type="button" onclick="CancelQuestion()"
+                    <input type="button" onclick="CancelLecturer()"
                         class="cursor-pointer px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
                         value="Hủy">
-                    <input type="button" id="save-question" onclick="SaveQuestion()"
+                    <input type="button" id="save-lecturer" onclick="SaveLecturer()"
                         class="cursor-pointer px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-                        value="Thêm câu hỏi">
-                    <input type="button" id="update-question"
+                        value="Thêm giảng viên">
+                    <input type="button" id="update-lecturer"
                         class=" hidden cursor-pointer px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700"
                         value="Lưu">
                 </div>
             </div>
         </div>
     </div>
+
+    <div id="lecturer-modal-auto" class="modal">
+        <div class="modal-content">
+            <div id="modal-lecturer-form-auto">
+                <div class="mb-4">
+                    <a class="bg-yellow-300 w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
+                        href="/pages/public/Lecturer.xlsx">Tải file mẫu tại đây !</a>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-lg font-medium text-gray-700">Tải file lên</label>
+                    <div class="flex items-center gap-2">
+                        <input type="file" id="file"
+                            class="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300">
+                    </div>
+                </div>
+                <div class="mt-6 flex justify-end space-x-2">
+                    <input type="button" onclick="CancelLecturer()"
+                        class="cursor-pointer px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+                        value="Hủy">
+                    <input type="button" id="save-lecturer-auto" onclick="SaveLecturerAuto()"
+                        class="cursor-pointer px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                        value="Thêm các giảng viên">
+                </div>
+            </div>
+        </div>
     </div>
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+
+    <script>
+        async function SaveLecturer() {
+            const lecturerCode = document.getElementById('lecturerCode').value;
+            const lecturerName = document.getElementById('lecturerName').value;
+            const dateOfBirth = document.getElementById('dateOfBirth').value;
+            const email = document.getElementById('email').value;
+            const departmentName = document.getElementById('departmentName').value;
+
+            const lecturer = {
+                lecturerCode: lecturerCode,
+                fullName: lecturerName,
+                dateOfBirth: dateOfBirth,
+                departmentName: departmentName,
+                email: email
+            };
+
+            const numberRes = await InsertLecturer(lecturer);
+
+            if (numberRes > 0) {
+                alert('Thêm giảng viên thành công !');
+
+                window.location.reload();
+            }
+            else {
+                alert('Server Error');
+            }
+        }
+
+        async function SaveLecturerAuto() {
+            const numberLecturer = await readExcelFile();
+
+            if (numberLecturer !== 0) {
+                alert(`Thêm thành công ${numberLecturer} giảng viên !`);
+            } else {
+                alert("Lỗi thêm giảng viên");
+            }
+        }
+
+        async function InsertLecturer(lecturer) {
+            const response = await fetch('account-lecturer.aspx/HandleInsertLecturer', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ lecturer: lecturer })
+            });
+
+            const res = await response.json();
+
+            return res.d.status === '200' ? 1 : 0;
+        }
+
+        async function readExcelFile() {
+            let numberLecturer = 0;
+            const fileInput = document.getElementById('file');
+            const file = fileInput.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                return new Promise((resolve, reject) => {
+                    reader.onload = async function (event) {
+                        try {
+                            const data = new Uint8Array(event.target.result);
+                            const workbook = XLSX.read(data, { type: 'array' });
+                            const firstSheetName = workbook.SheetNames[0];
+                            const worksheet = workbook.Sheets[firstSheetName];
+                            const users = XLSX.utils.sheet_to_json(worksheet);
+
+                            for (const user of users) {
+                                if (user.DateOfBirth) {
+                                    const date = XLSX.SSF.parse_date_code(user.DateOfBirth);
+                                    const day = date.d < 10 ? '0' + date.d : date.d;
+                                    const month = date.m < 10 ? '0' + date.m : date.m;
+                                    const year = date.y;
+                                    user.DateOfBirth = `${day}/${month}/${year}`;
+                                }
+
+                                const result = await InsertLecturer(user);
+                                numberLecturer += result;
+                            }
+
+                            resolve(numberLecturer);
+                        } catch (err) {
+                            document.getElementById('output').innerText = "Lỗi xử lý dữ liệu.";
+                            reject(0);
+                        }
+                    };
+
+                    reader.onerror = function () {
+                        document.getElementById('output').innerText = "Lỗi đọc file.";
+                        reject(0);
+                    };
+
+                    reader.readAsArrayBuffer(file);
+                });
+            } else {
+                alert('Vui lòng chọn một file Excel.');
+                return 0;
+            }
+        }
+
+
+        function CancelLecturer() {
+            document.getElementById("lecturer-modal").style.display = "none";;
+            document.getElementById('update-lecturer').style.display = 'none';
+            document.getElementById("lecturer-modal-auto").style.display = "none";;
+            document.getElementById('update-lecturer-auto').style.display = 'none';
+        }
+
+        function CreateLecturerAccount() {
+            document.getElementById("lecturer-modal").style.display = 'block';;
+            document.getElementById('save-lecturer').style.display = 'block';
+
+            document.getElementById('lecturerCode').value = '';
+            document.getElementById('lecturerName').value = '';
+            document.getElementById('dateOfBirth').value = '';
+            document.getElementById('departmentName').value = '';
+        }
+
+        function CreateLecturerAccountAuto() {
+            document.getElementById("lecturer-modal-auto").style.display = 'block';;
+            document.getElementById('save-lecturer-auto').style.display = 'block';
+        }
+    </script>
 </asp:Content>

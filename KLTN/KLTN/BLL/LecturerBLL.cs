@@ -62,11 +62,19 @@ namespace KLTN.BLL
                 lecturers.Add(new Models.Res.Lecturer()
                 {
                     LecturerCode = row["LecturerCode"].ToString(),
+                    DateOfBirth = Convert.ToDateTime(row["DateOfBirth"]),
+                    Email = row["Email"].ToString(),
+                    DepartmentName = row["DepartmentName"].ToString(),
                     FullName = row["FullName"].ToString()
                 });
             }
 
             return lecturers;
+        }
+
+        public bool InsertLecturer(Models.Req.Lecturer lecturer)
+        {
+            return _lecturerDAL.InsertLecturer(lecturer);
         }
     }
 }

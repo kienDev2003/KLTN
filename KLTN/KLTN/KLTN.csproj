@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="pages\account-lecturer.aspx" />
+    <Content Include="pages\account-student.aspx" />
     <Content Include="pages\assessment.aspx" />
     <Content Include="pages\assignment-lecterer.aspx" />
     <Content Include="pages\assignment-teaching.aspx" />
@@ -100,6 +101,7 @@
     <Compile Include="DAL\SubjectLecturerDAL.cs" />
     <Compile Include="DAL\SubjectTeachingDAL.cs" />
     <Compile Include="DB\DbConn.cs" />
+    <Compile Include="Models\Req\Lecturer.cs" />
     <Compile Include="Models\Req\Login.cs" />
     <Compile Include="Models\Req\Question.cs" />
     <Compile Include="Models\Req\Subject.cs" />
@@ -115,6 +117,13 @@
     </Compile>
     <Compile Include="pages\account-lecturer.aspx.designer.cs">
       <DependentUpon>account-lecturer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pages\account-student.aspx.cs">
+      <DependentUpon>account-student.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\account-student.aspx.designer.cs">
+      <DependentUpon>account-student.aspx</DependentUpon>
     </Compile>
     <Compile Include="pages\assessment.aspx.cs">
       <DependentUpon>assessment.aspx</DependentUpon>
@@ -205,6 +214,8 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="pages\master\home.Master" />
+    <Content Include="pages\public\Lecturer.xlsx" />
+    <Content Include="pages\public\Student.xlsx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
