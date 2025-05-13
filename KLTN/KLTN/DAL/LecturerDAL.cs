@@ -44,7 +44,6 @@ namespace KLTN.DAL
             DataTable data = new DataTable();
             string query = @"SELECT FullName, DateOfBirth, IsLeader, DepartmentName
                              FROM Lecturer
-                             JOIN Department ON Lecturer.DepartmentCode = Department.DepartmentCode
                              WHERE LecturerCode = @lecturerCode";
 
             using (SqlConnection conn = _db.GetConn())

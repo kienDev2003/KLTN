@@ -53,15 +53,16 @@
             <input type="button" onclick="CreateStudentAccountAuto()" class="cursor-pointer bg-green-500 text-white py-2 px-4 rounded" value="Thêm tài khoản tự động">
         </div>
         <div class="mt-5 bg-white p-4 shadow-md rounded-lg">
-            <h2 class="text-xl font-bold mb-4">Danh sách giảng viên</h2>
+            <h2 class="text-xl font-bold mb-4">Danh sách sinh viên</h2>
             <table class="w-full border-collapse border border-gray-300">
                 <thead>
                     <tr class="bg-gray-200">
-                        <th class="border border-gray-300 px-4 py-2">Mã giảng viên</th>
+                        <th class="border border-gray-300 px-4 py-2">Mã sinh viên</th>
                         <th class="border border-gray-300 px-4 py-2">Họ tên</th>
                         <th class="border border-gray-300 px-4 py-2">Ngày sinh</th>
+                        <th class="border border-gray-300 px-4 py-2">Lớp</th>
                         <th class="border border-gray-300 px-4 py-2">Email</th>
-                        <th class="border border-gray-300 px-4 py-2">Bộ môn</th>
+                        <th class="border border-gray-300 px-4 py-2">Chuyên ngành</th>
                         <th class="border border-gray-300 px-4 py-2">Chức năng</th>
                     </tr>
                 </thead>
@@ -84,11 +85,11 @@
         <div class="modal-content">
             <div id="modal-student-form">
                 <div class="mb-4">
-                    <label class="block text-lg font-medium text-gray-700">Mã giảng viên</label>
+                    <label class="block text-lg font-medium text-gray-700">Mã sinh viên</label>
                     <div class="flex items-center gap-2">
                         <input type="text" id="studentCode"
                             class="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
-                            placeholder="Nhập mã giảng viên">
+                            placeholder="Nhập mã sinh viên">
                     </div>
                 </div>
                 <div class="mb-4">
@@ -213,7 +214,7 @@
             }
         }
 
-        async function Insertstudent(student) {
+        async function InsertStudent(student) {
             const response = await fetch('account-student.aspx/HandleInsertStudent', {
                 method: 'POST',
                 headers: {
@@ -253,13 +254,14 @@
                                     user.DateOfBirth = `${day}/${month}/${year}`;
                                 }
 
-                                const result = await Insertstudent(user);
+                                console.log(user);
+                                const result = await InsertStudent(user);
                                 numberstudent += result;
                             }
 
                             resolve(numberstudent);
                         } catch (err) {
-                            document.getElementById('output').innerText = "Lỗi xử lý dữ liệu.";
+                            console.log(err);
                             reject(0);
                         }
                     };
@@ -292,7 +294,9 @@
             document.getElementById('studentCode').value = '';
             document.getElementById('studentName').value = '';
             document.getElementById('dateOfBirth').value = '';
-            document.getElementById('departmentName').value = '';
+            document.getElementById('className').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('majorName').value = '';
         }
 
         function CreateStudentAccountAuto() {

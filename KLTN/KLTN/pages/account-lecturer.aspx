@@ -248,7 +248,7 @@
 
                             resolve(numberLecturer);
                         } catch (err) {
-                            document.getElementById('output').innerText = "Lỗi xử lý dữ liệu.";
+                            console.log(err);
                             reject(0);
                         }
                     };

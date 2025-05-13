@@ -76,6 +76,7 @@
     <Content Include="pages\assignment-lecterer.aspx" />
     <Content Include="pages\assignment-teaching.aspx" />
     <Content Include="pages\bank-question.aspx" />
+    <Content Include="pages\exam-created.aspx" />
     <Content Include="pages\home.aspx" />
     <Content Include="pages\index.aspx" />
     <Content Include="pages\question-created.aspx" />
@@ -87,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL\AccountBLL.cs" />
+    <Compile Include="BLL\ExamBLL.cs" />
     <Compile Include="BLL\LecturerBLL.cs" />
     <Compile Include="BLL\QuestionBLL.cs" />
     <Compile Include="BLL\StudentBLL.cs" />
@@ -94,6 +96,7 @@
     <Compile Include="BLL\SubjectLecturerBLL.cs" />
     <Compile Include="BLL\SubjectTeachingBLL.cs" />
     <Compile Include="DAL\AccountDAL.cs" />
+    <Compile Include="DAL\ExamDAL.cs" />
     <Compile Include="DAL\LecturerDAL.cs" />
     <Compile Include="DAL\QuestionDAL.cs" />
     <Compile Include="DAL\StudentDAL.cs" />
@@ -101,9 +104,11 @@
     <Compile Include="DAL\SubjectLecturerDAL.cs" />
     <Compile Include="DAL\SubjectTeachingDAL.cs" />
     <Compile Include="DB\DbConn.cs" />
+    <Compile Include="Models\Req\Exam.cs" />
     <Compile Include="Models\Req\Lecturer.cs" />
     <Compile Include="Models\Req\Login.cs" />
     <Compile Include="Models\Req\Question.cs" />
+    <Compile Include="Models\Req\Student.cs" />
     <Compile Include="Models\Req\Subject.cs" />
     <Compile Include="Models\Req\SubjectTeaching.cs" />
     <Compile Include="Models\Res\Lecturer.cs" />
@@ -152,6 +157,13 @@
     </Compile>
     <Compile Include="pages\bank-question.aspx.designer.cs">
       <DependentUpon>bank-question.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pages\exam-created.aspx.cs">
+      <DependentUpon>exam-created.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\exam-created.aspx.designer.cs">
+      <DependentUpon>exam-created.aspx</DependentUpon>
     </Compile>
     <Compile Include="pages\home.aspx.cs">
       <DependentUpon>home.aspx</DependentUpon>
