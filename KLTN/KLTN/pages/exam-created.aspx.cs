@@ -16,19 +16,52 @@ namespace KLTN.pages
         {
             if (Session["login"] == null) return;
 
+            string subjectCode = Request.QueryString["subjectCode"].ToString();
+            HandleGetExam(subjectCode);
 
+            var exam = _examBLL.GetExamByExamPaperCode(2);
+        }
+
+        private void HandleGetExam(string subjectCode)
+        {
+            List<Models.Req.Exam> exams = _examBLL.GetAllExam(subjectCode);
+
+            if (exams == null)
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "showWarring", "showWarring('Bạn chưa tạo đề thi nào cho môn học này !');", true);
+                return;
+            }
+
+            string html = "";
+            foreach (var exam in exams)
+            {
+                html += $"<tr class=\"text-center\">" +
+                            $"<td class=\"border border-gray-300 px-4 py-2 max-w-[250px] truncate\" title=\"{exam.ExamName}\">{exam.ExamName}</td>" +
+                            $"<td class=\"border border-gray-300 px-4 py-2\">{exam.ExamTime}</td>" +
+                            $"<td class=\"border border-gray-300 px-4 py-2\">{(exam.IsApproved ? "Đã duyệt" : "Chưa duyệt")}</td>" +
+                            $"<td class=\"border border-gray-300 px-4 py-2\">{(exam.IsApproved ? exam.ApprovedByLectuterCode : "-")}</td>" +
+                            $"<td class=\"border border-gray-300 px-4 py-2\">" +
+                                $"<input type=\"button\" class=\"cursor-pointer bg-blue-500 text-white px-2 py-1 rounded\" onclick=\"HandleViewExam({exam.ExamCode})\" value=\"Xem\">"+
+                                $"<input type=\"button\" class=\"{(exam.IsApproved ? "hidden" : "")} cursor-pointer bg-red-500 text-white px-2 py-1 rounded\" onclick=\"HandleDeleteExam({exam.ExamCode})\" value=\"Xóa\">"+
+                            $"</td>" +
+                        $"</tr>";
+            }
+
+            LiteralControl literalControl = new LiteralControl(html);
+            examPaper_table.Controls.Clear();
+            examPaper_table.Controls.Add(literalControl);
         }
 
         [WebMethod]
         public static object InsertExam(Models.Req.Exam exam)
         {
-            foreach(var chapter in exam.chapterExams)
+            foreach (var chapter in exam.chapterExams)
             {
                 bool numberBasic = _examBLL.CheckNumberQuestion(exam.SubjectCode, chapter.ChapterCode, "basic", chapter.NumberBasic);
                 bool numberMedium = _examBLL.CheckNumberQuestion(exam.SubjectCode, chapter.ChapterCode, "medium", chapter.NumberMedium);
                 bool numberHard = _examBLL.CheckNumberQuestion(exam.SubjectCode, chapter.ChapterCode, "hard", chapter.NumberHard);
 
-                if(!numberBasic || !numberMedium || !numberHard)
+                if (!numberBasic || !numberMedium || !numberHard)
                 {
                     return new
                     {
@@ -43,6 +76,23 @@ namespace KLTN.pages
             bool exec = _examBLL.InsertExam(exam);
 
             if (exec) return new { status = "200", message = "Tạo đề thi thành công" };
+            else return new { status = "500", message = "Server error" };
+        }
+
+        [WebMethod]
+        public static object GetExamPaper(int examPaperCode)
+        {
+            var exam = _examBLL.GetExamByExamPaperCode(examPaperCode);
+
+            return new { exam = exam };
+        }
+
+        [WebMethod]
+        public static object DeleteExam(int examPaperCode)
+        {
+            bool exec = _examBLL.DeleteExam(examPaperCode);
+
+            if (exec) return new { status = "200", message = "Xóa đề thi thành công !" };
             else return new { status = "500", message = "Server error" };
         }
     }

@@ -84,6 +84,7 @@
     <Content Include="pages\subject-lecturer.aspx" />
     <Content Include="pages\subject-teaching.aspx" />
     <Content Include="pages\subject.aspx" />
+    <Content Include="pages\view-exam.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -111,6 +112,7 @@
     <Compile Include="Models\Req\Student.cs" />
     <Compile Include="Models\Req\Subject.cs" />
     <Compile Include="Models\Req\SubjectTeaching.cs" />
+    <Compile Include="Models\Res\Exam.cs" />
     <Compile Include="Models\Res\Lecturer.cs" />
     <Compile Include="Models\Res\Login.cs" />
     <Compile Include="Models\Res\Question.cs" />
@@ -220,6 +222,13 @@
     </Compile>
     <Compile Include="pages\subject.aspx.designer.cs">
       <DependentUpon>subject.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pages\view-exam.aspx.cs">
+      <DependentUpon>view-exam.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\view-exam.aspx.designer.cs">
+      <DependentUpon>view-exam.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

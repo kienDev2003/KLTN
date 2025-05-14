@@ -150,5 +150,112 @@ namespace KLTN.DAL
 
             return data;
         }
+
+        public DataTable GetAllExam(string subjectCode)
+        {
+            DataTable data = new DataTable();
+            string query = @"SELECT * 
+                             FROM ExamPaper
+                             WHERE SubjectCode = @subjectCode";
+
+            using(SqlConnection conn = _db.GetConn())
+            {
+                using(SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@subjectCode", subjectCode);
+
+                    using(SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(data);
+                    }
+                }
+            }
+
+            return data;
+        }
+
+        public DataTable GetExamPaper(int examPaperCode)
+        {
+            DataTable data = new DataTable();
+            string query = @"SELECT * 
+                             FROM ExamPaper
+                             WHERE ExamPaperCode = @examPaperCode";
+
+            using (SqlConnection conn = _db.GetConn())
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@examPaperCode", examPaperCode);
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(data);
+                    }
+                }
+            }
+
+            return data;
+        }
+
+        public DataTable GetListQuestionByExamPaperCode(int examPaperCode)
+        {
+            DataTable data = new DataTable();
+            string query = @"SELECT QuestionCode
+                             FROM ExamPaper_Question
+                             WHERE ExamPaperCode = @examPaperCode";
+
+            using (SqlConnection conn = _db.GetConn())
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@examPaperCode", examPaperCode);
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(data);
+                    }
+                }
+            }
+
+            return data;
+        }
+
+        public bool DeleteExam(int examPaperCode)
+        {
+            string query1 = @"DELETE ExamPaper_Question WHERE ExamPaperCode = @examPaperCode";
+            string query2 = @"DELETE ExamPaper WHERE ExamPaperCode = @examPaperCode";
+
+            using(SqlConnection conn = _db.GetConn())
+            {
+                using(SqlTransaction tran = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using(SqlCommand cmd1 = new SqlCommand(query1, conn, tran))
+                        {
+                            cmd1.Parameters.AddWithValue("@examPaperCode", examPaperCode);
+
+                            cmd1.ExecuteNonQuery();
+                        }
+
+                        using(SqlCommand cmd2 = new SqlCommand(query2, conn, tran))
+                        {
+                            cmd2.Parameters.AddWithValue("@examPaperCode", examPaperCode);
+
+                            cmd2.ExecuteNonQuery();
+                        }
+
+                        tran.Commit();
+                        return true;
+
+                    }catch(Exception ex)
+                    {
+                        tran.Rollback();
+                    }
+                }
+            }
+
+            return false;
+        }
     }
 }

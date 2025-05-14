@@ -7,6 +7,7 @@ namespace KLTN.Models.Req
 {
     public class Exam
     {
+        public int ExamCode { get; set; }
         public string ExamName { get; set; }
         public int ExamTime { get; set; }
         public string SubjectCode { get; set; }

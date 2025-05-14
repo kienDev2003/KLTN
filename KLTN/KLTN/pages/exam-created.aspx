@@ -265,5 +265,32 @@
             return chapterData
 
         }
+
+        function HandleViewExam(examPaperCode) {
+            window.location.href = `/pages/view-exam.aspx?examPaperCode=${examPaperCode}`
+        }
+
+        async function HandleDeleteExam(examPaperCode) {
+            const response = await fetch('exam-created.aspx/DeleteExam', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ examPaperCode: examPaperCode })
+            });
+
+            const res = await response.json();
+
+            if (res.d.status !== "200") {
+                alert(res.d.message);
+                return;
+            }
+            else {
+                alert(res.d.message);
+
+                window.location.reload();
+            }
+        }
+
     </script>
 </asp:Content>
