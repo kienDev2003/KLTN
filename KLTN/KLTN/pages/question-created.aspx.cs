@@ -49,7 +49,7 @@ namespace KLTN.pages
             foreach(var question in questions)
             {
                 html += $"<tr class=\"text-center\">" +
-                            $"<td class=\"border border-gray-300 px-4 py-2 max-w-[250px] truncate\" title=\"{question.QuestionText}\">{question.QuestionText}</td>"+
+                            $"<td class=\"border border-gray-300 px-4 py-2 max-w-[250px] truncate\" title=\"{EscapeHTML(question.QuestionText)}\">{EscapeHTML(question.QuestionText)}</td>"+
                             $"<td class=\"border border-gray-300 px-4 py-2\">{HandleFormatQuestionType(question.QuestionType)}</td>" +
                             $"<td class=\"border border-gray-300 px-4 py-2\">{HandleFormatQuestionLevel(question.QuestionLevel)}</td>" +
                             $"<td class=\"border border-gray-300 px-4 py-2\">{question.CreateDate}</td>" +
@@ -67,6 +67,17 @@ namespace KLTN.pages
             question_table.Controls.Add(literalControl);
 
             HandleCreatePageNumber(loginSession.accountCode, subjectCode);
+        }
+
+        private string EscapeHTML(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return text;
+            }
+            return text
+                .Replace("<", "&lt;")
+                .Replace(">", "&gt;");
         }
 
         private void HandleCreatePageNumber(int accountCode, string subjectCode)

@@ -151,7 +151,7 @@ namespace KLTN.DAL
             return data;
         }
 
-        public DataTable GetAllExam(string subjectCode)
+        public DataTable GetAllExamBySubjectCode(string subjectCode)
         {
             DataTable data = new DataTable();
             string query = @"SELECT * 
@@ -165,6 +165,26 @@ namespace KLTN.DAL
                     cmd.Parameters.AddWithValue("@subjectCode", subjectCode);
 
                     using(SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(data);
+                    }
+                }
+            }
+
+            return data;
+        }
+
+        public DataTable GetAllExam()
+        {
+            DataTable data = new DataTable();
+            string query = @"SELECT * 
+                             FROM ExamPaper";
+
+            using (SqlConnection conn = _db.GetConn())
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
                     {
                         adapter.Fill(data);
                     }
@@ -253,6 +273,39 @@ namespace KLTN.DAL
                         tran.Rollback();
                     }
                 }
+            }
+
+            return false;
+        }
+
+        public bool ExamPaperApproved(int examPaperCode, string lecturerCodeApproved)
+        {
+            string query = @"UPDATE ExamPaper SET IsApproved = 1, ApprovedByLectuterCode = @lecturerCodeApproved, ApprovedDate = @approvedDate WHERE ExamPaperCode = @examPaperCode";
+
+            using(SqlConnection conn = _db.GetConn())
+            {
+                using(SqlTransaction tran = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SqlCommand cmd = new SqlCommand(query, conn,tran))
+                        {
+                            cmd.Parameters.AddWithValue("@examPaperCode", examPaperCode);
+                            cmd.Parameters.AddWithValue("@lecturerCodeApproved", lecturerCodeApproved);
+                            cmd.Parameters.AddWithValue("@approvedDate", DateTime.Now);
+
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        tran.Commit();
+                        return true;
+                    }
+                    catch(Exception ex)
+                    {
+                        tran.Rollback();
+                    }
+                }
+                
             }
 
             return false;

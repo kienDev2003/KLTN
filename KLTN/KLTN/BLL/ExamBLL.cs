@@ -29,9 +29,9 @@ namespace KLTN.BLL
             return _examDAL.InsertExam(exam);
         }
 
-        public List<Models.Req.Exam> GetAllExam(string subjectCode)
+        public List<Models.Req.Exam> GetAllExamBySubjectCode(string subjectCode)
         {
-            DataTable data = _examDAL.GetAllExam(subjectCode);
+            DataTable data = _examDAL.GetAllExamBySubjectCode(subjectCode);
 
             if (data.Rows.Count <= 0) return null;
 
@@ -45,6 +45,31 @@ namespace KLTN.BLL
                     CreateByLectuterCode = row["CreateByLectuterCode"].ToString(),
                     CreatedDate = Convert.ToDateTime(row["CreatedDate"]),
                     ExamCode = Convert.ToInt32(row["ExamPaperCode"]),
+                    ApprovedByLectuterCode = row["ApprovedByLectuterCode"].ToString(),
+                    IsApproved = Convert.ToBoolean(row["IsApproved"])
+                });
+            }
+
+            return exams;
+        }
+
+        public List<Models.Req.Exam> GetAllExam()
+        {
+            DataTable data = _examDAL.GetAllExam();
+
+            if (data.Rows.Count <= 0) return null;
+
+            List<Models.Req.Exam> exams = new List<Models.Req.Exam>();
+            foreach (DataRow row in data.Rows)
+            {
+                exams.Add(new Models.Req.Exam
+                {
+                    ExamName = row["ExamPaperText"].ToString(),
+                    ExamTime = Convert.ToInt32(row["ExamTime"]),
+                    CreateByLectuterCode = row["CreateByLectuterCode"].ToString(),
+                    CreatedDate = Convert.ToDateTime(row["CreatedDate"]),
+                    ExamCode = Convert.ToInt32(row["ExamPaperCode"]),
+                    SubjectCode = row["SubjectCode"].ToString(),
                     IsApproved = Convert.ToBoolean(row["IsApproved"])
                 });
             }
@@ -87,6 +112,11 @@ namespace KLTN.BLL
         public bool DeleteExam(int examPaperCode)
         {
             return _examDAL.DeleteExam(examPaperCode);
+        }
+
+        public bool ExamPaperApproved(int examPaperCode, string lecturerCodeApproved)
+        {
+            return _examDAL.ExamPaperApproved(examPaperCode, lecturerCodeApproved);
         }
     }
 }

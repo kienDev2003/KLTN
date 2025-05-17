@@ -56,6 +56,7 @@ namespace KLTN.BLL
                     QuestionType = row["QuestionType"].ToString(),
                     IsApproved = Convert.ToBoolean(row["IsApproved"]),
                     CreateDate = Convert.ToDateTime(row["CreateDate"]),
+                    ChapterCode = Convert.ToInt32(row["ChapterCode"]),
                     LecturerCode = row["LecturerCode"].ToString()
                 });
             }

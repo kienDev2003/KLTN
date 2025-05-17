@@ -56,7 +56,7 @@ namespace KLTN.DAL
             else start = ((pageIndex - 1) * 10) + 1;
 
             DataTable data = new DataTable();
-            string query = @"SELECT QuestionCode, QuestionText, QuestionLevel, QuestionType, IsApproved, Question.CreateDate, Question.LecturerCode
+            string query = @"SELECT QuestionCode, QuestionText, ChapterCode, QuestionLevel, QuestionType, IsApproved, Question.CreateDate, Question.LecturerCode
                              FROM Question
                              JOIN Subject ON Question.SubjectCode = Subject.SubjectCode
                              JOIN Subject_Lecturer ON Subject.SubjectCode = Subject_Lecturer.SubjectCode

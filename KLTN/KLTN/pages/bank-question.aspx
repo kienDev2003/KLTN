@@ -56,7 +56,7 @@
                     <thead>
                         <tr class="bg-gray-200">
                             <th class="border border-gray-300 px-4 py-2">Câu hỏi</th>
-                            <th class="border border-gray-300 px-4 py-2">Dạng</th>
+                            <th class="border border-gray-300 px-4 py-2">Chương</th>
                             <th class="border border-gray-300 px-4 py-2">Mức độ</th>
                             <th class="border border-gray-300 px-4 py-2">Thời gian tạo</th>
                             <th class="border border-gray-300 px-4 py-2">Người tạo</th>
@@ -214,7 +214,7 @@
             }
         }
 
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", async function (){
             const paginationButtons = document.querySelectorAll(".pagination-btn");
 
             paginationButtons.forEach(button => {
@@ -234,9 +234,26 @@
                     this.classList.add("text-white");
                     this.classList.remove("bg-white");
                     this.classList.remove("text-gray-700");
-
                 });
             });
         })
+
+        async function NextPage(event) {
+            const subjectCode = new URLSearchParams(window.location.search).get('subjectCode');
+
+            const response = await fetch('bank-question.aspx/HandleNextPage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ pageIndex: event.value, subjectCode : subjectCode })
+            });
+
+            const res = await response.json();
+
+            const question_table = document.getElementById('main_question_table');
+            question_table.innerHTML = '';
+            question_table.innerHTML = res.d.html;
+        }
     </script>
 </asp:Content>

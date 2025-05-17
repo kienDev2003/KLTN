@@ -171,5 +171,26 @@ namespace KLTN.DAL
 
             return false;
         }
+
+        public DataTable GetChaperInfo(int chapterCode)
+        {
+            DataTable data = new DataTable();
+            string query = @"SELECT * FROM Chapter WHERE ChapterCode = @chapterCode";
+
+            using(SqlConnection conn = _db.GetConn())
+            {
+                using(SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@chapterCode", chapterCode);
+
+                    using(SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(data);
+                    }
+                }
+            }
+
+            return data;
+        }
     }
 }

@@ -96,5 +96,21 @@ namespace KLTN.BLL
         {
             return _subjectDAL.DeleteSubject(subjectCode);
         }
+
+        public Models.Res.Chapter GetChapterInfo(int chapterCode)
+        {
+            DataTable data = _subjectDAL.GetChaperInfo(chapterCode);
+
+            if (data.Rows.Count <= 0) return null;
+
+            Models.Res.Chapter chapter = new Models.Res.Chapter();
+            foreach(DataRow row in data.Rows)
+            {
+                chapter.ChapterCode = Convert.ToInt32(row["ChapterCode"]);
+                chapter.ChapterName = row["ChapterName"].ToString();
+            }
+
+            return chapter;
+        }
     }
 }

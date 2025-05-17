@@ -12,19 +12,18 @@ namespace KLTN.pages
     public partial class exam_created : System.Web.UI.Page
     {
         private static ExamBLL _examBLL = new ExamBLL();
+        private static LecturerBLL _lecturerBLL = new LecturerBLL();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["login"] == null) return;
 
             string subjectCode = Request.QueryString["subjectCode"].ToString();
             HandleGetExam(subjectCode);
-
-            var exam = _examBLL.GetExamByExamPaperCode(2);
         }
 
         private void HandleGetExam(string subjectCode)
         {
-            List<Models.Req.Exam> exams = _examBLL.GetAllExam(subjectCode);
+            List<Models.Req.Exam> exams = _examBLL.GetAllExamBySubjectCode(subjectCode);
 
             if (exams == null)
             {
@@ -39,7 +38,7 @@ namespace KLTN.pages
                             $"<td class=\"border border-gray-300 px-4 py-2 max-w-[250px] truncate\" title=\"{exam.ExamName}\">{exam.ExamName}</td>" +
                             $"<td class=\"border border-gray-300 px-4 py-2\">{exam.ExamTime}</td>" +
                             $"<td class=\"border border-gray-300 px-4 py-2\">{(exam.IsApproved ? "Đã duyệt" : "Chưa duyệt")}</td>" +
-                            $"<td class=\"border border-gray-300 px-4 py-2\">{(exam.IsApproved ? exam.ApprovedByLectuterCode : "-")}</td>" +
+                            $"<td class=\"border border-gray-300 px-4 py-2\">{(exam.IsApproved ? GetNameLecturer(exam.ApprovedByLectuterCode) : "-")}</td>" +
                             $"<td class=\"border border-gray-300 px-4 py-2\">" +
                                 $"<input type=\"button\" class=\"cursor-pointer bg-blue-500 text-white px-2 py-1 rounded\" onclick=\"HandleViewExam({exam.ExamCode})\" value=\"Xem\">"+
                                 $"<input type=\"button\" class=\"{(exam.IsApproved ? "hidden" : "")} cursor-pointer bg-red-500 text-white px-2 py-1 rounded\" onclick=\"HandleDeleteExam({exam.ExamCode})\" value=\"Xóa\">"+
@@ -50,6 +49,13 @@ namespace KLTN.pages
             LiteralControl literalControl = new LiteralControl(html);
             examPaper_table.Controls.Clear();
             examPaper_table.Controls.Add(literalControl);
+        }
+
+        private string GetNameLecturer(string lecturerCode)
+        {
+            Models.Res.Lecturer lecturer = _lecturerBLL.GetInfoByLecturerCode(lecturerCode);
+
+            return lecturer.FullName;
         }
 
         [WebMethod]
@@ -94,6 +100,18 @@ namespace KLTN.pages
 
             if (exec) return new { status = "200", message = "Xóa đề thi thành công !" };
             else return new { status = "500", message = "Server error" };
+        }
+
+        [WebMethod]
+        public static object ExamPaperApproved(int examPaperCode)
+        {
+            Models.Res.Login loginSession = HttpContext.Current.Session["login"] as Models.Res.Login;
+            Models.Res.Lecturer lecturer = _lecturerBLL.GetInfo(loginSession.accountCode);
+
+            bool exec = _examBLL.ExamPaperApproved(examPaperCode, lecturer.LecturerCode);
+
+            if (exec) return new { status = "200", message = "Duyệt đề thi thành công" };
+            else return new { status = "500", message = "Server Error" };
         }
     }
 }

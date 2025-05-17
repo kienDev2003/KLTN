@@ -5,30 +5,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giao Diện Đề Thi</title>
+    <title>Đề Thi</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Additional custom styles if needed */
         body {
-            font-family: 'Inter', sans-serif; /* Using a common sans-serif font */
+            font-family: 'Inter', sans-serif; 
         }
-        /* Style for readonly inputs to better match the image */
         .readonly-input {
-            background-color: #f9fafb; /* Tailwind's gray-50 */
+            background-color: #f9fafb; 
             cursor: default;
         }
 
             .readonly-input:focus {
                 outline: none;
                 box-shadow: none;
-                border-color: #d1d5db; /* Tailwind's gray-300 */
+                border-color: #d1d5db; 
             }
     </style>
 </head>
 <body class="bg-slate-100">
     <div class="container mx-auto p-6">
         <div class="flex flex-col md:flex-row gap-6">
-            <!-- Left Panel: Exam Info -->
             <div class="w-full md:w-1/3 bg-white p-6 rounded-lg shadow-lg">
                 <h2 class="text-2xl font-semibold text-slate-700 mb-6">Thông tin bài thi</h2>
                 <div class="space-y-4">
@@ -53,17 +50,37 @@
                 </div>
             </div>
 
-            <!-- Right Panel: Questions -->
             <div class="w-full md:w-2/3 bg-white p-6 rounded-lg shadow-lg">
                 <h2 class="text-2xl font-semibold text-slate-700 mb-6">Các Câu Hỏi</h2>
                 <div id="questionsContainer" class="space-y-8 overflow-y-auto max-h-[calc(100vh-12rem)] pr-2">
-                    <!-- Questions will be dynamically inserted here -->
                 </div>
             </div>
         </div>
     </div>
 
     <script>
+        async function ExamApproved() {
+            const examPaperCode = new URLSearchParams(window.location.search).get('examPaperCode');
+
+            const response = await fetch('exam-created.aspx/ExamPaperApproved', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ examPaperCode: examPaperCode })
+            });
+
+            const res = await response.json();
+
+            if (res.d.status == "200") {
+                alert(res.d.message);
+                window.location.href = '/pages/exam.aspx';
+            }
+            else {
+                alert(res.d.message);
+            }
+        }
+
         async function HandleGetExamPaper() {
             const examPaperCode = new URLSearchParams(window.location.search).get('examPaperCode');
 
@@ -77,8 +94,6 @@
 
             const res = await response.json();
 
-            console.log(res.d.exam);
-
             return res.d.exam;
         }
 
@@ -90,12 +105,10 @@
 
             const exam = await HandleGetExamPaper();
 
-            // Populate exam info
             document.getElementById('examTitle').value = exam.ExamPaperText || 'N/A';
             document.getElementById('examTime').value = exam.ExamTime || 'N/A';
             document.getElementById('questionCount').textContent = exam.questions ? exam.questions.length : 0;
 
-            // Populate questions
             const questionsContainer = document.getElementById('questionsContainer');
             if (exam.questions && exam.questions.length > 0) {
                 exam.questions.forEach((question, index) => {
@@ -125,7 +138,6 @@
                                 input.name = `question-${question.QuestionCode}`;
                             } else if (question.QuestionType === 'multiple') {
                                 input.type = 'checkbox';
-                                // For multiple choices, names can be unique or part of an array
                                 input.name = `answer-checkbox-${answer.AnswerCode}`;
                             }
 
