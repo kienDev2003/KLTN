@@ -20,6 +20,16 @@ namespace KLTN.BLL
             return _examSessionDAL.InsertExamSession(examSession);
         }
 
+        public bool UpdateExamSession(Models.Req.ExamSession examSession)
+        {
+            return _examSessionDAL.UpdateExamSession(examSession);
+        }
+
+        public bool DeleteExamSession(int examSessionCode)
+        {
+            return _examSessionDAL.DeleteExamSession(examSessionCode);
+        }
+
         public List<Models.Req.ExamSession> GetAllExamSession()
         {
             DataTable data = _examSessionDAL.GetAllExamSession();
@@ -38,11 +48,62 @@ namespace KLTN.BLL
                     ExamPaperCode = Convert.ToInt32(row["ExamPaperCode"]),
                     CreateByLecturer = row["CreateByLecturer"].ToString(),
                     ExamSessionPassword = row["ExamSessionPassword"].ToString(),
-                    IsAssessment = Convert.ToBoolean(row["IsAssessment"])
+                    InvigilatorMainCode = row["InvigilatorMainCode"].ToString(),
+                    InvigilatorCode = row["InvigilatorCode"].ToString()
                 });
             }
 
             return examSessions;
+        }
+
+        public List<Models.Req.ExamSession> GetAllExamSessionByInvigilatorCode(string invigilatorCode)
+        {
+            DataTable data = _examSessionDAL.GetAllExamSessionByInvigilatorCode(invigilatorCode);
+
+            if (data.Rows.Count <= 0) return null;
+
+            List<Models.Req.ExamSession> examSessions = new List<Models.Req.ExamSession>();
+            foreach (DataRow row in data.Rows)
+            {
+                examSessions.Add(new Models.Req.ExamSession()
+                {
+                    ExamSessionCode = Convert.ToInt32(row["ExamSessionCode"]),
+                    SubjectCode = row["SubjectCode"].ToString(),
+                    StartExamDate = Convert.ToDateTime(row["StartExamDate"]),
+                    EndExamDate = Convert.ToDateTime(row["EndExamDate"]),
+                    ExamPaperCode = Convert.ToInt32(row["ExamPaperCode"]),
+                    CreateByLecturer = row["CreateByLecturer"].ToString(),
+                    ExamSessionPassword = row["ExamSessionPassword"].ToString(),
+                    InvigilatorMainCode = row["InvigilatorMainCode"].ToString(),
+                    InvigilatorCode = row["InvigilatorCode"].ToString()
+                });
+            }
+
+            return examSessions;
+        }
+
+        public Models.Req.ExamSession GetExamSession(int examSessionCode)
+        {
+            DataTable data = _examSessionDAL.GetExamSession(examSessionCode);
+
+            if (data.Rows.Count <= 0) return null;
+
+            Models.Req.ExamSession examSession = new Models.Req.ExamSession();
+            foreach (DataRow row in data.Rows)
+            {
+
+                examSession.ExamSessionCode = Convert.ToInt32(row["ExamSessionCode"]);
+                examSession.SubjectCode = row["SubjectCode"].ToString();
+                examSession.StartExamDate = Convert.ToDateTime(row["StartExamDate"]);
+                examSession.EndExamDate = Convert.ToDateTime(row["EndExamDate"]);
+                examSession.ExamPaperCode = Convert.ToInt32(row["ExamPaperCode"]);
+                examSession.CreateByLecturer = row["CreateByLecturer"].ToString();
+                examSession.ExamSessionPassword = row["ExamSessionPassword"].ToString();
+                examSession.InvigilatorMainCode = row["InvigilatorMainCode"].ToString();
+                examSession.InvigilatorCode = row["InvigilatorCode"].ToString();
+            }
+
+            return examSession;
         }
     }
 }

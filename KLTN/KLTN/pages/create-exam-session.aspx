@@ -61,7 +61,8 @@
                             <th class="border border-gray-300 px-4 py-2">Thời gian kết thúc</th>
                             <th class="border border-gray-300 px-4 py-2">Đề thi</th>
                             <th class="border border-gray-300 px-4 py-2">Mật khẩu ca thi</th>
-                            <th class="border border-gray-300 px-4 py-2">Trạng thái phân công</th>
+                            <th class="border border-gray-300 px-4 py-2">Giảng viên coi thi chính</th>
+                            <th class="border border-gray-300 px-4 py-2">Giảng viên coi thi phụ</th>
                             <th class="border border-gray-300 px-4 py-2">Chức năng</th>
                         </tr>
                     </thead>
@@ -110,6 +111,18 @@
                             class="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
                             placeholder="Nhập mật khẩu ca thi">
                     </div>
+                    <div class="mb-4">
+                        <label class="block text-lg font-medium text-gray-700">Giáo viên coi thi chính</label>
+                        <select id="InvigilatorMainCode"
+                            class="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300">
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-lg font-medium text-gray-700">Giáo viên coi thi phụ</label>
+                        <select id="InvigilatorCode"
+                            class="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300">
+                        </select>
+                    </div>
                     <div class="mt-6 flex justify-end space-x-2">
                         <input type="button" onclick="CancelExamSession()"
                             class="cursor-pointer px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
@@ -127,19 +140,152 @@
     </div>
 
     <script>
+        async function HandleDeteleExamSession(examSessionCode) {
+            if (!confirm('Bạn chắc chắn muốn xóa ca thi này ?')) return;
+
+            const response = await fetch('create-exam-session.aspx/HandleDeleteExamSession', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ examSessionCode: examSessionCode })
+            });
+
+            const res = await response.json();
+
+            if (res.d.status !== "200") {
+                alert(res.d.message);
+            }
+            else {
+                alert(res.d.message);
+                window.location.reload();
+            }
+        }
+        
+        function formatDatetimeLocal(dateString) {
+            if (!dateString) return '';
+
+            const match = dateString.match(/\/Date\((\d+)\)\//);
+            if (!match || !match[1]) {
+                return '';
+            }
+
+            const milliseconds = parseInt(match[1], 10);
+            const date = new Date(milliseconds);
+
+            if (isNaN(date)) {
+                return '';
+            }
+
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+            const hours = date.getHours().toString().padStart(2, '0');
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+
+            return `${year}-${month}-${day}T${hours}:${minutes}`;
+        }
+
+        async function HandleEditExamSession(examSessionCode) {
+
+            const response = await fetch('create-exam-session.aspx/GetExamSessionByExamSessionCode', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ examSessionCode: examSessionCode })
+            });
+
+            const res = await response.json();
+
+            if (res.d.status !== "200") {
+                alert(res.d.message);
+                return;
+            }
+            else {
+                await HandleGetSubjects();
+                document.getElementById('subject').value = res.d.examSession.SubjectCode;
+
+                await HandleGetExamBySubject();
+                document.getElementById('exam').value = res.d.examSession.ExamPaperCode;
+
+                document.getElementById('start-exam-date').value = formatDatetimeLocal(res.d.examSession.StartExamDate);
+                document.getElementById('end-exam-date').value = formatDatetimeLocal(res.d.examSession.EndExamDate);
+
+                document.getElementById('password-exam').value = res.d.examSession.ExamSessionPassword;
+
+
+                await HandleGetLecturers();
+                document.getElementById('InvigilatorMainCode').value = res.d.examSession.InvigilatorMainCode;
+                document.getElementById('InvigilatorCode').value = res.d.examSession.InvigilatorCode;
+
+                const modal = document.getElementById("examSession-modal");
+                modal.style.display = 'block';
+                document.getElementById('save-examSession').style.display = 'none';
+
+                const btnEdit = document.getElementById('update-examSession');
+                btnEdit.style.display = 'block';
+                btnEdit.addEventListener('click', async () => await UpdateExamSession(examSessionCode));
+            }
+        }
+
+        async function UpdateExamSession(examSessionCode) {
+            const subjectCode = document.getElementById('subject').value;
+            const examPaperCode = document.getElementById('exam').value;
+            const start_exam_date = document.getElementById('start-exam-date').value;
+            const end_exam_date = document.getElementById('end-exam-date').value;
+            const password_examSession = document.getElementById('password-exam').value;
+            const invigilatorMainCode = document.getElementById('InvigilatorMainCode').value;
+            const invigilatorCode = document.getElementById('InvigilatorCode').value;
+
+            const examSession = {
+                ExamSessionCode: examSessionCode,
+                SubjectCode: subjectCode,
+                ExamPaperCode: examPaperCode,
+                StartExamDate: start_exam_date,
+                EndExamDate: end_exam_date,
+                ExamSessionPassword: password_examSession,
+                invigilatorMainCode: invigilatorMainCode,
+                invigilatorCode: invigilatorCode
+            };
+
+            const response = await fetch('create-exam-session.aspx/HandleUpdateExamSession', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ examSession: examSession })
+            });
+
+            const res = await response.json();
+
+            if (res.d.status !== "200") {
+                alert(res.d.message);
+                return;
+            }
+            else {
+                alert(res.d.message);
+                window.location.reload();
+            }
+        }
+
         async function SaveExamSession() {
             const subjectCode = document.getElementById('subject').value;
             const examPaperCode = document.getElementById('exam').value;
             const start_exam_date = document.getElementById('start-exam-date').value;
             const end_exam_date = document.getElementById('end-exam-date').value;
             const password_examSession = document.getElementById('password-exam').value;
+            const invigilatorMainCode = document.getElementById('InvigilatorMainCode').value;
+            const invigilatorCode = document.getElementById('InvigilatorCode').value;
 
             const examSession = {
                 SubjectCode: subjectCode,
                 ExamPaperCode: examPaperCode,
                 StartExamDate: start_exam_date,
                 EndExamDate: end_exam_date,
-                ExamSessionPassword: password_examSession
+                ExamSessionPassword: password_examSession,
+                invigilatorMainCode: invigilatorMainCode,
+                invigilatorCode: invigilatorCode
             };
 
             const response = await fetch('create-exam-session.aspx/HandleInsertExamSession', {
@@ -169,6 +315,7 @@
 
             await HandleGetSubjects();
             await HandleGetExamBySubject();
+            await HandleGetLecturers();
         }
 
         function CancelExamSession() {
@@ -177,6 +324,39 @@
 
             document.getElementById('subject').innerHTML = '';
             document.getElementById('exam').innerHTML = '';
+            document.getElementById('InvigilatorMainCode').innerHTML = '';
+            document.getElementById('InvigilatorCode').innerHTML = '';
+        }
+
+        async function HandleGetLecturers() {
+            const response = await fetch('create-exam-session.aspx/HandleGetLecturers', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({})
+            });
+
+            const res = await response.json();
+
+            if (res.d.status !== "200") {
+                alert(res.d.message);
+                return;
+            }
+
+            const invigilatorMainCodeHTML = document.getElementById('InvigilatorMainCode');
+            const invigilatorCodeHTML = document.getElementById('InvigilatorCode');
+
+            if (res.d.lecturers && Array.isArray(res.d.lecturers)) {
+                for (let i = 0; i < res.d.lecturers.length; i++) {
+                    const lecturer = res.d.lecturers[i];
+
+                    const html = `<option value="${lecturer.LecturerCode}">${lecturer.FullName}</option>`;
+
+                    invigilatorMainCodeHTML.innerHTML += html;
+                    invigilatorCodeHTML.innerHTML += html;
+                }
+            }
         }
 
         async function HandleGetSubjects() {
@@ -210,6 +390,8 @@
 
         async function HandleGetExamBySubject() {
             const subjectCode = document.getElementById('subject').value;
+
+            if (subjectCode == undefined || subjectCode == null || subjectCode == '') return;
 
             const response = await fetch('create-exam-session.aspx/HandleGetExamBySubject', {
                 method: 'POST',

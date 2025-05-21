@@ -72,7 +72,6 @@ namespace KLTN.pages.master
                                 <li class=""mt-2""><a class=""text-green-500"" href=""/pages/subject-lecturer.aspx"">Môn học phụ trách</a></li>
                                 <li class=""mt-2""><a class=""text-green-500"" href=""/pages/assignment-lecterer.aspx"">Phân công phụ trách môn học</a></li>
                                 <li class=""mt-2""><a class=""text-green-500"" href=""/pages/assignment-teaching.aspx"">Phân công giảng dạy</a></li>
-                                <li class=""mt-2""><a class=""text-green-500"" href=""/pages/assignment-exam"">Phân công trông thi</a></li>
                                 <li class=""mt-2""><a class=""text-green-500"" href=""/pages/create-exam-session.aspx"">Tạo ca thi</a></li>
                                 <li class=""mt-2""><a class=""text-green-500"" href=""/pages/exam.aspx"">Duyệt đề thi</a></li>
                                 <li class=""mt-2""><a class=""text-green-500"" href=""/pages/subject.aspx"">Danh sách môn học</a></li>

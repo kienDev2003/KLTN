@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KLTN.Models.Req;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -17,8 +18,8 @@ namespace KLTN.DAL
 
         public bool InsertExamSession(Models.Req.ExamSession examSession)
         {
-            string query = @"INSERT INTO ExamSession (SubjectCode, StartExamDate, EndExamDate, CreateByLecturer, ExamPaperCode, ExamSessionPassword, IsAssessment)
-                             VALUES (@subjectCode, @startExamDate, @endExamDate, @createByLecturer, @examPaperCode, @examSessionPassword, 0);";
+            string query = @"INSERT INTO ExamSession (SubjectCode, StartExamDate, EndExamDate, CreateByLecturer, ExamPaperCode, ExamSessionPassword, InvigilatorMainCode, InvigilatorCode)
+                             VALUES (@subjectCode, @startExamDate, @endExamDate, @createByLecturer, @examPaperCode, @examSessionPassword, @invigilatorMainCode, @invigilatorCode);";
 
             using(SqlConnection conn = _db.GetConn())
             {
@@ -34,6 +35,8 @@ namespace KLTN.DAL
                             cmd.Parameters.AddWithValue("@createByLecturer", examSession.CreateByLecturer);
                             cmd.Parameters.AddWithValue("@examPaperCode", examSession.ExamPaperCode);
                             cmd.Parameters.AddWithValue("@examSessionPassword", examSession.ExamSessionPassword);
+                            cmd.Parameters.AddWithValue("@invigilatorMainCode", examSession.InvigilatorMainCode);
+                            cmd.Parameters.AddWithValue("@invigilatorCode", examSession.InvigilatorCode);
 
                             cmd.ExecuteNonQuery();
                         }
@@ -41,6 +44,78 @@ namespace KLTN.DAL
                         tran.Commit();
                         return true;
                     }catch(Exception ex)
+                    {
+                        tran.Rollback();
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public bool UpdateExamSession(Models.Req.ExamSession examSession)
+        {
+            string query = @"UPDATE ExamSession SET SubjectCode = @subjectCode, StartExamDate = @startExamDate, EndExamDate = @endExamDate,
+                                                    CreateByLecturer = @createByLecturer, ExamPaperCode = @examPaperCode, ExamSessionPassword = @examSessionPassword,
+                                                    InvigilatorMainCode = @invigilatorMainCode, InvigilatorCode = @invigilatorCode
+                             WHERE ExamSessionCode = @examSessionCode";
+
+            using (SqlConnection conn = _db.GetConn())
+            {
+                using (SqlTransaction tran = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SqlCommand cmd = new SqlCommand(query, conn, tran))
+                        {
+                            cmd.Parameters.AddWithValue("@subjectCode", examSession.SubjectCode);
+                            cmd.Parameters.AddWithValue("@startExamDate", examSession.StartExamDate);
+                            cmd.Parameters.AddWithValue("@endExamDate", examSession.EndExamDate);
+                            cmd.Parameters.AddWithValue("@createByLecturer", examSession.CreateByLecturer);
+                            cmd.Parameters.AddWithValue("@examPaperCode", examSession.ExamPaperCode);
+                            cmd.Parameters.AddWithValue("@examSessionPassword", examSession.ExamSessionPassword);
+                            cmd.Parameters.AddWithValue("@invigilatorMainCode", examSession.InvigilatorMainCode);
+                            cmd.Parameters.AddWithValue("@invigilatorCode", examSession.InvigilatorCode);
+                            cmd.Parameters.AddWithValue("@examSessionCode", examSession.ExamSessionCode);
+
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        tran.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public bool DeleteExamSession(int examSessionCode)
+        {
+            string query = @"DELETE ExamSession
+                             WHERE ExamSessionCode = @examSessionCode";
+
+            using (SqlConnection conn = _db.GetConn())
+            {
+                using (SqlTransaction tran = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SqlCommand cmd = new SqlCommand(query, conn, tran))
+                        {
+                            cmd.Parameters.AddWithValue("@examSessionCode", examSessionCode);
+
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        tran.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
                     {
                         tran.Rollback();
                     }
@@ -60,6 +135,50 @@ namespace KLTN.DAL
                 using(SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     using(SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(data);
+                    }
+                }
+            }
+
+            return data;
+        }
+
+        public DataTable GetAllExamSessionByInvigilatorCode(string invigilatorCode)
+        {
+            DataTable data = new DataTable();
+            string query = @"SELECT *
+                            FROM ExamSession
+                            WHERE InvigilatorCode = @invigilatorCode OR InvigilatorMainCode = @invigilatorCode;";
+
+            using (SqlConnection conn = _db.GetConn())
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@invigilatorCode", invigilatorCode);
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(data);
+                    }
+                }
+            }
+
+            return data;
+        }
+
+        public DataTable GetExamSession(int examSessionCode)
+        {
+            DataTable data = new DataTable();
+            string query = @"SELECT * FROM ExamSession WHERE ExamSessionCode = @examSessionCode";
+
+            using (SqlConnection conn = _db.GetConn())
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@examSessionCode", examSessionCode);
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
                     {
                         adapter.Fill(data);
                     }

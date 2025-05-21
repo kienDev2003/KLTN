@@ -14,6 +14,7 @@ namespace KLTN.Models.Req
         public int ExamPaperCode { get; set; }
         public string CreateByLecturer { get; set; }
         public string ExamSessionPassword { get; set; }
-        public bool IsAssessment {  get; set; }
+        public string InvigilatorMainCode { get; set; }
+        public string InvigilatorCode { get; set; }
     }
 }
