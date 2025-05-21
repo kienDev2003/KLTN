@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Sinh viên và Ca thi</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            gap: 20px;
+        }
+
+        .left-panel {
+            flex: 1;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            overflow: auto;
+        }
+
+        .right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .right-top {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            flex: 1;
+            overflow: auto;
+        }
+
+        .right-bottom {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            flex: 1;
+            overflow: auto;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .form-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .delete-btn {
+            background-color: #f44336;
+        }
+
+        .delete-btn:hover {
+            background-color: #d32f2f;
+        }
+
+        .exam-info {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .exam-field {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .exam-field label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .exam-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .exam-field {
+            line-height: 1.5;
+        }
+
+        .exam-field label {
+            font-weight: bold;
+            color: #333;
+            margin-right: 5px;
+        }
+
+        .info-text {
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Phần bên trái - Bảng thông tin sinh viên -->
+        <div class="left-panel">
+            <h2>Thông tin sinh viên</h2>
+
+            <!-- Bảng sinh viên -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mã SV</th>
+                        <th>Họ tên</th>
+                        <th>Ngày sinh</th>
+                        <th>Lớp</th>
+                        <th>Chức năng</th>
+                    </tr>
+                </thead>
+                <tbody id="student-table-body">
+                    <tr>
+                        <td>SV001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>15/05/2000</td>
+                        <td>CNTT1</td>
+                        <td><button class="delete-btn" onclick="deleteStudent(this)">Xóa</button></td>
+                    </tr>
+                    <tr>
+                        <td>SV002</td>
+                        <td>Trần Thị B</td>
+                        <td>22/08/2001</td>
+                        <td>CNTT2</td>
+                        <td><button class="delete-btn" onclick="deleteStudent(this)">Xóa</button></td>
+                    </tr>
+                    <tr>
+                        <td>SV003</td>
+                        <td>Lê Văn C</td>
+                        <td>10/02/2000</td>
+                        <td>CNTT1</td>
+                        <td><button class="delete-btn" onclick="deleteStudent(this)">Xóa</button></td>
+                    </tr>
+                    <tr>
+                        <td>SV004</td>
+                        <td>Phạm Thị D</td>
+                        <td>05/11/2002</td>
+                        <td>CNTT3</td>
+                        <td><button class="delete-btn" onclick="deleteStudent(this)">Xóa</button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Form thêm sinh viên -->
+
+        </div>
+
+        <!-- Phần bên phải - chia làm 2 phần -->
+        <div class="right-panel">
+            <!-- Phần trên - Thông tin ca thi -->
+            <div class="right-top">
+                <h2>Thông tin ca thi</h2>
+                <div class="exam-info">
+                    <div class="exam-field">
+                        <label>Mã ca thi: CT001</label>
+                    </div>
+                    <div class="exam-field">
+                        <label>Môn thi: Lập trình Java</label>
+                    </div>
+                    <div class="exam-field">
+                        <label>Ngày thi: 10/06/2025</label>
+                    </div>
+                    <div class="exam-field">
+                        <label>Giờ thi: 08:00 - 10:00</label>
+                    </div>
+                    <div class="exam-field">
+                        <label>Phòng thi: A101</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phần dưới - Khu vực thông tin bổ sung -->
+            <div class="right-bottom">
+                <div>
+                    <h3>Thêm sinh viên mới</h3>
+                    <form id="add-student-form">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label for="student-id">Mã SV</label>
+                                <input type="text" id="student-id">
+                            </div>
+                        </div>
+                        <button type="button" onclick="addStudent()">Thêm sinh viên</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hàm thêm sinh viên mới
+        function addStudent() {
+            // Lấy giá trị từ các trường input
+            const id = document.getElementById('student-id').value;
+            const name = document.getElementById('student-name').value;
+            const dob = document.getElementById('student-dob').value;
+            const className = document.getElementById('student-class').value;
+
+            // Kiểm tra nếu tất cả các trường đều có giá trị
+            if (id && name && dob && className) {
+                // Tạo hàng mới cho bảng
+                const tableBody = document.getElementById('student-table-body');
+                const newRow = document.createElement('tr');
+
+                // Thêm nội dung cho hàng
+                newRow.innerHTML = `
+                    <td>${id}</td>
+                    <td>${name}</td>
+                    <td>${dob}</td>
+                    <td>${className}</td>
+                    <td><button class="delete-btn" onclick="deleteStudent(this)">Xóa</button></td>
+                `;
+
+                // Thêm hàng vào bảng
+                tableBody.appendChild(newRow);
+
+                // Xóa giá trị trong các trường input
+                document.getElementById('student-id').value = '';
+                document.getElementById('student-name').value = '';
+                document.getElementById('student-dob').value = '';
+                document.getElementById('student-class').value = '';
+            } else {
+                alert('Vui lòng điền đầy đủ thông tin sinh viên');
+            }
+        }
+
+        // Hàm xóa sinh viên
+        function deleteStudent(button) {
+            // Lấy hàng chứa nút được nhấn và xóa nó
+            const row = button.closest('tr');
+            row.remove();
+        }
+    </script>
+</body>
+
+</html>
