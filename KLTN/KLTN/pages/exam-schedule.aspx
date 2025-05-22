@@ -13,4 +13,17 @@
             </a>
         </div>
     </div>
+    <script>
+        function CheckDatetime(startExamSessionDate) {
+            var now = new Date();
+            var target = new Date(startExamSessionDate);
+
+            if (now < target) {
+                alert('Chưa đến thời gian bắt đầu ca thi');
+                return true;
+            } else {
+                return true;
+            }
+        }
+    </script>
 </asp:Content>

@@ -70,6 +70,7 @@ namespace KLTN.pages.master
             {
                 string html = @"<li class=""mt-2""><a class=""text-green-500"" href=""/pages/subject-teaching.aspx"">Môn học giảng dạy</a></li>
                                 <li class=""mt-2""><a class=""text-green-500"" href=""/pages/subject-lecturer.aspx"">Môn học phụ trách</a></li>
+                                <li class=""mt-2""><a class=""text-green-500"" href=""/pages/exam-schedule.aspx"">Lịch trông thi</a></li>
                                 <li class=""mt-2""><a class=""text-green-500"" href=""/pages/assignment-lecterer.aspx"">Phân công phụ trách môn học</a></li>
                                 <li class=""mt-2""><a class=""text-green-500"" href=""/pages/assignment-teaching.aspx"">Phân công giảng dạy</a></li>
                                 <li class=""mt-2""><a class=""text-green-500"" href=""/pages/create-exam-session.aspx"">Tạo ca thi</a></li>
@@ -98,8 +99,8 @@ namespace KLTN.pages.master
             }
             if (accountType == "SV")
             {
-                string html = @"<li class=""mt-2""><a class=""text-green-500"" href=""/pages/exam-session-taken.aspx"">Ca thi đã thi</a></li>
-                                <li class=""mt-2""><a class=""text-green-500"" href=""/pages/exam-session-upcoming.aspx"">Ca thi sắp tới</a></li>
+                string html = @"<li class=""mt-2""><a class=""text-green-500"" href=""/pages/exam-schedule.aspx"">Ca thi đã thi</a></li>
+                                <li class=""mt-2""><a class=""text-green-500"" href=""/pages/exam-schedule.aspx"">Ca thi sắp tới</a></li>
                                ";
 
                 LiteralControl literalControl = new LiteralControl(html);

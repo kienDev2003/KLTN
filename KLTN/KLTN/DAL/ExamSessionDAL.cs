@@ -186,6 +186,122 @@ namespace KLTN.DAL
             }
 
             return data;
+        } 
+
+        public bool InsertStudentInExamSession_Student(string studentCode, int examSessionCode)
+        {
+            string query = @"INSERT INTO ExamSession_Student (ExamSessionCode, StudentCode, StudentHaveEntered, SubmissionRequirements)
+                             VALUES (@examSessionCode, @studentCode, 0, 0)";
+
+            using(SqlConnection conn = _db.GetConn())
+            {
+                using(SqlTransaction tran = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SqlCommand cmd = new SqlCommand(query, conn, tran))
+                        {
+                            cmd.Parameters.AddWithValue("@examSessionCode", examSessionCode);
+                            cmd.Parameters.AddWithValue("@studentCode", studentCode);
+
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        tran.Commit();
+                        return true;
+                    }
+                    catch(Exception ex)
+                    {
+                        tran.Rollback();
+                    }
+                }
+
+                return false;
+            }
+        }
+
+        public DataTable GetStudentByExamSessionCode(int examSessionCode)
+        {
+            string query = @"SELECT * FROM ExamSession_Student WHERE ExamSessionCode = @examSessionCode";
+            DataTable data = new DataTable();
+
+            using(SqlConnection conn = _db.GetConn())
+            {
+                using(SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@examSessionCode", examSessionCode);
+
+                    using(SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(data);
+                    }
+                }
+            }
+
+            return data;
+        }
+
+        public bool HandleLogoutStudent(int examSessionCode, string studentCode)
+        {
+            string query = @"UPDATE ExamSession_Student SET StudentHaveEntered = 0 
+                             WHERE ExamSessionCode = @examSessionCode AND StudentCode = @studentCode";
+
+            using(SqlConnection conn = _db.GetConn())
+            {
+                using(SqlTransaction tran = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using(SqlCommand cmd = new SqlCommand(query, conn, tran))
+                        {
+                            cmd.Parameters.AddWithValue("@examSessionCode", examSessionCode);
+                            cmd.Parameters.AddWithValue("@studentCode", studentCode);
+
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        tran.Commit();
+                        return true;
+                    }catch(Exception ex)
+                    {
+                        tran.Rollback();
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public bool HandleSubmissionRequirements(int examSessionCode, string studentCode)
+        {
+            string query = @"UPDATE ExamSession_Student SET SubmissionRequirements = 1
+                             WHERE ExamSessionCode = @examSessionCode AND StudentCode = @studentCode";
+
+            using (SqlConnection conn = _db.GetConn())
+            {
+                using (SqlTransaction tran = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SqlCommand cmd = new SqlCommand(query, conn, tran))
+                        {
+                            cmd.Parameters.AddWithValue("@examSessionCode", examSessionCode);
+                            cmd.Parameters.AddWithValue("@studentCode", studentCode);
+
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        tran.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }

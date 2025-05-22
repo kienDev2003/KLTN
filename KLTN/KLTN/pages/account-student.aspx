@@ -279,7 +279,6 @@
             }
         }
 
-
         function CancelStudent() {
             document.getElementById("student-modal").style.display = "none";;
             document.getElementById('update-student').style.display = 'none';

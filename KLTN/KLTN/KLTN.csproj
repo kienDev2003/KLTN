@@ -80,6 +80,7 @@
     <Content Include="pages\exam-created.aspx" />
     <Content Include="pages\exam-schedule.aspx" />
     <Content Include="pages\exam.aspx" />
+    <Content Include="pages\examSession.aspx" />
     <Content Include="pages\home.aspx" />
     <Content Include="pages\index.aspx" />
     <Content Include="pages\question-created.aspx" />
@@ -119,6 +120,7 @@
     <Compile Include="Models\Req\Subject.cs" />
     <Compile Include="Models\Req\SubjectTeaching.cs" />
     <Compile Include="Models\Res\Exam.cs" />
+    <Compile Include="Models\Res\ExamSession_Student.cs" />
     <Compile Include="Models\Res\Lecturer.cs" />
     <Compile Include="Models\Res\Login.cs" />
     <Compile Include="Models\Res\Question.cs" />
@@ -193,6 +195,13 @@
     </Compile>
     <Compile Include="pages\exam.aspx.designer.cs">
       <DependentUpon>exam.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pages\examSession.aspx.cs">
+      <DependentUpon>examSession.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\examSession.aspx.designer.cs">
+      <DependentUpon>examSession.aspx</DependentUpon>
     </Compile>
     <Compile Include="pages\home.aspx.cs">
       <DependentUpon>home.aspx</DependentUpon>

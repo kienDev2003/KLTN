@@ -17,7 +17,21 @@ namespace KLTN.pages
         {
             if (Session["login"] == null) return;
 
-            HandleGetExamSessionByInvigilatorCode();
+            Models.Res.Login loginSession = Session["login"] as Models.Res.Login;
+            if(loginSession.accountType == "GV")
+            {
+                HandleGetExamSessionByInvigilatorCode();
+            }
+            else
+            {
+                HandleGetExamSessionByStudentCode();
+            }
+            
+        }
+
+        private void HandleGetExamSessionByStudentCode()
+        {
+            throw new NotImplementedException();
         }
 
         private void HandleGetExamSessionByInvigilatorCode()
@@ -40,7 +54,7 @@ namespace KLTN.pages
                 string InvigilatorName = GetNameLecturer(examSession.InvigilatorCode);
                 string InvigilatorMainName = GetNameLecturer(examSession.InvigilatorMainCode);
 
-                html += $"<a href=\"/pages/examSession.aspx?examSessionCode={examSession.ExamSessionCode}\">" +
+                html += $"<a href=\"/pages/examSession.aspx?examSessionCode={examSession.ExamSessionCode}\" onclick=\"return CheckDatetime('{examSession.StartExamDate.ToString("yyyy-MM-ddTHH:mm:ss")}')\">" +
                             $"<div class=\"flex flex-col bg-white rounded-lg p-5 shadow-md h-full flex items-center\">" +
                                 $"<h3 class=\"mb-2 text-secondary text-base font-medium\">Môn: {subjectName}</h3>" +
                                 $"<h3 class=\"mb-2 text-secondary text-base font-medium\">Bắt đầu: {examSession.StartExamDate.ToString("HH:mm dd/MM/yyyy")}</h3>" +

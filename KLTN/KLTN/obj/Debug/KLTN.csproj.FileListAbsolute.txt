@@ -51,11 +51,11 @@ C:\Users\KienDev2003\Desktop\KLTN\KLTN\KLTN\bin\roslyn\vbc.rsp
 C:\Users\KienDev2003\Desktop\KLTN\KLTN\KLTN\bin\roslyn\VBCSCompiler.exe
 C:\Users\KienDev2003\Desktop\KLTN\KLTN\KLTN\bin\roslyn\VBCSCompiler.exe.config
 C:\Users\KienDev2003\Desktop\KLTN\KLTN\KLTN\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\KienDev2003\Desktop\KLTN\KLTN\KLTN\bin\System.Configuration.ConfigurationManager.dll
+C:\Users\KienDev2003\Desktop\KLTN\KLTN\KLTN\bin\System.Configuration.ConfigurationManager.xml
 C:\Users\KienDev2003\Desktop\KLTN\KLTN\KLTN\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\KienDev2003\Desktop\KLTN\KLTN\KLTN\obj\Debug\KLTN.csproj.AssemblyReference.cache
 C:\Users\KienDev2003\Desktop\KLTN\KLTN\KLTN\obj\Debug\KLTN.csproj.CoreCompileInputs.cache
 C:\Users\KienDev2003\Desktop\KLTN\KLTN\KLTN\obj\Debug\KLTN.csproj.Up2Date
 C:\Users\KienDev2003\Desktop\KLTN\KLTN\KLTN\obj\Debug\KLTN.dll
 C:\Users\KienDev2003\Desktop\KLTN\KLTN\KLTN\obj\Debug\KLTN.pdb
-C:\Users\KienDev2003\Desktop\KLTN\KLTN\KLTN\bin\System.Configuration.ConfigurationManager.dll
-C:\Users\KienDev2003\Desktop\KLTN\KLTN\KLTN\bin\System.Configuration.ConfigurationManager.xml

@@ -111,5 +111,26 @@ namespace KLTN.DAL
             }
             return data;
         }
+
+        public DataTable GetStudentByStudentCode(string studentCode)
+        {
+            DataTable data = new DataTable();
+            string query = @"SELECT * FROM Student WHERE StudentCode = @studentCode";
+
+            using (SqlConnection conn = _db.GetConn())
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@studentCode", studentCode);
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(data);
+                    }
+                }
+                conn.Close();
+            }
+            return data;
+        }
     }
 }

@@ -61,5 +61,22 @@ namespace KLTN.BLL
             }
             return students;
         }
+
+        public Models.Res.Student GetStudentByStudentCode(string studentCode)
+        {
+            DataTable data = _studentDAL.GetStudentByStudentCode(studentCode);
+
+            if (data.Rows.Count <= 0) return null;
+
+            Models.Res.Student student = new Models.Res.Student();
+            foreach (DataRow row in data.Rows)
+            {
+                student.StudentCode = row["StudentCode"].ToString();
+                student.FullName = row["FullName"].ToString();
+                student.DateOfBirth = Convert.ToDateTime(row["DateOfBirth"]);
+                student.ClassName = row["ClassName"].ToString();
+            }
+            return student;
+        }
     }
 }

@@ -105,5 +105,41 @@ namespace KLTN.BLL
 
             return examSession;
         }
+
+        public bool InsertStudentInExamSession_Student(string studentCode, int examSessionCode)
+        {
+            return _examSessionDAL.InsertStudentInExamSession_Student(studentCode, examSessionCode);
+        }
+
+        public List<Models.Res.ExamSession_Student> GetStudentByExamSessionCode(int examSessionCode)
+        {
+            DataTable data = _examSessionDAL.GetStudentByExamSessionCode(examSessionCode);
+
+            if (data.Rows.Count <= 0) return null;
+
+            List<Models.Res.ExamSession_Student> examSession_Students = new List<Models.Res.ExamSession_Student>();
+            foreach(DataRow row in data.Rows)
+            {
+                examSession_Students.Add(new Models.Res.ExamSession_Student()
+                {
+                    StudentCode = row["StudentCode"].ToString(),
+                    ExamSessionCode = Convert.ToInt32(row["ExamSessionCode"]),
+                    StudentHaveEntered = Convert.ToBoolean(row["StudentHaveEntered"]),
+                    SubmissionRequirements = Convert.ToBoolean(row["SubmissionRequirements"])
+                });
+            }
+
+            return examSession_Students;
+        }
+
+        public bool HandleLogoutStudent(string studentCode, int examSessionCode)
+        {
+            return _examSessionDAL.HandleLogoutStudent(examSessionCode, studentCode);
+        }
+
+        public bool HandleSubmissionRequirements(string  studentCode, int examSessionCode)
+        {
+            return _examSessionDAL.HandleSubmissionRequirements(examSessionCode, studentCode);
+        }
     }
 }
