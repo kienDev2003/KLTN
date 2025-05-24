@@ -8,7 +8,6 @@
         <div id="list_examSession" runat="server" class="flex flex-wrap gap-4 max-w-6xl mx-auto">
             <a href="pages/examSession.aspx?examSessionCode=11">
                 <div class="flex flex-col bg-white rounded-lg p-5 shadow-md h-full flex items-center">
-                    
                 </div>
             </a>
         </div>
@@ -24,6 +23,55 @@
             } else {
                 return true;
             }
+        }
+
+        function handleExamClick(anchorElement, passwordExamSession) {
+            CheckPassword(passwordExamSession, function (allowed) {
+                if (allowed) {
+                    window.location.href = anchorElement.href;
+                }
+            });
+        }
+
+        function CheckPassword(passwordExamSession, callback) {
+            let inputPassword = prompt('Nhập mật khẩu ca thi được cấp !');
+
+            if (inputPassword === null) {
+                callback(false);
+                return;
+            }
+
+            if (passwordExamSession === inputPassword) {
+                CheckStudentHaveted().then(status => {
+                    if (status === true) {
+                        alert('Bạn đã ở trong ca thi. Hãy xin cấp quyền vào lại !');
+                        callback(false);
+                    } else {
+                        callback(true);
+                    }
+                }).catch(error => {
+                    console.error("Lỗi khi kiểm tra sinh viên:", error);
+                    callback(false);
+                });
+            } else {
+                alert('Sai mật khẩu !');
+                callback(false);
+            }
+        }
+
+        async function CheckStudentHaveted() {
+            const examSessionCode = document.getElementById('examSessionCode').textContent;
+
+            const response = await fetch('exam-schedule.aspx/CheckStudentHaveEntered', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ examSessionCode: examSessionCode })
+            });
+
+            const res = await response.json();
+            return res.d.status;
         }
     </script>
 </asp:Content>

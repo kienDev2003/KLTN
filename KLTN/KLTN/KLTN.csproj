@@ -85,9 +85,11 @@
     <Content Include="pages\index.aspx" />
     <Content Include="pages\question-created.aspx" />
     <Content Include="pages\question.aspx" />
+    <Content Include="pages\quiz.aspx" />
     <Content Include="pages\subject-lecturer.aspx" />
     <Content Include="pages\subject-teaching.aspx" />
     <Content Include="pages\subject.aspx" />
+    <Content Include="pages\testing.aspx" />
     <Content Include="pages\view-exam.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -238,6 +240,13 @@
     <Compile Include="pages\question.aspx.designer.cs">
       <DependentUpon>question.aspx</DependentUpon>
     </Compile>
+    <Compile Include="pages\quiz.aspx.cs">
+      <DependentUpon>quiz.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\quiz.aspx.designer.cs">
+      <DependentUpon>quiz.aspx</DependentUpon>
+    </Compile>
     <Compile Include="pages\subject-lecturer.aspx.cs">
       <DependentUpon>subject-lecturer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -258,6 +267,13 @@
     </Compile>
     <Compile Include="pages\subject.aspx.designer.cs">
       <DependentUpon>subject.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pages\testing.aspx.cs">
+      <DependentUpon>testing.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\testing.aspx.designer.cs">
+      <DependentUpon>testing.aspx</DependentUpon>
     </Compile>
     <Compile Include="pages\view-exam.aspx.cs">
       <DependentUpon>view-exam.aspx</DependentUpon>

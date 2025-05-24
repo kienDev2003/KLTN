@@ -105,6 +105,8 @@
 
             const exam = await HandleGetExamPaper();
 
+            console.log(exam);
+
             document.getElementById('examTitle').value = exam.ExamPaperText || 'N/A';
             document.getElementById('examTime').value = exam.ExamTime || 'N/A';
             document.getElementById('questionCount').textContent = exam.questions ? exam.questions.length : 0;

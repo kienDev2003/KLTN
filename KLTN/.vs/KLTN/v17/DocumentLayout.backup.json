@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|c:\\users\\kiendev2003\\desktop\\kltn\\kltn\\kltn\\pages\\master\\home.master.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|solutionrelative:kltn\\pages\\master\\home.master.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|c:\\users\\kiendev2003\\desktop\\kltn\\kltn\\kltn\\pages\\exam-schedule.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|solutionrelative:kltn\\pages\\exam-schedule.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|c:\\users\\kiendev2003\\desktop\\kltn\\kltn\\kltn\\pages\\examsession.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|solutionrelative:kltn\\pages\\examsession.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+      "AbsoluteMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\kltn\\pages\\exam-schedule.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|solutionrelative:kltn\\pages\\exam-schedule.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|c:\\users\\kiendev2003\\desktop\\kltn\\kltn\\kltn\\pages\\examsession.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|solutionrelative:kltn\\pages\\examsession.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|c:\\users\\kiendev2003\\desktop\\kltn\\kltn\\kltn\\pages\\testing.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|solutionrelative:kltn\\pages\\testing.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|c:\\users\\kiendev2003\\desktop\\kltn\\kltn\\kltn\\pages\\testing.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|solutionrelative:kltn\\pages\\testing.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\kltn\\bll\\examsessionbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -25,6 +25,18 @@
     {
       "AbsoluteMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\kltn\\dal\\examsessiondal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|solutionrelative:kltn\\dal\\examsessiondal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|c:\\users\\kiendev2003\\desktop\\kltn\\kltn\\kltn\\pages\\view-exam.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|solutionrelative:kltn\\pages\\view-exam.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|c:\\users\\kiendev2003\\desktop\\kltn\\kltn\\kltn\\pages\\question-created.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|solutionrelative:kltn\\pages\\question-created.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|c:\\users\\kiendev2003\\desktop\\kltn\\kltn\\kltn\\models\\res\\exam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C66F1488-BFF4-42EA-9494-99EF691D051F}|KLTN\\KLTN.csproj|solutionrelative:kltn\\models\\res\\exam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -39,53 +51,40 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "home.Master.cs",
-              "DocumentMoniker": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\master\\home.Master.cs",
-              "RelativeDocumentMoniker": "KLTN\\pages\\master\\home.Master.cs",
-              "ToolTip": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\master\\home.Master.cs",
-              "RelativeToolTip": "KLTN\\pages\\master\\home.Master.cs",
-              "ViewState": "AgIAAFwAAAAAAAAAAAAAAGYAAACJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-22T18:43:22.091Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
               "Title": "exam-schedule.aspx.cs",
               "DocumentMoniker": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\exam-schedule.aspx.cs",
               "RelativeDocumentMoniker": "KLTN\\pages\\exam-schedule.aspx.cs",
               "ToolTip": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\exam-schedule.aspx.cs",
               "RelativeToolTip": "KLTN\\pages\\exam-schedule.aspx.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAswCEAAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAACQAAAAAAAAAAAAYwDUAAADTAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-22T18:40:17.89Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "examSession.aspx.cs",
-              "DocumentMoniker": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\examSession.aspx.cs",
-              "RelativeDocumentMoniker": "KLTN\\pages\\examSession.aspx.cs",
-              "ToolTip": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\examSession.aspx.cs",
-              "RelativeToolTip": "KLTN\\pages\\examSession.aspx.cs",
-              "ViewState": "AgIAAGgAAAAAAAAAAAA6wIMAAAA5AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-22T08:21:56.28Z",
+              "WhenOpened": "2025-05-24T16:54:35.27Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "examSession.aspx",
-              "DocumentMoniker": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\examSession.aspx",
-              "RelativeDocumentMoniker": "KLTN\\pages\\examSession.aspx",
-              "ToolTip": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\examSession.aspx",
-              "RelativeToolTip": "KLTN\\pages\\examSession.aspx",
+              "Title": "testing.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\testing.aspx.cs",
+              "RelativeDocumentMoniker": "KLTN\\pages\\testing.aspx.cs",
+              "ToolTip": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\testing.aspx.cs",
+              "RelativeToolTip": "KLTN\\pages\\testing.aspx.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAwB8AAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-24T07:43:30.403Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "exam-schedule.aspx",
+              "DocumentMoniker": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\exam-schedule.aspx",
+              "RelativeDocumentMoniker": "KLTN\\pages\\exam-schedule.aspx",
+              "ToolTip": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\exam-schedule.aspx",
+              "RelativeToolTip": "KLTN\\pages\\exam-schedule.aspx",
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-05-22T06:44:57.797Z",
+              "WhenOpened": "2025-05-23T02:36:17.514Z",
               "EditorCaption": ""
             },
             {
@@ -96,7 +95,7 @@
               "RelativeDocumentMoniker": "KLTN\\BLL\\ExamSessionBLL.cs",
               "ToolTip": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\BLL\\ExamSessionBLL.cs",
               "RelativeToolTip": "KLTN\\BLL\\ExamSessionBLL.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAAgwIsAAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAAKAAAAAAAAAAAAAYwKsAAABeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-21T17:28:56.413Z",
               "EditorCaption": ""
@@ -109,9 +108,61 @@
               "RelativeDocumentMoniker": "KLTN\\DAL\\ExamSessionDAL.cs",
               "ToolTip": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\DAL\\ExamSessionDAL.cs",
               "RelativeToolTip": "KLTN\\DAL\\ExamSessionDAL.cs",
-              "ViewState": "AgIAAAsBAAAAAAAAAADwvxIBAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAANQAAAAAAAAAAAAzwGgBAABaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-21T17:18:18.409Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "testing.aspx",
+              "DocumentMoniker": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\testing.aspx",
+              "RelativeDocumentMoniker": "KLTN\\pages\\testing.aspx",
+              "ToolTip": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\testing.aspx",
+              "RelativeToolTip": "KLTN\\pages\\testing.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2025-05-24T06:43:24.113Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Exam.cs",
+              "DocumentMoniker": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\Models\\Res\\Exam.cs",
+              "RelativeDocumentMoniker": "KLTN\\Models\\Res\\Exam.cs",
+              "ToolTip": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\Models\\Res\\Exam.cs",
+              "RelativeToolTip": "KLTN\\Models\\Res\\Exam.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-24T15:08:17.1Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "question-created.aspx",
+              "DocumentMoniker": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\question-created.aspx",
+              "RelativeDocumentMoniker": "KLTN\\pages\\question-created.aspx",
+              "ToolTip": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\question-created.aspx",
+              "RelativeToolTip": "KLTN\\pages\\question-created.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2025-05-24T15:17:41.639Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "view-exam.aspx",
+              "DocumentMoniker": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\view-exam.aspx",
+              "RelativeDocumentMoniker": "KLTN\\pages\\view-exam.aspx",
+              "ToolTip": "C:\\Users\\KienDev2003\\Desktop\\KLTN\\KLTN\\KLTN\\pages\\view-exam.aspx",
+              "RelativeToolTip": "KLTN\\pages\\view-exam.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2025-05-24T06:43:58.737Z",
               "EditorCaption": ""
             }
           ]

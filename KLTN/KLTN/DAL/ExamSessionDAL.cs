@@ -167,6 +167,28 @@ namespace KLTN.DAL
             return data;
         }
 
+        public DataTable GetAllExamSessionByStudentCode(string studentCode)
+        {
+            DataTable data = new DataTable();
+            string query = @"SELECT ExamSession.* FROM ExamSession_Student
+                             JOIN ExamSession ON ExamSession.ExamSessionCode = ExamSession_Student.ExamSessionCode
+                             WHERE ExamSession_Student.StudentCode = @studentCode";
+
+            using(SqlConnection conn = _db.GetConn())
+            {
+                using(SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@studentCode", studentCode);
+
+                    using(SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(data);
+                    }
+                }
+            }
+            return data;
+        }
+
         public DataTable GetExamSession(int examSessionCode)
         {
             DataTable data = new DataTable();
@@ -272,6 +294,38 @@ namespace KLTN.DAL
             return false;
         }
 
+        public bool HandleLoginStudent(int examSessionCode, string studentCode)
+        {
+            string query = @"UPDATE ExamSession_Student SET StudentHaveEntered = 1 
+                             WHERE ExamSessionCode = @examSessionCode AND StudentCode = @studentCode";
+
+            using (SqlConnection conn = _db.GetConn())
+            {
+                using (SqlTransaction tran = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SqlCommand cmd = new SqlCommand(query, conn, tran))
+                        {
+                            cmd.Parameters.AddWithValue("@examSessionCode", examSessionCode);
+                            cmd.Parameters.AddWithValue("@studentCode", studentCode);
+
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        tran.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                    }
+                }
+            }
+
+            return false;
+        }
+
         public bool HandleSubmissionRequirements(int examSessionCode, string studentCode)
         {
             string query = @"UPDATE ExamSession_Student SET SubmissionRequirements = 1
@@ -297,6 +351,28 @@ namespace KLTN.DAL
                     catch (Exception ex)
                     {
                         tran.Rollback();
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public bool HandleCheckStudentHaveEntered(int examSessionCode, string studentCode)
+        {
+            string query = @"SELECT StudentHaveEntered FROM ExamSession_Student
+                             WHERE ExamSessionCode = @examSessionCode AND StudentCode = @studentCode AND StudentHaveEntered = 1";
+
+            using(SqlConnection conn = _db.GetConn())
+            {
+                using(SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@examSessionCode", examSessionCode);
+                    cmd.Parameters.AddWithValue("@studentCode", studentCode);
+
+                    using(SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read()) return true;
                     }
                 }
             }

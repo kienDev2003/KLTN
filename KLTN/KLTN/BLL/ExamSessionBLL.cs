@@ -82,6 +82,32 @@ namespace KLTN.BLL
             return examSessions;
         }
 
+        public List<Models.Req.ExamSession> GetAllExamSessionByStudentCode(string studentCode)
+        {
+            DataTable data = _examSessionDAL.GetAllExamSessionByStudentCode(studentCode);
+
+            if (data.Rows.Count <= 0) return null;
+
+            List<Models.Req.ExamSession> examSessions = new List<Models.Req.ExamSession>();
+            foreach (DataRow row in data.Rows)
+            {
+                examSessions.Add(new Models.Req.ExamSession()
+                {
+                    ExamSessionCode = Convert.ToInt32(row["ExamSessionCode"]),
+                    SubjectCode = row["SubjectCode"].ToString(),
+                    StartExamDate = Convert.ToDateTime(row["StartExamDate"]),
+                    EndExamDate = Convert.ToDateTime(row["EndExamDate"]),
+                    ExamPaperCode = Convert.ToInt32(row["ExamPaperCode"]),
+                    CreateByLecturer = row["CreateByLecturer"].ToString(),
+                    ExamSessionPassword = row["ExamSessionPassword"].ToString(),
+                    InvigilatorMainCode = row["InvigilatorMainCode"].ToString(),
+                    InvigilatorCode = row["InvigilatorCode"].ToString()
+                });
+            }
+
+            return examSessions;
+        }
+
         public Models.Req.ExamSession GetExamSession(int examSessionCode)
         {
             DataTable data = _examSessionDAL.GetExamSession(examSessionCode);
@@ -135,6 +161,15 @@ namespace KLTN.BLL
         public bool HandleLogoutStudent(string studentCode, int examSessionCode)
         {
             return _examSessionDAL.HandleLogoutStudent(examSessionCode, studentCode);
+        }
+        public bool HandleLoginStudent(string studentCode, int examSessionCode)
+        {
+            return _examSessionDAL.HandleLoginStudent(examSessionCode, studentCode);
+        }
+
+        public bool HandleCheckStudentHaveEntered(string studentCode, int examSessionCode)
+        {
+            return _examSessionDAL.HandleCheckStudentHaveEntered(examSessionCode,studentCode);
         }
 
         public bool HandleSubmissionRequirements(string  studentCode, int examSessionCode)
