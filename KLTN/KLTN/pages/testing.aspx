@@ -32,6 +32,29 @@
                 transform: translateY(0);
             }
         }
+
+        html, body {
+            height: 100%;
+            overflow: hidden; /* Ẩn scrollbar mặc định */
+        }
+
+        #examContent {
+            display: flex; /* Đảm bảo examContent là flex container */
+            flex-direction: column; /* Các item bên trong xếp theo chiều dọc */
+            height: 100%; /* Chiếm toàn bộ chiều cao của body */
+        }
+
+        /* Đảm bảo phần câu hỏi có thể cuộn độc lập */
+        .flex-1 {
+            overflow-y: auto; /* Cho phép cuộn dọc cho phần câu hỏi */
+            height: calc(100vh - 80px); /* 100vh trừ đi chiều cao của header cố định */
+        }
+
+        /* Đảm bảo sidebar sơ đồ câu hỏi cũng có thể cuộn nếu cần */
+        .w-80 {
+            overflow-y: auto; /* Cho phép cuộn dọc cho sidebar */
+            height: calc(100vh - 80px); /* Tương tự, trừ đi chiều cao của header */
+        }
     </style>
 </head>
 
@@ -157,10 +180,11 @@
             let answeredQuestions = new Set();
             let timerInterval;
             let submitExam = [];
+            let numberHiddenDoc = 0;
 
             let examObject = {};
 
-            async function startExam() {
+            function startExam() {
                 document.getElementById('examInfoPopup').style.display = 'none';
                 document.getElementById('examContent').style.display = 'block';
 
@@ -169,6 +193,25 @@
                 renderQuestions();
                 renderQuestionMap();
                 timerInterval = setInterval(updateTimer, 1000);
+
+                document.addEventListener('visibilitychange', CheckHiddenWindow);
+            }
+
+            function CheckHiddenWindow() {
+                if (document.hidden) {
+                    numberHiddenDoc++;
+                    pendingWarning = true;
+                } else if (pendingWarning) {
+                    pendingWarning = false;
+
+                    if (numberHiddenDoc === 4) {
+                        alert(`Đạt giới hạn cảnh báo. Tự động nộp bài!`);
+                        submitExamFunction();
+                    }
+                    else {
+                        alert(`Cảnh báo gian lận do chuyển tab! (lần ${numberHiddenDoc})`);
+                    }
+                }
             }
 
             function updateTimer() {
@@ -195,7 +238,6 @@
 
                         const totalSeconds = minutes * 60;
 
-                        console.log(totalSeconds);
                         return totalSeconds;
                     } else {
                         return 300;
@@ -342,6 +384,8 @@
             window.addEventListener('DOMContentLoaded', async () => {
                 await LoadContentExamPaper();
             });
+            
+
         </script>
     </form>
 </body>
