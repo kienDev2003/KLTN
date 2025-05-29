@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
@@ -117,6 +118,81 @@ namespace KLTN.BLL
         public bool ExamPaperApproved(int examPaperCode, string lecturerCodeApproved)
         {
             return _examDAL.ExamPaperApproved(examPaperCode, lecturerCodeApproved);
+        }
+
+        public int GetNumberQuestion(int examPaperCode)
+        {
+            return _examDAL.GetNumberQuestion(examPaperCode);
+        }
+
+        public bool InsertExamSubmitted(Models.Req.ExamSubmitted examSubmit, float score, string studentCode,int numberQuestionTotal,int numberQuestionTrue)
+        {
+            return _examDAL.InsertExamSubmitted(examSubmit, score, studentCode, numberQuestionTotal, numberQuestionTrue);
+        }
+
+        public Models.Res.Exam_Result GetExamResultForStudent(int examSessionCode, string studentCode)
+        {
+            DataTable data = _examDAL.GetExamResultForStudent(examSessionCode, studentCode);
+
+            if (data.Rows.Count <= 0) return null;
+
+            Models.Res.Exam_Result exam_Result = new Models.Res.Exam_Result();
+            foreach(DataRow row in data.Rows)
+            {
+                exam_Result.ExamPaperName = row["ExamPaperText"].ToString();
+                exam_Result.TotalQuestions = Convert.ToInt32(row["NumberQuestionTotal"]);
+                exam_Result.CorrectAnswers = Convert.ToInt32(row["NumberQuestionTrue"]);
+                exam_Result.Score = Math.Round(Convert.ToDouble(row["Score"]), 2);
+                exam_Result.Note = row["Note"].ToString();
+            }
+
+            return exam_Result;
+        }
+
+        public bool InsertWarringHiddenWindow(int examSessionCode, string studentCode)
+        {
+            return _examDAL.InsertWarringHiddenWindow(examSessionCode, studentCode);
+        }
+
+        public List<Models.Res.ExamSessionWarring> GetAllExamSessionWarring(int examSessionCode)
+        {
+            DataTable data = _examDAL.GetAllExamSessionWarring(examSessionCode);
+
+            if (data.Rows.Count <= 0) return null;
+
+            List<Models.Res.ExamSessionWarring> examSessionWarrings = new List<Models.Res.ExamSessionWarring>();
+            foreach(DataRow row in data.Rows)
+            {
+                examSessionWarrings.Add(new Models.Res.ExamSessionWarring()
+                {
+                    StudentCode = row["StudentCode"].ToString(),
+                    DateWarring = Convert.ToDateTime(row["DateWarring"]),
+                    ExamSessionCode = Convert.ToInt32(row["ExamSessionCode"])
+                });
+            }
+
+            return examSessionWarrings;
+        }
+
+        public bool CheckedWarring(string studentCode, int examSessionCode)
+        {
+            return _examDAL.CheckedWarring(examSessionCode,studentCode);
+        }
+
+        public Models.Res.SubmissionRequirements CheckSubmissionRequirements(int examSessionCode, string studentCode)
+        {
+            DataTable data = _examDAL.CheckSubmissionRequirements(studentCode,examSessionCode);
+
+            if (data.Rows.Count <= 0) return null;
+
+            Models.Res.SubmissionRequirements submissionRequirements = new Models.Res.SubmissionRequirements();
+            foreach(DataRow row in data.Rows)
+            {
+                submissionRequirements.Status = Convert.ToBoolean(row["SubmissionRequirements"]);
+                submissionRequirements.NoteSubmissionRequirements = Convert.ToString(row["NoteSubmissionRequirements"]);
+            }
+
+            return submissionRequirements;
         }
     }
 }

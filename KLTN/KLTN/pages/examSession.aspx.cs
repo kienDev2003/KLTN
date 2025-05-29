@@ -129,12 +129,30 @@ namespace KLTN.pages
         }
 
         [WebMethod]
-        public static object HandleSubmissionRequirements(string studentCode, int examSessionCode)
+        public static object HandleSubmissionRequirements(string studentCode, int examSessionCode, string noteSubmissionRequirements)
         {
-            bool exec = _examSessionBLL.HandleSubmissionRequirements(studentCode, examSessionCode);
+            bool exec = _examSessionBLL.HandleSubmissionRequirements(studentCode, examSessionCode, noteSubmissionRequirements);
 
             if (exec) return new { status = "200", message = "Yêu cầu nộp bài thành công" };
             else return new { status = "404", message = "Not Found" };
+        }
+
+        [WebMethod]
+        public static object HandleGetExamSessionWarring(int examSessionCode)
+        {
+            List<Models.Res.ExamSessionWarring> examSessionWarrings = _examBLL.GetAllExamSessionWarring(examSessionCode);
+
+            if (examSessionWarrings == null) return new { status = "404", message = "Not Found" };
+            else return new { status = "200", examSessionWarrings = examSessionWarrings };
+        }
+
+        [WebMethod]
+        public static object HandleCheckedWarring(string studentCode, int examSessionCode)
+        {
+            bool exec = _examBLL.CheckedWarring(studentCode, examSessionCode);
+
+            if (exec) return new { status = "200" };
+            else return new { status = "500", message = "Server Update Status Warring Error" };
         }
     }
 }

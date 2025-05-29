@@ -326,9 +326,9 @@ namespace KLTN.DAL
             return false;
         }
 
-        public bool HandleSubmissionRequirements(int examSessionCode, string studentCode)
+        public bool HandleSubmissionRequirements(int examSessionCode, string studentCode, string noteSubmissionRequirements)
         {
-            string query = @"UPDATE ExamSession_Student SET SubmissionRequirements = 1
+            string query = @"UPDATE ExamSession_Student SET SubmissionRequirements = 1, NoteSubmissionRequirements = @noteSubmissionRequirements
                              WHERE ExamSessionCode = @examSessionCode AND StudentCode = @studentCode";
 
             using (SqlConnection conn = _db.GetConn())
@@ -341,6 +341,7 @@ namespace KLTN.DAL
                         {
                             cmd.Parameters.AddWithValue("@examSessionCode", examSessionCode);
                             cmd.Parameters.AddWithValue("@studentCode", studentCode);
+                            cmd.Parameters.AddWithValue("@noteSubmissionRequirements", noteSubmissionRequirements);
 
                             cmd.ExecuteNonQuery();
                         }
@@ -379,5 +380,6 @@ namespace KLTN.DAL
 
             return false;
         }
+
     }
 }

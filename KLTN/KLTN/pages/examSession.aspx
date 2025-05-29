@@ -28,31 +28,36 @@
         }
 
         .left-panel {
-            flex: 1;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            overflow: auto;
-        }
-
-        .right-panel {
-            flex: 1;
+            flex: 2;
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
 
-        .right-top {
+        .right-panel {
+            flex: 1;
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            flex: 1;
             overflow: auto;
         }
 
-        .right-bottom {
+        .exam-info-section {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .add-student-section {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .student-table-section {
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -229,57 +234,88 @@
             font-size: 20px;
             cursor: pointer;
         }
+
+        .notification-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            background-color: #f9fafb;
+        }
+
+        .notification-content {
+            flex: 1;
+            margin-right: 10px;
+        }
     </style>
 </head>
 
 <body>
     <form runat="server">
-        <div class="flex">
-            <!-- Phần bên trái - Bảng thông tin sinh viên -->
+        <div class="container">
+            <!-- Phần bên trái -->
             <div class="left-panel">
-                <h2>Thông tin sinh viên</h2>
+                <!-- Thêm sinh viên -->
+                <div class="add-student-section">
+                    <h3>Thêm sinh viên vào ca thi</h3>
+                    <form id="add-student-form">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label for="student-id">Mã SV</label>
+                                <input type="text" id="student-id">
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <input type="button" class="cursor-pointer px-3 py-2 bg-green-600 text-white rounded hover:bg-green-700" id="AddStudent" runat="server" onclick="addStudent()" value="Thêm sinh viên">
+                            <input type="button" class="cursor-pointer px-3 py-2 bg-green-600 text-white rounded hover:bg-green-700" id="AddStudentAuto" runat="server" onclick="CreateStudentAccountAuto()" value="Thêm sinh viên tự động">
+                            <input type="button" class="hidden cursor-pointer px-3 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700" id="ExportTestScores" runat="server" value="Xuất danh sách điểm thi">
+                        </div>
+                    </form>
+                </div>
 
                 <!-- Bảng sinh viên -->
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Mã SV</th>
-                            <th>Họ tên</th>
-                            <th>Ngày sinh</th>
-                            <th>Lớp</th>
-                            <th>Trạng thái</th>
-                            <th>Chức năng</th>
-                        </tr>
-                    </thead>
-                    <tbody id="student-table-body">
-                    </tbody>
-                </table>
+                <div class="student-table-section">
+                    <h2>Thông tin sinh viên</h2>
+                    <input type="button" class="cursor-pointer px-2 mt-3 mb-3 bg-green-600 text-white rounded hover:bg-green-700" onclick="GetStudent()" value="Reload">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Mã SV</th>
+                                <th>Họ tên</th>
+                                <th>Ngày sinh</th>
+                                <th>Lớp</th>
+                                <th>Trạng thái</th>
+                                <th>Chức năng</th>
+                            </tr>
+                        </thead>
+                        <tbody id="student-table-body">
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="right-panel max-w-xs px-6">
-                <div class="right-top">
+
+            <!-- Phần bên phải -->
+            <div class="right-panel">
+                <!-- Thông tin ca thi -->
+                <div class="exam-info-section mb-5">
                     <h2>Thông tin ca thi</h2>
                     <div class="exam-info" id="exam_info" runat="server">
                     </div>
                 </div>
 
-                <div class="right-bottom">
-                    <div>
-                        <h3>Thêm sinh viên vào ca thi</h3>
-                        <form id="add-student-form">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <label for="student-id">Mã SV</label>
-                                    <input type="text" id="student-id">
-                                </div>
-                            </div>
-                            <input type="button" class="cursor-pointer mb-3 px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" id="AddStudent" runat="server" onclick="addStudent()" value="Thêm sinh viên">
-                            <input type="button" class="cursor-pointer px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" id="AddStudentAuto" runat="server" onclick="CreateStudentAccountAuto()" value="Thêm sinh viên tự động">
-                            <input type="button" class="hidden cursor-pointer px-2 py-1 bg-yellow-600 text-white rounded hover:bg-yellow-700" id="ExportTestScores" runat="server" value="Xuất danh sách điểm thi">
-                        </form>
+                <!-- Bảng thông báo -->
+                <div>
+                    <h2>Thông báo</h2>
+                    <div id="notifications-container">
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Modal thêm sinh viên tự động -->
         <div id="student-modal-auto" class="modal">
             <div class="modal-content">
                 <div id="modal-student-form-auto">
@@ -305,8 +341,87 @@
                 </div>
             </div>
         </div>
+
         <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
         <script>
+            function formatMsDate(dateString) {
+                const match = dateString.match(/\/Date\((\d+)\)\//);
+
+                if (!match || match.length < 2) {
+                    console.error("Định dạng ngày không hợp lệ:", dateString);
+                    return "Ngày không hợp lệ";
+                }
+
+                const timestamp = parseInt(match[1], 10);
+                const date = new Date(timestamp);
+
+                const hours = date.getHours().toString().padStart(2, '0');
+                const minutes = date.getMinutes().toString().padStart(2, '0');
+                const seconds = date.getSeconds().toString().padStart(2, '0');
+
+                const day = date.getDate().toString().padStart(2, '0');
+                const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                const year = date.getFullYear();
+
+                return `${hours}:${minutes}:${seconds} ${day}/${month}/${year}`;
+            }
+
+            async function GetExamSessionWarring() {
+                const examSessionCode = new URLSearchParams(location.search).get("examSessionCode");
+                const container = document.getElementById('notifications-container');
+                container.innerHTML = '';
+
+                const response = await fetch('examSession.aspx/HandleGetExamSessionWarring', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ examSessionCode: examSessionCode })
+                });
+
+                const res = await response.json();
+
+                if (res.d.status !== '200') {
+                    return;
+                }
+                else {
+                    const examSessionWarrings = res.d.examSessionWarrings;
+
+                    for (examSessionWarring of examSessionWarrings) {
+                        const notificationHTML = `
+                                                    <div class="notification-item">
+                                                        <div class="notification-content">
+                                                            <p class="text-sm font-medium text-gray-800">Sinh viên mã ${examSessionWarring.StudentCode} đã ẩn màn hình thi lúc ${formatMsDate(examSessionWarring.DateWarring)}</p>
+                                                        </div>
+                                                        <button type="button" class="px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700" onclick="CheckedWarring('${examSessionWarring.StudentCode}',${examSessionWarring.ExamSessionCode})">
+                                                            Đã kiểm tra
+                                                        </button>
+                                                    </div>
+                                                `;
+                        container.insertAdjacentHTML('afterbegin', notificationHTML);
+                    }
+                }
+            }
+
+            async function CheckedWarring(studentCode, examSessionCode) {
+                const response = await fetch('examSession.aspx/HandleCheckedWarring', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ studentCode: studentCode, examSessionCode: examSessionCode })
+                });
+
+                const res = await response.json();
+
+                if (res.d.status === '200') {
+                    GetExamSessionWarring();
+                }
+                else {
+                    alert(res.d.message);
+                }
+            }
+
             async function GetStudent() {
                 const examSessionCode = new URLSearchParams(location.search).get("examSessionCode");
 
@@ -369,12 +484,18 @@
             async function SubmissionRequirements(studentCode) {
                 const examSessionCode = new URLSearchParams(location.search).get("examSessionCode");
 
+                let noteSubmissionRequirements = prompt("Nhập lý do yêu cầu nộp bài:");
+
+                if (noteSubmissionRequirements === null) {
+                    noteSubmissionRequirements = ''
+                };
+
                 const response = await fetch('examSession.aspx/HandleSubmissionRequirements', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ studentCode: studentCode, examSessionCode: examSessionCode })
+                    body: JSON.stringify({ studentCode: studentCode, examSessionCode: examSessionCode, noteSubmissionRequirements: noteSubmissionRequirements })
                 });
 
                 const res = await response.json();
@@ -385,7 +506,6 @@
                 }
                 else {
                     alert(res.d.message);
-                    window.location.reload();
                 }
             }
 
@@ -408,7 +528,7 @@
                 }
                 else {
                     alert(res.d.message);
-                    window.location.reload();
+                    GetStudent();
                 }
             }
 
@@ -436,6 +556,9 @@
 
                 if (res > 0) {
                     alert('Them student thanh cong');
+                    addNotification(`Đã thêm sinh viên ${studentCode} vào ca thi`);
+                    document.getElementById('student-id').value = '';
+                    GetStudent();
                 }
                 else {
                     alert('Loi');
@@ -447,6 +570,9 @@
 
                 if (numberstudent !== 0) {
                     alert(`Thêm thành công ${numberstudent} sinh viên !`);
+                    addNotification(`Đã thêm ${numberstudent} sinh viên từ file Excel`);
+                    CancelStudent();
+                    GetStudent();
                 } else {
                     alert("Lỗi thêm sinh viên");
                 }
@@ -479,14 +605,12 @@
                                         user.DateOfBirth = `${day}/${month}/${year}`;
                                     }
 
-                                    console.log(user.StudentCode);
                                     const result = await InsertStudent(user.StudentCode, examSessionCode);
                                     numberstudent += result;
                                 }
 
                                 resolve(numberstudent);
                             } catch (err) {
-                                console.log(err);
                                 reject(0);
                             }
                         };
@@ -518,12 +642,18 @@
                 return res.d.status === '200' ? 1 : 0;
             }
 
+            function CheckEndExamSession() {
+
+            }
+
             function HandleWindowLoaded() {
                 GetStudent();
                 CheckEndExamSession();
+                setInterval(GetExamSessionWarring, 10000);
+                GetExamSessionWarring();
             }
 
-            window.addEventListener('DOMContentLoaded', HandleWindowLoaded());
+            window.addEventListener('DOMContentLoaded', HandleWindowLoaded);
         </script>
     </form>
 </body>

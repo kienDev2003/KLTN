@@ -15,15 +15,6 @@ namespace KLTN.pages
     {
 
         /// <summary>
-        /// exam_info control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl exam_info;
-
-        /// <summary>
         /// AddStudent control.
         /// </summary>
         /// <remarks>
@@ -49,5 +40,14 @@ namespace KLTN.pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputButton ExportTestScores;
+
+        /// <summary>
+        /// exam_info control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl exam_info;
     }
 }

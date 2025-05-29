@@ -32,29 +32,6 @@
                 transform: translateY(0);
             }
         }
-
-        html, body {
-            height: 100%;
-            overflow: hidden; /* Ẩn scrollbar mặc định */
-        }
-
-        #examContent {
-            display: flex; /* Đảm bảo examContent là flex container */
-            flex-direction: column; /* Các item bên trong xếp theo chiều dọc */
-            height: 100%; /* Chiếm toàn bộ chiều cao của body */
-        }
-
-        /* Đảm bảo phần câu hỏi có thể cuộn độc lập */
-        .flex-1 {
-            overflow-y: auto; /* Cho phép cuộn dọc cho phần câu hỏi */
-            height: calc(100vh - 80px); /* 100vh trừ đi chiều cao của header cố định */
-        }
-
-        /* Đảm bảo sidebar sơ đồ câu hỏi cũng có thể cuộn nếu cần */
-        .w-80 {
-            overflow-y: auto; /* Cho phép cuộn dọc cho sidebar */
-            height: calc(100vh - 80px); /* Tương tự, trừ đi chiều cao của header */
-        }
     </style>
 </head>
 
@@ -134,10 +111,10 @@
             <div class="fixed top-0 left-0 right-0 bg-white shadow-md z-50 px-6 py-4">
                 <div class="flex justify-between items-center">
                     <div class="text-lg font-semibold text-gray-800">
-                        Thí sinh: <span class="text-blue-600">Nguyễn Văn A</span>
+                        Thí sinh: <span runat="server" id="student_name" class="text-blue-600"></span>
                     </div>
                     <div class="text-xl font-bold text-red-600" id="timer">25:00</div>
-                    <button type="button" onclick="submitExamFunction()"
+                    <button type="button" onclick="btn_submitExam()"
                         class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg font-medium transition-colors">
                         Nộp bài
                     </button>
@@ -181,6 +158,7 @@
             let timerInterval;
             let submitExam = [];
             let numberHiddenDoc = 0;
+            let note = '';
 
             let examObject = {};
 
@@ -199,18 +177,27 @@
 
             function CheckHiddenWindow() {
                 if (document.hidden) {
-                    numberHiddenDoc++;
                     pendingWarning = true;
-                } else if (pendingWarning) {
-                    pendingWarning = false;
+                    InsertWarringHiddenWindow();
+                }
+            }
 
-                    if (numberHiddenDoc === 4) {
-                        alert(`Đạt giới hạn cảnh báo. Tự động nộp bài!`);
-                        submitExamFunction();
-                    }
-                    else {
-                        alert(`Cảnh báo gian lận do chuyển tab! (lần ${numberHiddenDoc})`);
-                    }
+            async function InsertWarringHiddenWindow() {
+                const examSessionCode = new URLSearchParams(window.location.search).get('examSessionCode');
+
+                const response = await fetch('testing.aspx/InsertWarringHiddenWindow', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ examSessionCode: examSessionCode })
+                });
+
+                const res = await response.json();
+
+                if (res.d.status !== '200') {
+                    alert(res.d.message);
+                    return;
                 }
             }
 
@@ -338,7 +325,7 @@
                 });
             }
 
-            function submitExamFunction() {
+            async function btn_submitExam() {
                 const confirmSubmit = confirm('Bạn có chắc chắn muốn nộp bài không?');
                 if (confirmSubmit) {
                     if (submitExam === null || (Array.isArray(submitExam) && submitExam.length === 0)) {
@@ -348,10 +335,42 @@
                             return;
                         }
                     }
-                    console.log('Submit data:', submitExam);
-                    alert('Nộp bài thành công!');
-                    clearInterval(timerInterval);
+
+                    await submitExamFunction();
                 }
+            }
+
+            async function submitExamFunction() {
+                const examPaperCode = new URLSearchParams(window.location.search).get('examPaperCode');
+                const examSessionCode = new URLSearchParams(window.location.search).get('examSessionCode');
+
+                var examSubmit = {
+                    examSessionCode: examSessionCode,
+                    examPaperCode: examPaperCode,
+                    note: note,
+                    questions: submitExam,
+                    questionSubmitJson: JSON.stringify(submitExam)
+                };
+
+                const response = await fetch('testing.aspx/ExamSubmit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ examSubmit: examSubmit })
+                });
+
+                const res = await response.json();
+
+                if (res.d.status !== '200') {
+                    alert(res.d.message);
+                    return;
+                }
+                else {
+                    window.location.href = `/pages/exam-result.aspx?examSessionCode=${examSessionCode}`;
+                }
+
+                clearInterval(timerInterval);
             }
 
             async function LoadContentExamPaper() {
@@ -381,10 +400,30 @@
                 examObject = examPaper;
             }
 
+            async function CheckSubmissionRequirements() {
+                const examSessionCode = new URLSearchParams(window.location.search).get('examSessionCode');
+
+                const response = await fetch('testing.aspx/CheckSubmissionRequirements', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ examSessionCode: examSessionCode })
+                });
+
+                const res = await response.json();
+
+                if (res.d.status === true) {
+                    note = res.d.note;
+                    alert(`Bạn được yêu cầu nộp bài !. Lý do: ${note}`)
+                    submitExamFunction();
+                }
+            }
+
             window.addEventListener('DOMContentLoaded', async () => {
                 await LoadContentExamPaper();
+                setInterval(CheckSubmissionRequirements, 5000);
             });
-            
 
         </script>
     </form>

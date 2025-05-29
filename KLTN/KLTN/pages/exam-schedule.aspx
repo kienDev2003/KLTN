@@ -26,14 +26,16 @@
         }
 
         function handleExamClick(anchorElement, passwordExamSession) {
-            CheckPassword(passwordExamSession, function (allowed) {
+            const examSessionCode = anchorElement.querySelector('#examSessionCode').textContent;
+
+            CheckPassword(passwordExamSession, examSessionCode, function (allowed) {
                 if (allowed) {
                     window.location.href = anchorElement.href;
                 }
             });
         }
 
-        function CheckPassword(passwordExamSession, callback) {
+        function CheckPassword(passwordExamSession, examSessionCode, callback) {
             let inputPassword = prompt('Nhập mật khẩu ca thi được cấp !');
 
             if (inputPassword === null) {
@@ -42,7 +44,7 @@
             }
 
             if (passwordExamSession === inputPassword) {
-                CheckStudentHaveted().then(status => {
+                CheckStudentHaveted(examSessionCode).then(status => {
                     if (status === true) {
                         alert('Bạn đã ở trong ca thi. Hãy xin cấp quyền vào lại !');
                         callback(false);
@@ -59,8 +61,7 @@
             }
         }
 
-        async function CheckStudentHaveted() {
-            const examSessionCode = document.getElementById('examSessionCode').textContent;
+        async function CheckStudentHaveted(examSessionCode) {
 
             const response = await fetch('exam-schedule.aspx/CheckStudentHaveEntered', {
                 method: 'POST',

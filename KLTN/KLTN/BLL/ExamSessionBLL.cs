@@ -172,9 +172,9 @@ namespace KLTN.BLL
             return _examSessionDAL.HandleCheckStudentHaveEntered(examSessionCode,studentCode);
         }
 
-        public bool HandleSubmissionRequirements(string  studentCode, int examSessionCode)
+        public bool HandleSubmissionRequirements(string  studentCode, int examSessionCode, string noteSubmissionRequirements)
         {
-            return _examSessionDAL.HandleSubmissionRequirements(examSessionCode, studentCode);
+            return _examSessionDAL.HandleSubmissionRequirements(examSessionCode, studentCode, noteSubmissionRequirements);
         }
     }
 }

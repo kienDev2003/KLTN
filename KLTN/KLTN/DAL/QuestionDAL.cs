@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.UI.WebControls;
 
 namespace KLTN.DAL
 {
@@ -359,6 +360,32 @@ namespace KLTN.DAL
                     catch(Exception ex)
                     {
                         tran.Rollback();
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public bool CheckAnswerTrue(int answerCode)
+        {
+            string query = @"SELECT AnswerTrue FROM Answer WHERE AnswerCode = @answerCode";
+
+            using(SqlConnection conn = _db.GetConn())
+            {
+                using(SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@answerCode", answerCode);
+
+                    using(SqlDataReader reader =  cmd.ExecuteReader())
+                    {
+                        if(reader.Read())
+                        {
+                            bool statusAnswer = Convert.ToBoolean(reader["AnswerTrue"]);
+
+                            if (statusAnswer) return true;
+                            else return false;
+                        }
                     }
                 }
             }

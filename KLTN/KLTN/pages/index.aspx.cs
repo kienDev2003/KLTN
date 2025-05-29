@@ -14,7 +14,7 @@ namespace KLTN.pages
         private AccountBLL _accountBLL = new AccountBLL();
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            if (Session["login"] != null) Response.Redirect("~/pages/home.aspx");
         }
         protected void HandleLogin(object sender, EventArgs e)
         {

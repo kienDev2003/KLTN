@@ -78,6 +78,7 @@
     <Content Include="pages\bank-question.aspx" />
     <Content Include="pages\create-exam-session.aspx" />
     <Content Include="pages\exam-created.aspx" />
+    <Content Include="pages\exam-result.aspx" />
     <Content Include="pages\exam-schedule.aspx" />
     <Content Include="pages\exam.aspx" />
     <Content Include="pages\examSession.aspx" />
@@ -115,6 +116,7 @@
     <Compile Include="DB\DbConn.cs" />
     <Compile Include="Models\Req\Exam.cs" />
     <Compile Include="Models\Req\ExamSession.cs" />
+    <Compile Include="Models\Req\ExamSubmitted.cs" />
     <Compile Include="Models\Req\Lecturer.cs" />
     <Compile Include="Models\Req\Login.cs" />
     <Compile Include="Models\Req\Question.cs" />
@@ -122,12 +124,15 @@
     <Compile Include="Models\Req\Subject.cs" />
     <Compile Include="Models\Req\SubjectTeaching.cs" />
     <Compile Include="Models\Res\Exam.cs" />
+    <Compile Include="Models\Res\ExamSessionWarring.cs" />
     <Compile Include="Models\Res\ExamSession_Student.cs" />
+    <Compile Include="Models\Res\Exam_Result.cs" />
     <Compile Include="Models\Res\Lecturer.cs" />
     <Compile Include="Models\Res\Login.cs" />
     <Compile Include="Models\Res\Question.cs" />
     <Compile Include="Models\Res\Student.cs" />
     <Compile Include="Models\Res\Subject.cs" />
+    <Compile Include="Models\Res\SubmissionRequirements.cs" />
     <Compile Include="pages\account-lecturer.aspx.cs">
       <DependentUpon>account-lecturer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -183,6 +188,13 @@
     </Compile>
     <Compile Include="pages\exam-created.aspx.designer.cs">
       <DependentUpon>exam-created.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pages\exam-result.aspx.cs">
+      <DependentUpon>exam-result.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\exam-result.aspx.designer.cs">
+      <DependentUpon>exam-result.aspx</DependentUpon>
     </Compile>
     <Compile Include="pages\exam-schedule.aspx.cs">
       <DependentUpon>exam-schedule.aspx</DependentUpon>

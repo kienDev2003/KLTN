@@ -131,5 +131,10 @@ namespace KLTN.BLL
         {
             return _questionDAL.ApprovalQuestion(questionCode);
         }
+
+        public bool CheckAnswerTrue(int answerCode)
+        {
+            return _questionDAL.CheckAnswerTrue(answerCode);
+        }
     }
 }
