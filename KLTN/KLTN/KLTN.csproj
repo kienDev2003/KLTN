@@ -126,6 +126,7 @@
     <Compile Include="Models\Res\Exam.cs" />
     <Compile Include="Models\Res\ExamSessionWarring.cs" />
     <Compile Include="Models\Res\ExamSession_Student.cs" />
+    <Compile Include="Models\Res\ExamSubmitted.cs" />
     <Compile Include="Models\Res\Exam_Result.cs" />
     <Compile Include="Models\Res\Lecturer.cs" />
     <Compile Include="Models\Res\Login.cs" />

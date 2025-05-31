@@ -37,14 +37,13 @@ namespace KLTN.pages
                 string InvigilatorMainName = GetNameLecturer(examSession.InvigilatorMainCode);
                 string InvigilatorName = GetNameLecturer(examSession.InvigilatorCode);
                 string subjectName = GetNameSubject(examSession.SubjectCode);
-                string examPaperName = GetNameExamPaper(examSession.ExamPaperCode);
                 string password = examSession.ExamSessionPassword;
 
                 html += $"<tr class=\"text-center\">" +
                              $"<td class=\"border border-gray-300 px-4 py-2 max-w-[150px] truncate\" title=\"{subjectName}\">{subjectName}</td>" +
                              $"<td class=\"border border-gray-300 px-4 py-2 max-w-[150px] truncate\" title=\"{startDate}\">{startDate}</td>" +
                              $"<td class=\"border border-gray-300 px-4 py-2 max-w-[150px] truncate\" title=\"{endDate}\">{endDate}</td>" +
-                             $"<td class=\"border border-gray-300 px-4 py-2 max-w-[150px] truncate\" title=\"{examPaperName}\">{examPaperName}</td>" +
+                             $"<td class=\"border border-gray-300 px-4 py-2 max-w-[150px] truncate\" title=\"{examSession.ExamPaperCode}\">{examSession.ExamPaperCode}</td>" +
                              $"<td class=\"border border-gray-300 px-4 py-2 max-w-[150px] truncate\" title=\"{password}\">{password}</td>" +
                              $"<td class=\"border border-gray-300 px-4 py-2 max-w-[150px] truncate\" title=\"{InvigilatorMainName}\">{InvigilatorMainName}</td>" +
                              $"<td class=\"border border-gray-300 px-4 py-2 max-w-[150px] truncate\" title=\"{InvigilatorName}\">{InvigilatorName}</td>" +
@@ -58,13 +57,6 @@ namespace KLTN.pages
             LiteralControl literalControl = new LiteralControl(html);
             examSession_table.Controls.Clear();
             examSession_table.Controls.Add(literalControl);
-        }
-
-        private static string GetNameExamPaper(int examPaperCode)
-        {
-            Models.Res.ExamPaper examPaper = _examBLL.GetExamByExamPaperCode(examPaperCode);
-
-            return examPaper.ExamPaperText;
         }
 
         private static string GetNameSubject(string subjectCode)

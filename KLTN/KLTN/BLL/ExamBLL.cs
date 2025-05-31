@@ -41,7 +41,6 @@ namespace KLTN.BLL
             {
                 exams.Add(new Models.Req.Exam
                 {
-                    ExamName = row["ExamPaperText"].ToString(),
                     ExamTime = Convert.ToInt32(row["ExamTime"]),
                     CreateByLectuterCode = row["CreateByLectuterCode"].ToString(),
                     CreatedDate = Convert.ToDateTime(row["CreatedDate"]),
@@ -65,7 +64,6 @@ namespace KLTN.BLL
             {
                 exams.Add(new Models.Req.Exam
                 {
-                    ExamName = row["ExamPaperText"].ToString(),
                     ExamTime = Convert.ToInt32(row["ExamTime"]),
                     CreateByLectuterCode = row["CreateByLectuterCode"].ToString(),
                     CreatedDate = Convert.ToDateTime(row["CreatedDate"]),
@@ -87,7 +85,6 @@ namespace KLTN.BLL
             Models.Res.ExamPaper examPaper = new Models.Res.ExamPaper();
             foreach (DataRow row in dataExam.Rows)
             {
-                examPaper.ExamPaperText = row["ExamPaperText"].ToString();
                 examPaper.ExamTime = Convert.ToInt32(row["ExamTime"]);
                 examPaper.CreateByLectuterCode = row["CreateByLectuterCode"].ToString();
                 examPaper.CreatedDate = Convert.ToDateTime(row["CreatedDate"]);

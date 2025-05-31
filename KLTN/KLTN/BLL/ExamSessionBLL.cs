@@ -176,5 +176,33 @@ namespace KLTN.BLL
         {
             return _examSessionDAL.HandleSubmissionRequirements(examSessionCode, studentCode, noteSubmissionRequirements);
         }
+
+        public List<Models.Res.ExamSubmitted> HandleGetExportListScroesByExamSessionCode(int examSessionCode)
+        {
+            DataTable data = _examSessionDAL.HandleGetExportListScroesByExamSessionCode(examSessionCode);
+
+            if (data.Rows.Count <= 0) return null;
+
+            List<Models.Res.ExamSubmitted> examSubmitteds = new List<Models.Res.ExamSubmitted>();
+            foreach(DataRow row in data.Rows)
+            {
+                examSubmitteds.Add(new Models.Res.ExamSubmitted()
+                {
+                    ExamSessionCode = Convert.ToInt32(row["ExamSessionCode"]),
+                    ExamPaperCode = Convert.ToInt32(row["ExamPaperCode"]),
+                    StudentCode = row["StudentCode"].ToString(),
+                    StudentName = row["FullName"].ToString(),
+                    StudentDateOfBrith = Convert.ToDateTime(row["DateOfBirth"]).ToString("dd/MM/yyyy"),
+                    StudentClassName = row["ClassName"].ToString(),
+                    SubmittedDate = Convert.ToDateTime(row["SubmittedDate"]).ToString("HH:mm:ss dd/MM/yyyy"),
+                    SubjectName = row["SubjectName"].ToString(),
+                    Score = Convert.ToDouble(row["Score"]),
+                    Note = row["Note"].ToString()
+                });
+            }
+
+            return examSubmitteds;
+
+        }
     }
 }

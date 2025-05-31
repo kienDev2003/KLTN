@@ -35,7 +35,7 @@ namespace KLTN.pages
             foreach (var exam in exams)
             {
                 html += $"<tr class=\"text-center\">" +
-                            $"<td class=\"border border-gray-300 px-4 py-2 max-w-[250px] truncate\" title=\"{exam.ExamName}\">{exam.ExamName}</td>" +
+                            $"<td class=\"border border-gray-300 px-4 py-2 max-w-[250px] truncate\" title=\"{exam.ExamCode}\">{exam.ExamCode}</td>" +
                             $"<td class=\"border border-gray-300 px-4 py-2\">{exam.ExamTime}</td>" +
                             $"<td class=\"border border-gray-300 px-4 py-2\">{(exam.IsApproved ? "Đã duyệt" : "Chưa duyệt")}</td>" +
                             $"<td class=\"border border-gray-300 px-4 py-2\">{(exam.IsApproved ? GetNameLecturer(exam.ApprovedByLectuterCode) : "-")}</td>" +

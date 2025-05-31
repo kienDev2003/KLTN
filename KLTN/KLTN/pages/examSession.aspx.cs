@@ -154,5 +154,14 @@ namespace KLTN.pages
             if (exec) return new { status = "200" };
             else return new { status = "500", message = "Server Update Status Warring Error" };
         }
+
+        [WebMethod]
+        public static object HandleExportListScroes(int examSessionCode)
+        {
+            List<Models.Res.ExamSubmitted> examSubmitteds = _examSessionBLL.HandleGetExportListScroesByExamSessionCode(examSessionCode);
+
+            if (examSubmitteds == null) return new { status = "404", message = "Not found" };
+            else return new { status = "200", examSubmitteds = examSubmitteds };
+        }
     }
 }

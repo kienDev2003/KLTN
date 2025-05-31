@@ -46,8 +46,8 @@ namespace KLTN.DAL
 
         public bool InsertExam(Models.Req.Exam exam)
         {
-            string query1 = @"INSERT INTO ExamPaper (SubjectCode, ExamPaperText, CreateByLectuterCode, CreatedDate, ExamTime, IsApproved)
-                              VALUES (@subjectCode, @examName, @createByLectuterCode, @createdDate, @examTime, 0);
+            string query1 = @"INSERT INTO ExamPaper (SubjectCode, CreateByLectuterCode, CreatedDate, ExamTime, IsApproved)
+                              VALUES (@subjectCode, @createByLectuterCode, @createdDate, @examTime, 0);
                               SELECT SCOPE_IDENTITY();";
 
             string query2 = @"INSERT INTO ExamPaper_Question (ExamPaperCode, QuestionCode)
@@ -64,7 +64,6 @@ namespace KLTN.DAL
                         using (SqlCommand cmd1 = new SqlCommand(query1, conn, tran))
                         {
                             cmd1.Parameters.AddWithValue("@subjectCode", exam.SubjectCode);
-                            cmd1.Parameters.AddWithValue("@examName", exam.ExamName);
                             cmd1.Parameters.AddWithValue("@createByLectuterCode", exam.CreateByLectuterCode);
                             cmd1.Parameters.AddWithValue("@createdDate", exam.CreatedDate);
                             cmd1.Parameters.AddWithValue("@examTime", exam.ExamTime);

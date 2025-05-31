@@ -177,19 +177,27 @@
 
             function CheckHiddenWindow() {
                 if (document.hidden) {
-                    numberHiddenDoc++;
                     pendingWarning = true;
-                } else if (pendingWarning) {
-                    pendingWarning = false;
+                    InsertWarringHiddenWindow();
+                }
+            }
 
-                    if (numberHiddenDoc === 4) {
-                        alert(`Đạt giới hạn cảnh báo. Tự động nộp bài!`);
-                        note = 'Đạt giới hạn cảnh báo gian lận !'
-                        submitExamFunction();
-                    }
-                    else {
-                        alert(`Cảnh báo gian lận do chuyển tab! (lần ${numberHiddenDoc})`);
-                    }
+            async function InsertWarringHiddenWindow() {
+                const examSessionCode = new URLSearchParams(window.location.search).get('examSessionCode');
+
+                const response = await fetch('testing.aspx/InsertWarringHiddenWindow', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ examSessionCode: examSessionCode })
+                });
+
+                const res = await response.json();
+
+                if (res.d.status !== '200') {
+                    alert(res.d.message);
+                    return;
                 }
             }
 
@@ -392,8 +400,29 @@
                 examObject = examPaper;
             }
 
+            async function CheckSubmissionRequirements() {
+                const examSessionCode = new URLSearchParams(window.location.search).get('examSessionCode');
+
+                const response = await fetch('testing.aspx/CheckSubmissionRequirements', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ examSessionCode: examSessionCode })
+                });
+
+                const res = await response.json();
+
+                if (res.d.status === true) {
+                    note = res.d.note;
+                    alert(`Bạn được yêu cầu nộp bài !. Lý do: ${note}`)
+                    submitExamFunction();
+                }
+            }
+
             window.addEventListener('DOMContentLoaded', async () => {
                 await LoadContentExamPaper();
+                setInterval(CheckSubmissionRequirements, 5000);
             });
 
         </script>

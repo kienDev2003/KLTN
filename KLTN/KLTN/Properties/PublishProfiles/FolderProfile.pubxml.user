@@ -3,15 +3,15 @@
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\Users\KienDev2003\Desktop\KLTN\KLTN\KLTN\bin\app.publish\</_PublishTargetUrl>
-    <History>True|2025-05-26T07:06:18.6843502Z||;True|2025-05-13T15:18:25.6765866+07:00||;</History>
+    <History>True|2025-05-31T02:54:25.2375085Z||;True|2025-05-29T22:59:00.8125285+07:00||;True|2025-05-26T14:06:18.6843502+07:00||;True|2025-05-13T15:18:25.6765866+07:00||;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/KLTN.dll">
-      <publishTime>05/26/2025 14:06:17</publishTime>
+      <publishTime>05/31/2025 09:54:24</publishTime>
     </File>
     <File Include="bin/KLTN.pdb">
-      <publishTime>05/26/2025 14:06:17</publishTime>
+      <publishTime>05/31/2025 09:54:24</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>05/19/2025 22:07:37</publishTime>
@@ -194,13 +194,13 @@
       <publishTime>05/26/2025 13:32:28</publishTime>
     </File>
     <File Include="pages/exam-schedule.aspx">
-      <publishTime>05/25/2025 00:21:24</publishTime>
+      <publishTime>05/28/2025 19:41:03</publishTime>
     </File>
     <File Include="pages/exam.aspx">
       <publishTime>05/19/2025 22:07:37</publishTime>
     </File>
     <File Include="pages/examSession.aspx">
-      <publishTime>05/23/2025 01:40:06</publishTime>
+      <publishTime>05/31/2025 09:53:34</publishTime>
     </File>
     <File Include="pages/home.aspx">
       <publishTime>05/19/2025 22:07:37</publishTime>
@@ -236,7 +236,7 @@
       <publishTime>05/19/2025 22:07:37</publishTime>
     </File>
     <File Include="pages/testing.aspx">
-      <publishTime>05/26/2025 13:49:26</publishTime>
+      <publishTime>05/29/2025 14:18:30</publishTime>
     </File>
     <File Include="pages/view-exam.aspx">
       <publishTime>05/23/2025 22:21:53</publishTime>

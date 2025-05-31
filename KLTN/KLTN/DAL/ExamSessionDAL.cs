@@ -172,13 +172,15 @@ namespace KLTN.DAL
             DataTable data = new DataTable();
             string query = @"SELECT ExamSession.* FROM ExamSession_Student
                              JOIN ExamSession ON ExamSession.ExamSessionCode = ExamSession_Student.ExamSessionCode
-                             WHERE ExamSession_Student.StudentCode = @studentCode";
+                             WHERE ExamSession_Student.StudentCode = @studentCode
+                                AND ExamSession.EndExamDate > @dateNow";
 
             using(SqlConnection conn = _db.GetConn())
             {
                 using(SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@studentCode", studentCode);
+                    cmd.Parameters.AddWithValue("@dateNow", DateTime.Now);
 
                     using(SqlDataAdapter adapter = new SqlDataAdapter(cmd))
                     {
@@ -379,6 +381,34 @@ namespace KLTN.DAL
             }
 
             return false;
+        }
+
+        public DataTable HandleGetExportListScroesByExamSessionCode(int examSessionCode)
+        {
+            DataTable data = new DataTable();
+            string query = @"SELECT ExamSubmitted.ExamSessionCode, ExamSubmitted.ExamPaperCode, Student.StudentCode, SubmittedDate, Score, Note,
+                             Student.FullName, Student.DateOfBirth, Student.ClassName, SubjectName
+                             FROM ExamSubmitted
+                             JOIN Student ON ExamSubmitted.StudentCode = Student.StudentCode
+							 JOIN ExamSession ON ExamSubmitted.ExamSessionCode = ExamSession.ExamSessionCode
+							 JOIN Subject ON ExamSession.SubjectCode = Subject.SubjectCode
+                             WHERE ExamSubmitted.ExamSessionCode = @examSessionCode";
+
+            using(SqlConnection conn = _db.GetConn())
+            {
+                using(SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@examSessionCode", examSessionCode);
+
+                    using(SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(data);
+                    }
+                }
+            }
+
+            return data;
+
         }
 
     }

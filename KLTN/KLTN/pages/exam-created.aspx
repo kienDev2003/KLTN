@@ -58,7 +58,7 @@
                 <table class="w-full border-collapse border border-gray-300">
                     <thead>
                         <tr class="bg-gray-200">
-                            <th class="border border-gray-300 px-4 py-2">Tên đề thi</th>
+                            <th class="border border-gray-300 px-4 py-2">Mã đề thi</th>
                             <th class="border border-gray-300 px-4 py-2">Thời gian thi</th>
                             <th class="border border-gray-300 px-4 py-2">Duyệt đề</th>
                             <th class="border border-gray-300 px-4 py-2">Giảng viên duyệt</th>
@@ -83,14 +83,6 @@
             <div class="modal-content">
                 <div id="modal-examPaper-form">
                     <div class="mb-4">
-                        <label class="block text-lg font-medium text-gray-700">Tên đề thi</label>
-                        <div class="flex items-center gap-2">
-                            <input type="text" id="exam-name"
-                                class="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
-                                placeholder="Nhập tên đề thi">
-                        </div>
-                    </div>
-                    <div class="mb-4">
                         <label class="block text-lg font-medium text-gray-700">Thời gian làm bài</label>
                         <div class="flex items-center gap-2">
                             <input type="text" id="exam-time"
@@ -103,6 +95,9 @@
                         <input type="button" id="chapter-create" onclick="CreateElementChapter()"
                             class="cursor-pointer mt-2 flex items-center gap-1 text-blue-600 hover:text-blue-800"
                             value="➕ Thêm chương">
+                    </div>
+                    <div class="mb-4">
+                        <label class="mt-3 number-question-total block text-lg font-medium text-yellow-700">Tổng số câu hỏi: </label>
                     </div>
                     <div class="mt-6 flex justify-end space-x-2">
                         <input type="button" onclick="CancelExam()"
@@ -124,13 +119,11 @@
         async function SaveExam() {
             const subjectCode = new URLSearchParams(location.search).get("subjectCode");
             const lecturerCode = document.getElementById('user_code').innerText;
-            const examName = document.getElementById('exam-name').value;
             const examTime = document.getElementById('exam-time').value;
 
             const result = collectChapterData();
 
             const exam = {
-                examName: examName,
                 CreateByLectuterCode: lecturerCode,
                 subjectCode: subjectCode,
                 examTime: examTime,
@@ -171,10 +164,11 @@
                                     <select id="exam-chapter"
                                         class="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300">
                                     </select>
-                        <input type="text" class="number-basic w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300" placeholder="Số lượng đáp án dễ">
-                        <input type="text" class="number-medium w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300" placeholder="Số lượng đáp án trung bình">
-                        <input type="text" class="number-hard w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300" placeholder="Số lượng đáp án khó">
+                        <input type="text" class="number-basic w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300" onchange="NumberQuestionChange(this)" placeholder="Số lượng đáp án dễ">
+                        <input type="text" class="number-medium w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300" onchange="NumberQuestionChange(this)" placeholder="Số lượng đáp án trung bình">
+                        <input type="text" class="number-hard w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300" onchange="NumberQuestionChange(this)" placeholder="Số lượng đáp án khó">
                         <input type="button" onclick="DeleteAnswer(this)" class="cursor-pointer text-red-600 hover:text-red-800" value="🗑">
+                        <label class="number-question block text-lg font-medium text-gray-700"></label>
                         `
             chapterElem.innerHTML = chapter_element;
             chapter_list.appendChild(chapterElem);
@@ -185,6 +179,27 @@
         function DeleteAnswer(button) {
             button.closest('.chapter').remove();
         }
+
+        function NumberQuestionChange(element) {
+            const numberQuestionBasic = Number(element.parentElement.querySelector('.number-basic').value);
+            const numberQuestionMedium = Number(element.parentElement.querySelector('.number-medium').value);
+            const numberQuestionHard = Number(element.parentElement.querySelector('.number-hard').value);
+
+            const total = numberQuestionBasic + numberQuestionMedium + numberQuestionHard;
+
+            element.parentElement.querySelector('.number-question').innerText = total;
+
+            const totalQuestionChapters = document.querySelectorAll('.number-question');
+            let totalQuestion = 0;
+
+            for (totalQuestionChapter of totalQuestionChapters) {
+                totalQuestion += Number(totalQuestionChapter.innerText);
+            }
+
+            document.querySelector('.number-question-total').innerHTML = `Tổng số câu hỏi: ${totalQuestion}`;
+
+        }
+
 
         function CancelExam() {
             const modal = document.getElementById("examPaper-modal");
@@ -199,7 +214,6 @@
             document.getElementById('save-exam').style.display = 'block';
             document.getElementById('chapter-create').style.display = 'block';
 
-            document.getElementById('exam-name').value = '';
             document.getElementById('exam-time').value = '';
             const answer_list = document.getElementById('chapter-list');
             answer_list.innerHTML = '';

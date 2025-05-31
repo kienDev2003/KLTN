@@ -271,7 +271,7 @@
                         <div class="flex flex-wrap gap-2">
                             <input type="button" class="cursor-pointer px-3 py-2 bg-green-600 text-white rounded hover:bg-green-700" id="AddStudent" runat="server" onclick="addStudent()" value="Thêm sinh viên">
                             <input type="button" class="cursor-pointer px-3 py-2 bg-green-600 text-white rounded hover:bg-green-700" id="AddStudentAuto" runat="server" onclick="CreateStudentAccountAuto()" value="Thêm sinh viên tự động">
-                            <input type="button" class="hidden cursor-pointer px-3 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700" id="ExportTestScores" runat="server" value="Xuất danh sách điểm thi">
+                            <input type="button" class="hidden cursor-pointer px-3 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700" id="ExportTestScores" onclick="ExportListScores()" runat="server" value="Xuất danh sách điểm thi">
                         </div>
                     </form>
                 </div>
@@ -365,6 +365,104 @@
 
                 return `${hours}:${minutes}:${seconds} ${day}/${month}/${year}`;
             }
+
+            async function ExportListScores() {
+                const examSessionCode = new URLSearchParams(location.search).get("examSessionCode");
+
+                const response = await fetch('examSession.aspx/HandleExportListScroes', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ examSessionCode: examSessionCode })
+                });
+
+                const res = await response.json();
+
+                if (res.d.status !== '200') {
+                    alert(res.d.message);
+                }
+                else {
+                    RenderFileExcel(res.d.examSubmitteds);
+                }
+            }
+
+            function RenderFileExcel(examSubmitteds) {
+                const worksheet = XLSX.utils.json_to_sheet(examSubmitteds, {
+                    header: [
+                        "SubjectName", "ExamSessionCode", "ExamPaperCode", "StudentCode", "StudentName", "StudentDateOfBrith",
+                        "StudentClassName", "SubmittedDate", "Score", "Note"
+                    ]
+                });
+
+                // Đổi tiêu đề tiếng Việt
+                const headerMap = [
+                    { col: "A1", label: "Môn học" },
+                    { col: "B1", label: "Mã ca thi" },
+                    { col: "C1", label: "Mã đề thi" },
+                    { col: "D1", label: "Mã sinh viên" },
+                    { col: "E1", label: "Họ tên" },
+                    { col: "F1", label: "Ngày sinh" },
+                    { col: "G1", label: "Lớp" },
+                    { col: "H1", label: "Thời gian nộp bài" },
+                    { col: "I1", label: "Điểm" },
+                    { col: "J1", label: "Ghi chú" },
+                ];
+
+                // Căn giữa toàn bộ dữ liệu trước
+                const range = XLSX.utils.decode_range(worksheet['!ref']);
+                for (let R = 0; R <= range.e.r; ++R) {
+                    for (let C = 0; C <= range.e.c; ++C) {
+                        const cellAddress = XLSX.utils.encode_cell({ r: R, c: C });
+                        if (worksheet[cellAddress]) {
+                            worksheet[cellAddress].s = {
+                                alignment: {
+                                    horizontal: "center",
+                                    vertical: "center"
+                                }
+                            };
+                        }
+                    }
+                }
+
+                headerMap.forEach(({ col, label }) => {
+                    worksheet[col] = {
+                        v: label,
+                        t: 's',
+                        s: {
+                            font: { bold: true },
+                            alignment: {
+                                horizontal: "center",
+                                vertical: "middle"
+                            }
+                        }
+                    };
+                });
+
+                const colWidths = headerMap.map(({ label }) => ({ wch: label.length }));
+
+                const allKeys = [
+                    "SubjectName", "ExamSessionCode", "ExamPaperCode", "StudentCode", "StudentName", "StudentDateOfBrith",
+                    "StudentClassName", "SubmittedDate", "Score", "Note"
+                ];
+
+                examSubmitteds.forEach(row => {
+                    allKeys.forEach((key, idx) => {
+                        const val = row[key];
+                        const len = String(val || "").length;
+                        if (len > colWidths[idx].wch) {
+                            colWidths[idx].wch = len + 2;
+                        }
+                    });
+                });
+
+                worksheet["!cols"] = colWidths;
+
+                const workbook = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(workbook, worksheet, "DanhSach");
+                XLSX.writeFile(workbook, "Danh_Sach_Diem_Thi.xlsx");
+            }
+
 
             async function GetExamSessionWarring() {
                 const examSessionCode = new URLSearchParams(location.search).get("examSessionCode");
