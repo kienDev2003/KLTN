@@ -30,7 +30,7 @@
                 <h2 class="text-2xl font-semibold text-slate-700 mb-6">Thông tin bài thi</h2>
                 <div class="space-y-4">
                     <div>
-                        <label for="examTitle" class="block text-sm font-medium text-slate-600 mb-1">Tên đề thi</label>
+                        <label for="examTitle" class="block text-sm font-medium text-slate-600 mb-1">Mã đề thi</label>
                         <input type="text" id="examTitle" readonly
                             class="readonly-input mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm text-slate-700">
                     </div>
@@ -105,9 +105,7 @@
 
             const exam = await HandleGetExamPaper();
 
-            console.log(exam);
-
-            document.getElementById('examTitle').value = exam.ExamPaperText || 'N/A';
+            document.getElementById('examTitle').value = exam.ExamPaperCode || 'N/A';
             document.getElementById('examTime').value = exam.ExamTime || 'N/A';
             document.getElementById('questionCount').textContent = exam.questions ? exam.questions.length : 0;
 

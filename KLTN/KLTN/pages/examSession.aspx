@@ -271,6 +271,7 @@
                         <div class="flex flex-wrap gap-2">
                             <input type="button" class="cursor-pointer px-3 py-2 bg-green-600 text-white rounded hover:bg-green-700" id="AddStudent" runat="server" onclick="addStudent()" value="Thêm sinh viên">
                             <input type="button" class="cursor-pointer px-3 py-2 bg-green-600 text-white rounded hover:bg-green-700" id="AddStudentAuto" runat="server" onclick="CreateStudentAccountAuto()" value="Thêm sinh viên tự động">
+                            <input type="button" class="cursor-pointer px-3 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700" id="MoreTime" onclick="MoreTimeExamSession()" runat="server" value="Thêm thời gian cho ca thi">
                             <input type="button" class="hidden cursor-pointer px-3 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700" id="ExportTestScores" onclick="ExportListScores()" runat="server" value="Xuất danh sách điểm thi">
                         </div>
                     </form>

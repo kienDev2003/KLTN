@@ -57,9 +57,9 @@
                     <thead>
                         <tr class="bg-gray-200">
                             <th class="border border-gray-300 px-4 py-2">Môn học</th>
-                            <th class="border border-gray-300 px-4 py-2">Thời gian bắt đầu</th>
-                            <th class="border border-gray-300 px-4 py-2">Thời gian kết thúc</th>
-                            <th class="border border-gray-300 px-4 py-2">Đề thi</th>
+                            <th class="border border-gray-300 px-4 py-2">Bắt đầu</th>
+                            <th class="border border-gray-300 px-4 py-2">Kết thúc</th>
+                            <th class="border border-gray-300 px-4 py-2">Mã Đề thi</th>
                             <th class="border border-gray-300 px-4 py-2">Mật khẩu ca thi</th>
                             <th class="border border-gray-300 px-4 py-2">Giảng viên coi thi chính</th>
                             <th class="border border-gray-300 px-4 py-2">Giảng viên coi thi phụ</th>
@@ -90,7 +90,7 @@
                         </select>
                     </div>
                     <div class="mb-4">
-                        <label class="block text-lg font-medium text-gray-700">Đề thi</label>
+                        <label class="block text-lg font-medium text-gray-700">Mã Đề thi</label>
                         <select id="exam"
                             class="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300">
                         </select>
@@ -414,7 +414,7 @@
                 for (let i = 0; i < res.d.exams.length; i++) {
                     const exam = res.d.exams[i];
 
-                    const html = `<option value="${exam.ExamCode}">${exam.ExamName}</option>`;
+                    const html = `<option value="${exam.ExamCode}">${exam.ExamCode}</option>`;
 
                     examHTML.innerHTML += html;
                 }

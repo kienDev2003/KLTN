@@ -8,7 +8,7 @@
                 <thead>
                     <tr class="bg-gray-200">
                         <th class="border border-gray-300 px-4 py-2">Môn học</th>
-                        <th class="border border-gray-300 px-4 py-2">Tên đề thi</th>
+                        <th class="border border-gray-300 px-4 py-2">Mã đề thi</th>
                         <th class="border border-gray-300 px-4 py-2">Thời gian thi</th>
                         <th class="border border-gray-300 px-4 py-2">Người tạo</th>
                         <th class="border border-gray-300 px-4 py-2">Thời gian tạo</th>

@@ -87,6 +87,8 @@ namespace KLTN.pages
         {
             List<Models.Req.Exam> exams = _examBLL.GetAllExamBySubjectCode(subjectCode);
 
+            if(exams == null) return new { status = "404", message = "Not Found" };
+
             for (int i = exams.Count - 1; i >= 0; i--)
             {
                 if (exams[i].IsApproved == false)

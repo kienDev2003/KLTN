@@ -67,6 +67,7 @@ namespace KLTN.pages
                 classesAddStudent.Add("hidden");
                 AddStudent.Attributes["class"] = string.Join(" ", classesAddStudent);
                 AddStudentAuto.Attributes["class"] = string.Join(" ", classesAddStudent);
+                MoreTime.Attributes["class"] = string.Join(" ", classesAddStudent);
             }
 
         }

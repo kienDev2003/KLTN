@@ -401,7 +401,7 @@
                     { col: "B1", label: "Mã ca thi" },
                     { col: "C1", label: "Mã đề thi" },
                     { col: "D1", label: "Mã sinh viên" },
-                    { col: "R1", label: "Họ tên" },
+                    { col: "E1", label: "Họ tên" },
                     { col: "F1", label: "Ngày sinh" },
                     { col: "G1", label: "Lớp" },
                     { col: "H1", label: "Thời gian nộp bài" },

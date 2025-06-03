@@ -33,6 +33,15 @@ namespace KLTN.pages
         protected global::System.Web.UI.HtmlControls.HtmlInputButton AddStudentAuto;
 
         /// <summary>
+        /// MoreTime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputButton MoreTime;
+
+        /// <summary>
         /// ExportTestScores control.
         /// </summary>
         /// <remarks>
