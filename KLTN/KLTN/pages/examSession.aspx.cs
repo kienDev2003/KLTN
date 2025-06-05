@@ -108,7 +108,7 @@ namespace KLTN.pages
             List<Models.Res.ExamSession_Student> examSession_Students = _examSessionBLL.GetStudentByExamSessionCode(examSessionCode);
 
             if (examSession_Students != null) return new { status = "200", examSession_Students = examSession_Students };
-            else return new { status = "404", message = "Not Found" };
+            else return new { status = "404", message = "Not Found List Student" };
         }
 
         [WebMethod]
@@ -117,7 +117,7 @@ namespace KLTN.pages
             Models.Res.Student student = _studentBLL.GetStudentByStudentCode(studentCode);
 
             if (student != null) return new { status = "200", student = student };
-            else return new { status = "404", message = "Not Found" };
+            else return new { status = "404", message = "Not Found By Student Code" };
         }
 
         [WebMethod]
@@ -126,7 +126,7 @@ namespace KLTN.pages
             bool exec = _examSessionBLL.HandleLogoutStudent(studentCode, examSessionCode);
 
             if (exec) return new { status = "200", message = "Cấp quyền vào lại thành công" };
-            else return new { status = "404", message = "Not Found" };
+            else return new { status = "404", message = "Not Found By Student Code" };
         }
 
         [WebMethod]
@@ -135,7 +135,7 @@ namespace KLTN.pages
             bool exec = _examSessionBLL.HandleSubmissionRequirements(studentCode, examSessionCode, noteSubmissionRequirements);
 
             if (exec) return new { status = "200", message = "Yêu cầu nộp bài thành công" };
-            else return new { status = "404", message = "Not Found" };
+            else return new { status = "404", message = "Not Found Student Code" };
         }
 
         [WebMethod]
@@ -143,7 +143,7 @@ namespace KLTN.pages
         {
             List<Models.Res.ExamSessionWarring> examSessionWarrings = _examBLL.GetAllExamSessionWarring(examSessionCode);
 
-            if (examSessionWarrings == null) return new { status = "404", message = "Not Found" };
+            if (examSessionWarrings == null) return new { status = "404", message = "Not Found Warring For Exam Session Code" };
             else return new { status = "200", examSessionWarrings = examSessionWarrings };
         }
 
@@ -161,8 +161,26 @@ namespace KLTN.pages
         {
             List<Models.Res.ExamSubmitted> examSubmitteds = _examSessionBLL.HandleGetExportListScroesByExamSessionCode(examSessionCode);
 
-            if (examSubmitteds == null) return new { status = "404", message = "Not found" };
+            if (examSubmitteds == null) return new { status = "404", message = "Not found List Exam Submitted" };
             else return new { status = "200", examSubmitteds = examSubmitteds };
+        }
+
+        [WebMethod]
+        public static object HandleMoreTimeExamSession(int sumTime, int examSessionCode)
+        {
+            bool exec = _examSessionBLL.HandleMoreTimeExamSession(sumTime, examSessionCode);
+
+            if (exec) return new { status = "200" };
+            else return new { status = "500", message = "Server Error" };
+        }
+
+        [WebMethod]
+        public static object HandleGetEndExamSessionDate(int examSessionCode)
+        {
+            Models.Req.ExamSession examSession = _examSessionBLL.GetExamSession(examSessionCode);
+
+            if (examSession != null) return new { status = "200", examSession = examSession };
+            else return new { status = "404", message = "Not Found Exam Session" };
         }
     }
 }

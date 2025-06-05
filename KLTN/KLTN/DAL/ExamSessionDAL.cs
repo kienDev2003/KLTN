@@ -386,13 +386,31 @@ namespace KLTN.DAL
         public DataTable HandleGetExportListScroesByExamSessionCode(int examSessionCode)
         {
             DataTable data = new DataTable();
-            string query = @"SELECT ExamSubmitted.ExamSessionCode, ExamSubmitted.ExamPaperCode, Student.StudentCode, SubmittedDate, Score, Note,
-                             Student.FullName, Student.DateOfBirth, Student.ClassName, SubjectName
-                             FROM ExamSubmitted
-                             JOIN Student ON ExamSubmitted.StudentCode = Student.StudentCode
-							 JOIN ExamSession ON ExamSubmitted.ExamSessionCode = ExamSession.ExamSessionCode
-							 JOIN Subject ON ExamSession.SubjectCode = Subject.SubjectCode
-                             WHERE ExamSubmitted.ExamSessionCode = @examSessionCode";
+            string query = @"SELECT 
+                                es.ExamSessionCode,
+                                sess.ExamPaperCode,
+                                s.StudentCode,
+                                ISNULL(sub.SubmittedDate, '1900-01-01 00:00:00') AS SubmittedDate,
+                                ISNULL(sub.Score, 0 ) AS Score,
+                                ISNULL(sub.Note, N'Vắng thi') AS Note,
+                                s.FullName,
+                                s.DateOfBirth,
+                                s.ClassName,
+                                subjec.SubjectName
+                            FROM 
+                                ExamSession_Student es
+                            JOIN 
+                                Student s ON es.StudentCode = s.StudentCode
+                            JOIN 
+                                ExamSession sess ON es.ExamSessionCode = sess.ExamSessionCode
+                            JOIN 
+                                Subject subjec ON sess.SubjectCode = subjec.SubjectCode
+                            LEFT JOIN 
+                                ExamSubmitted sub 
+                                ON es.ExamSessionCode = sub.ExamSessionCode AND es.StudentCode = sub.StudentCode
+                            WHERE 
+                                es.ExamSessionCode = @examSessionCode
+                            ";
 
             using(SqlConnection conn = _db.GetConn())
             {
@@ -409,6 +427,37 @@ namespace KLTN.DAL
 
             return data;
 
+        }
+
+        public bool HandleMoreTimeExamSession(int sumTime, int examSessionCode)
+        {
+            string query = @"UPDATE ExamSession SET EndExamDate = DATEADD(MINUTE, @sumTime, EndExamDate) WHERE ExamSessionCode = @examSessionCode";
+
+            using(SqlConnection conn = _db.GetConn())
+            {
+                using(SqlTransaction tran = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SqlCommand cmd = new SqlCommand(query, conn, tran))
+                        {
+                            cmd.Parameters.AddWithValue("@sumTime", sumTime);
+                            cmd.Parameters.AddWithValue("@examSessionCode", examSessionCode);
+
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        tran.Commit();
+                        return true;
+                    }
+                    catch(Exception ex)
+                    {
+                        tran.Rollback();
+                    }
+                }
+            }
+
+            return false;
         }
 
     }

@@ -21,6 +21,26 @@
             padding: 20px;
         }
 
+        /* CSS cho countdown timer */
+        .countdown-container {
+            text-align: center;
+            padding-bottom: 5px;
+        }
+
+            .countdown-container::before {
+                content: '';
+            }
+
+        .countdown-label {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .countdown-display {
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
         .container {
             display: flex;
             min-height: 100vh;
@@ -255,6 +275,12 @@
 
 <body>
     <form runat="server">
+        <!-- Countdown Timer với CSS mới -->
+        <div class="countdown-container">
+            <div class="countdown-label">Thời gian còn lại:</div>
+            <div id="countdown" class="countdown-display">Đang tải...</div>
+        </div>
+
         <div class="container">
             <!-- Phần bên trái -->
             <div class="left-panel">
@@ -365,6 +391,29 @@
                 const year = date.getFullYear();
 
                 return `${hours}:${minutes}:${seconds} ${day}/${month}/${year}`;
+            }
+
+            async function MoreTimeExamSession() {
+                const examSessionCode = new URLSearchParams(location.search).get("examSessionCode");
+                const sumTime = Number(prompt('Nhập số lượng thời gian muốn thêm ! ( phút )'));
+
+                const response = await fetch('examSession.aspx/HandleMoreTimeExamSession', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ sumTime: sumTime, examSessionCode: examSessionCode })
+                });
+
+                const res = await response.json();
+
+                if (res.d.status !== '200') {
+                    alert(res.d.message);
+                }
+                else {
+                    alert('Thêm thời gian cho ca thi thành công !');
+                    window.location.reload();
+                }
             }
 
             async function ExportListScores() {
@@ -742,8 +791,41 @@
             }
 
             function CheckEndExamSession() {
+                const examSessionCode = new URLSearchParams(location.search).get("examSessionCode");
 
+                fetch('examSession.aspx/HandleGetEndExamSessionDate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ examSessionCode: examSessionCode })
+                })
+                    .then(res => res.json())
+                    .then(result => {
+                        if (result.d.status !== '200') return;
+
+                        const endTime = new Date(parseInt(result.d.examSession.EndExamDate.match(/\d+/)[0], 10));
+                        const countdownEl = document.getElementById('countdown');
+
+                        let alerted15 = false;
+                        let alerted5 = false;
+
+                        const interval = setInterval(() => {
+                            const now = new Date();
+                            const diffMs = endTime - now;
+
+                            if (diffMs <= 0) {
+                                countdownEl.textContent = "Ca thi đã kết thúc";
+                                clearInterval(interval);
+                                return;
+                            }
+
+                            const minutes = Math.floor(diffMs / 60000);
+                            const seconds = Math.floor((diffMs % 60000) / 1000);
+                            countdownEl.textContent = `${minutes} phút ${seconds} giây`;
+
+                        }, 1000);
+                    });
             }
+
 
             function HandleWindowLoaded() {
                 GetStudent();

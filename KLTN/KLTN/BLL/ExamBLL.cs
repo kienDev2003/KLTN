@@ -136,7 +136,7 @@ namespace KLTN.BLL
             Models.Res.Exam_Result exam_Result = new Models.Res.Exam_Result();
             foreach(DataRow row in data.Rows)
             {
-                exam_Result.ExamPaperName = row["ExamPaperText"].ToString();
+                exam_Result.ExamPaperCode = Convert.ToInt32(row["ExamPaperCode"]);
                 exam_Result.TotalQuestions = Convert.ToInt32(row["NumberQuestionTotal"]);
                 exam_Result.CorrectAnswers = Convert.ToInt32(row["NumberQuestionTrue"]);
                 exam_Result.Score = Math.Round(Convert.ToDouble(row["Score"]), 2);

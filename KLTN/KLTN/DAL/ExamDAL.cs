@@ -376,7 +376,7 @@ namespace KLTN.DAL
 
         public DataTable GetExamResultForStudent(int examSessionCode, string studentCode)
         {
-            string query = @"SELECT ExamPaper.ExamPaperText, NumberQuestionTrue, NumberQuestionTotal, Score, Note FROM ExamSubmitted
+            string query = @"SELECT ExamPaper.ExamPaperCode, NumberQuestionTrue, NumberQuestionTotal, Score, Note FROM ExamSubmitted
 	                             JOIN ExamPaper ON ExamSubmitted.ExamPaperCode = ExamPaper.ExamPaperCode
                              WHERE ExamSubmitted.ExamSessionCode = @examSessionCode AND ExamSubmitted.StudentCode = @studentCode";
 

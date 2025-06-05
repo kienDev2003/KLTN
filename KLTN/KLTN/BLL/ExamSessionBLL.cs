@@ -204,5 +204,10 @@ namespace KLTN.BLL
             return examSubmitteds;
 
         }
+
+        public bool HandleMoreTimeExamSession(int sumTime, int examSessionCode)
+        {
+            return _examSessionDAL.HandleMoreTimeExamSession(sumTime, examSessionCode);
+        }
     }
 }

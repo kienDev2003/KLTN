@@ -159,6 +159,7 @@
             let submitExam = [];
             let numberHiddenDoc = 0;
             let note = '';
+            let statusSubmit = false;
 
             let examObject = {};
 
@@ -176,7 +177,7 @@
             }
 
             function CheckHiddenWindow() {
-                if (document.hidden) {
+                if (document.hidden && statusSubmit === false) {
                     pendingWarning = true;
                     InsertWarringHiddenWindow();
                 }
@@ -341,6 +342,8 @@
             }
 
             async function submitExamFunction() {
+                statusSubmit = true;
+
                 const examPaperCode = new URLSearchParams(window.location.search).get('examPaperCode');
                 const examSessionCode = new URLSearchParams(window.location.search).get('examSessionCode');
 
