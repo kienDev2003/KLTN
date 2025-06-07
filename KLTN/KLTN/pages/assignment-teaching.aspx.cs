@@ -38,7 +38,7 @@ namespace KLTN.pages
                 html += $"<div onclick=\"HandleSelectLecturer(this,'{lecturer.LecturerCode}')\" class=\"btn-lecturer border rounded-lg overflow-hidden shadow-sm\">" +
                             $"<div class=\"p-3 border-b flex justify-between items-center\">" +
                                 $"<div class=\"flex items-center\">" +
-                                    $"<img src=\"/api/placeholder/40/40\" alt=\"subject\" class=\"w-8 h-8 mr-3\">" +
+                                    $"<img src=\"/pages/public/images/user_image.png\" alt=\"subject\" class=\"w-8 h-8 mr-3\">" +
                                     $"<p class=\"font-medium\">{lecturer.LecturerCode}-{lecturer.FullName}</p>" +
                                 $"</div>" +
                             $"</div>" +
@@ -55,7 +55,7 @@ namespace KLTN.pages
                 html += $"<div class=\"border rounded-lg overflow-hidden shadow-sm\">" +
                             $"<div class=\"p-3 border-b flex justify-between items-center\">" +
                                 $"<div class=\"flex items-center\">" +
-                                    $"<img src=\"/api/placeholder/40/40\" alt=\"subject\" class=\"w-8 h-8 mr-3\">" +
+                                    $"<img src=\"/pages/public/images/education_image.png\" alt=\"subject\" class=\"w-8 h-8 mr-3\">" +
                                     $"<p class=\"font-medium\">{subject.SubjectName}</p>" +
                                 $"</div>" +
                                 $"<div>" +

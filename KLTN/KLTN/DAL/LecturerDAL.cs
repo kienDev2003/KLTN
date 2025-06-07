@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -114,7 +115,7 @@ namespace KLTN.DAL
                         {
                             cmd2.Parameters.AddWithValue("@lecturerCode", lecturer.LecturerCode);
                             cmd2.Parameters.AddWithValue("@fullName", lecturer.FullName);
-                            cmd2.Parameters.AddWithValue("@dateOfBirth", Convert.ToDateTime(lecturer.DateOfBirth));
+                            cmd2.Parameters.AddWithValue("@dateOfBirth", DateTime.ParseExact(lecturer.DateOfBirth, "dd/MM/yyyy", CultureInfo.InvariantCulture));
                             cmd2.Parameters.AddWithValue("@accountCode", accountCode);
                             cmd2.Parameters.AddWithValue("@isLeader", false);
                             cmd2.Parameters.AddWithValue("@departmentName", lecturer.DepartmentName);
@@ -129,6 +130,38 @@ namespace KLTN.DAL
                     {
                         tran.Rollback();
                     }
+                }
+            }
+
+            return false;
+        }
+
+        public bool ChangeLeader(string lecturerCode, int status)
+        {
+            string query = @"UPDATE Lecturer SET IsLeader = @status WHERE LecturerCode = @lecturerCode";
+
+            using(SqlConnection conn = _db.GetConn())
+            {
+                using(SqlTransaction tran = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SqlCommand cmd = new SqlCommand(query, conn, tran))
+                        {
+                            cmd.Parameters.AddWithValue("@status", status);
+                            cmd.Parameters.AddWithValue("@lecturerCode", lecturerCode);
+
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        tran.Commit();
+                        return true;
+                    }
+                    catch(Exception ex)
+                    {
+                        tran.Rollback();
+                    }
+                    
                 }
             }
 

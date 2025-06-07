@@ -84,9 +84,10 @@
     <Content Include="pages\examSession.aspx" />
     <Content Include="pages\home.aspx" />
     <Content Include="pages\index.aspx" />
+    <Content Include="pages\public\images\education_image.png" />
+    <Content Include="pages\public\images\user_image.png" />
     <Content Include="pages\question-created.aspx" />
-    <Content Include="pages\question.aspx" />
-    <Content Include="pages\quiz.aspx" />
+    <Content Include="pages\assignment-leader.aspx" />
     <Content Include="pages\subject-lecturer.aspx" />
     <Content Include="pages\subject-teaching.aspx" />
     <Content Include="pages\subject.aspx" />
@@ -246,19 +247,12 @@
     <Compile Include="pages\question-created.aspx.designer.cs">
       <DependentUpon>question-created.aspx</DependentUpon>
     </Compile>
-    <Compile Include="pages\question.aspx.cs">
-      <DependentUpon>question.aspx</DependentUpon>
+    <Compile Include="pages\assignment-leader.aspx.cs">
+      <DependentUpon>assignment-leader.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="pages\question.aspx.designer.cs">
-      <DependentUpon>question.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="pages\quiz.aspx.cs">
-      <DependentUpon>quiz.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="pages\quiz.aspx.designer.cs">
-      <DependentUpon>quiz.aspx</DependentUpon>
+    <Compile Include="pages\assignment-leader.aspx.designer.cs">
+      <DependentUpon>assignment-leader.aspx</DependentUpon>
     </Compile>
     <Compile Include="pages\subject-lecturer.aspx.cs">
       <DependentUpon>subject-lecturer.aspx</DependentUpon>

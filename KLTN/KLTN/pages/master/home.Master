@@ -31,8 +31,8 @@
             <div class="bg-gray-100 text-green-500 w-full lg:w-1/4 p-4">
                 <div class="bg-white text-black p-4 rounded-lg shadow-md">
                     <div class="flex items-center cursor-pointer" id="avatar">
-                        <img alt="Profile picture of the student" class="w-16 h-16 rounded-full" height="100"
-                            src="./assets/images/user.jpg" width="100">
+                        <img class="w-16 h-16 rounded-full" height="100"
+                            src="/pages/public/images/user_image.png" width="100">
                         <div class="ml-4">
                             <p id="user_code" runat="server" class="font-bold"></p>
                             <p id="user_fullname" runat="server"></p>

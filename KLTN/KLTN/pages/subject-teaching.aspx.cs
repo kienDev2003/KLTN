@@ -36,7 +36,7 @@ namespace KLTN.pages
                 html += $"<a href=\"/pages/question-created.aspx?subjectCode={subject.SubjectCode}\">" +
                             $"<div class=\"bg-white rounded-lg p-5 shadow-md h-full flex items-center\">" +
                                 $"<div class=\"w-16 h-16 mr-4 flex-shrink-0 flex items-center justify-center\">" +
-                                    $"<img src=\"./assets/images/user.jpg\" class=\"max-w-full max-h-full\">" +
+                                    $"<img src=\"/pages/public/images/education_image.png\" class=\"max-w-full max-h-full\">" +
                                 $"</div>" +
                                 $"<h3 class=\"text-secondary text-base font-medium\">{subject.SubjectName}</h3>" +
                             $"</div>" +

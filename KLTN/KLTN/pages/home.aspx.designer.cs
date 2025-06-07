@@ -7,11 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace KLTN.pages
-{
-
-
-    public partial class home
-    {
+namespace KLTN.pages {
+    
+    
+    public partial class home {
     }
 }

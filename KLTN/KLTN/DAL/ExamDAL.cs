@@ -24,7 +24,8 @@ namespace KLTN.DAL
                              FROM Question
                              WHERE SubjectCode = @subjectCode
                                 AND ChapterCode = @chapterCode
-                                AND QuestionLevel = @questionLevel";
+                                AND QuestionLevel = @questionLevel
+                                AND IsApproved = 1";
 
             int number = -1;
 

@@ -65,7 +65,8 @@ namespace KLTN.BLL
                     DateOfBirth = Convert.ToDateTime(row["DateOfBirth"]),
                     Email = row["Email"].ToString(),
                     DepartmentName = row["DepartmentName"].ToString(),
-                    FullName = row["FullName"].ToString()
+                    FullName = row["FullName"].ToString(),
+                    IsLeader = Convert.ToBoolean(row["IsLeader"])
                 });
             }
 
@@ -75,6 +76,11 @@ namespace KLTN.BLL
         public bool InsertLecturer(Models.Req.Lecturer lecturer)
         {
             return _lecturerDAL.InsertLecturer(lecturer);
+        }
+
+        public bool ChangeLeader(string lecturerCode, int status)
+        {
+            return _lecturerDAL.ChangeLeader(lecturerCode, status);
         }
     }
 }

@@ -6,7 +6,7 @@
             <div
                 class="w-full lg:w-1/4 bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
                 <a id="exam-link">
-                    <img src="./h.jpg"
+                    <img src="/pages/public/images/education_image.png"
                         class="w-16 h-16 mb-4">
                     <h3 class="text-gray-800 font-medium mb-2">Danh sách đề thi</h3>
                 </a>
@@ -14,7 +14,7 @@
             <div
                 class="w-full lg:w-1/4 bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
                 <a id="question-link">
-                    <img src="./j.jpg"
+                    <img src="/pages/public/images/education_image.png"
                         class="w-16 h-16 mb-4">
                     <h3 class="text-gray-800 font-medium mb-2">Ngân hàng câu hỏi</h3>
                 </a>

@@ -24,7 +24,7 @@ namespace KLTN.DAL
                              JOIN Subject_Teaching ON Subject.SubjectCode = Subject_Teaching.SubjectCode
                              JOIN Lecturer ON Subject_Teaching.LecturerCode = Lecturer.LecturerCode
                              JOIN Account ON Lecturer.AccountCode = Account.AccountCode
-                             WHERE Account.AccountCode = @accountCode";
+                             WHERE Account.AccountCode = @accountCode AND Subject.IsDelete = 0";
 
             using (SqlConnection conn = _dB.GetConn())
             {

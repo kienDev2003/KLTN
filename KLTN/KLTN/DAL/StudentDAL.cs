@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Data;
+using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -70,7 +71,7 @@ namespace KLTN.DAL
                         {
                             cmd2.Parameters.AddWithValue("@studentCode", student.StudentCode);
                             cmd2.Parameters.AddWithValue("@fullName", student.FullName);
-                            cmd2.Parameters.AddWithValue("@dateOfBirth", Convert.ToDateTime(student.DateOfBirth));
+                            cmd2.Parameters.AddWithValue("@dateOfBirth", DateTime.ParseExact(student.DateOfBirth, "dd/MM/yyyy", CultureInfo.InvariantCulture));
                             cmd2.Parameters.AddWithValue("@accountCode", accountCode);
                             cmd2.Parameters.AddWithValue("@className", student.ClassName);
                             cmd2.Parameters.AddWithValue("@majorName", student.MajorName);
